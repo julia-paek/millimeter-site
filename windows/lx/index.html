@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LX하우시스 — 뷰프레임(일반창) · 유로시스템9(시스템창) | MM LAB</title>
+<link rel="canonical" href="/windows/lx/">
+<meta name="description" content="LX하우시스 창호 — 뷰프레임 완성창·제작창과 유로시스템9 AL·PL 시스템창의 라인업을 안내합니다.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="LX하우시스 — 뷰프레임(일반창) · 유로시스템9(시스템창) | MM LAB">
+<meta property="og:description" content="LX하우시스 창호 — 뷰프레임 완성창·제작창과 유로시스템9 AL·PL 시스템창의 라인업을 안내합니다.">
+<meta property="og:locale" content="ko_KR">
+<link rel="icon" href="../../assets/brand/favicon.ico?v=b2" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/brand/favicon-32.png?v=b2">
+<link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png?v=b2">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/variable/woff2/SUIT-Variable.css">
+<link rel="stylesheet" href="../../styles.css?v=g52">
+<style>
+.vue-hero{background:#F4F0E6;padding:calc(56px + clamp(20px,3vw,40px)) 24px clamp(40px,5vw,64px)}
+.vue-visual{background:#000;padding:0;height:auto;min-height:clamp(380px,42vw,520px);max-width:1200px;margin:0 auto;position:relative} /* 영상 영역 — 슬림 히어로 */
+.vue-visual video{border-radius:0;object-fit:contain;background:#000} /* contain — 글씨 안 잘리게 전체 프레임 표시 */
+.vue-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.78) 0%,rgba(0,0,0,.46) 42%,rgba(0,0,0,.08) 72%),linear-gradient(0deg,rgba(0,0,0,.44) 0%,transparent 50%);pointer-events:none;z-index:1}
+.vue-copy{position:absolute;left:clamp(28px,6vw,82px);right:clamp(28px,6vw,82px);bottom:clamp(96px,12vw,140px);z-index:2;max-width:760px;text-align:left;color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.38)} /* 영상 하단 자막 밴드(약 83~93%)와 겹치지 않게 위로 */
+.vue-hero .vue-copy .eyebrow{margin-bottom:14px;color:rgba(255,255,255,.82)}
+.vue-hero .vue-copy .display{margin-bottom:16px;color:#fff;font-size:clamp(36px,4.8vw,60px);line-height:1.04}
+.vue-hero .vue-copy .subtitle{max-width:680px;margin:0;color:rgba(255,255,255,.8);font-size:clamp(15px,1.45vw,18px);line-height:1.55}
+@media(max-width:640px){
+  .vue-hero{padding:72px 12px 36px}
+  .vue-visual{height:clamp(360px,52svh,420px);min-height:0}
+  /* 영상 하단에 새겨진 CG 안내 자막을 박스 밖으로 잘라낸다(실측 보정 145%) — 모바일 한정 */
+  .vue-visual video{height:145%;object-fit:cover;object-position:50% 0}
+  .vue-visual::after{background:linear-gradient(0deg,rgba(0,0,0,.84) 0%,rgba(0,0,0,.36) 66%,rgba(0,0,0,.08) 100%)}
+  .vue-copy{left:22px;right:22px;bottom:26px;max-width:none}
+  .vue-hero .vue-copy .eyebrow{font-size:11px;margin-bottom:11px}
+  .vue-hero .vue-copy .display{font-size:clamp(32px,9.6vw,42px);margin-bottom:13px}
+  .vue-hero .vue-copy .subtitle{font-size:14px;line-height:1.55}
+  .vue-hero .vue-copy .subtitle br{display:none}
+}
+.solution-card{position:relative;background:transparent;padding:18px 34px 30px;height:100%;display:flex;flex-direction:column;border-right:1px solid #BFC7B8;overflow:hidden}
+.solution-card:last-child{border-right:0}
+.solution-card .solution-tag{display:block;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;font-weight:600;color:var(--accent);margin-bottom:10px;letter-spacing:.12em;text-transform:uppercase}
+.solution-card h3{font-size:clamp(28px,2.8vw,38px);font-weight:700;margin-bottom:5px;letter-spacing:-.02em;color:#1F3822}
+.solution-card .sub{font-size:15px;color:#6E7C64;margin-bottom:8px}
+.solution-visual{height:250px;display:flex;align-items:center;justify-content:center;margin:8px 0 12px;color:var(--accent)}
+.solution-visual svg{width:100%;height:100%;overflow:visible;transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.solution-card:hover .solution-visual svg{transform:translateY(-7px)}
+.solution-visual .frame{fill:rgba(255,255,255,.34);stroke:currentColor;stroke-width:5}
+.solution-visual .fine{fill:none;stroke:currentColor;stroke-width:2}
+.solution-visual .bold{fill:none;stroke:currentColor;stroke-width:6}
+.solution-visual .label{fill:currentColor;font:600 13px 'JetBrains Mono',monospace;letter-spacing:.08em}
+.solution-visual .soft{opacity:.28}
+.clean .solution-visual{color:#2F5233}.safety .solution-visual{color:#B86418}.energy .solution-visual{color:#16836B}
+.clean .air-line{stroke-dasharray:10 9;animation:airflow 2.4s linear infinite}
+.safety .lock-bolt{transform-box:fill-box;transform-origin:center;transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.safety:hover .lock-bolt{transform:translateX(8px)}
+.energy .heat-line{stroke-dasharray:8 7;animation:heatflow 2.8s linear infinite}
+@keyframes airflow{to{stroke-dashoffset:-38}}
+@keyframes heatflow{to{stroke-dashoffset:-30}}
+.solution-points{list-style:none;padding:0;margin-top:auto;border-top:1px solid #BFC7B8}
+.solution-points li{display:grid;grid-template-columns:30px 1fr;gap:8px;padding:10px 0;border-bottom:1px solid #D7DDD2;font-size:14px;color:#1F3822;line-height:1.45}
+.solution-points li:last-child{border-bottom:0}
+.solution-points b{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;color:var(--accent)}
+@media(max-width:768px){
+  .solution-card{border:0;padding:18px 24px 28px;background:rgba(255,255,255,.28)}
+  .solution-visual{height:220px}
+}
+@media(min-width:481px) and (max-width:768px){
+  #solution .mobile-card-carousel>.mobile-card-track>.solution-card{
+    flex:0 0 calc(50% - 7px)!important;
+    width:calc(50% - 7px)!important;
+    max-width:calc(50% - 7px)!important;
+  }
+}
+@media(max-width:480px){
+  #solution .mobile-card-carousel{margin:0}
+  #solution .mobile-card-carousel>.mobile-card-track{padding-left:0;padding-right:0;gap:12px!important}
+  #solution .mobile-card-carousel>.mobile-card-track>.solution-card{
+    flex:0 0 100%!important;
+    width:100%!important;
+    max-width:100%!important;
+    padding:18px 18px 22px;
+  }
+  #solution .solution-card h3{font-size:28px}
+  #solution .solution-card .sub{font-size:14px}
+  #solution .solution-visual{height:176px;margin:4px 0 8px}
+  #solution .solution-points li{padding:8px 0;font-size:13px}
+}
+@media(prefers-reduced-motion:reduce){.clean .air-line,.energy .heat-line{animation:none}.solution-visual svg,.safety .lock-bolt{transition:none}}
+.smart-handle-grid{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:44px;margin-top:44px;padding:12px 0}
+.smart-handle-grid::before{content:"";position:absolute;left:12%;right:12%;top:50%;height:1px;background:#AEB9A7;z-index:0}
+.handle-item{position:relative;z-index:1;width:min(100%,260px);aspect-ratio:1;margin:0 auto;padding:34px 28px;border:1px solid #8D9E88;border-radius:50%;background:#F4F0E6;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s}
+.handle-item::after{content:"";position:absolute;inset:9px;border:1px dashed rgba(47,82,51,.32);border-radius:50%;pointer-events:none}
+.handle-item:hover{transform:translateY(-8px);box-shadow:0 18px 0 rgba(47,82,51,.09)}
+.handle-item .num{position:absolute;top:27px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.12em}
+.handle-item h5{font-size:18px;font-weight:700;margin:13px 0 5px;color:#1F3822}
+.handle-item p{max-width:205px;font-size:13px;color:#6E7C64;line-height:1.5}
+.sensor-viz{position:relative;width:84px;height:84px;display:grid;place-items:center;color:var(--accent)}
+.dust-scale{display:flex;align-items:center;gap:7px}
+.dust-scale i{display:block;width:11px;height:11px;border-radius:50%;background:#B9C8B4;box-shadow:0 0 0 5px rgba(47,82,51,.06)}
+.dust-scale i:nth-child(2){background:#79A06F}.dust-scale i:nth-child(3){background:#D79D42}.dust-scale i:nth-child(4){background:#B85A42}
+.dust-scale::after{content:"4 LEVEL";position:absolute;left:0;right:0;bottom:8px;font:600 13px 'JetBrains Mono',monospace;letter-spacing:.08em}
+.tvoc-gauge{border-radius:50%;background:conic-gradient(var(--accent) 0 72%,#D5DDD1 72% 100%)}
+.tvoc-gauge::before{content:"";position:absolute;inset:9px;border-radius:50%;background:#F4F0E6}
+.tvoc-gauge b{position:relative;z-index:1;font:700 13px 'JetBrains Mono',monospace;letter-spacing:.06em}
+.open-signal .window-mini{position:relative;width:52px;height:62px;border:3px solid currentColor}
+.open-signal .window-mini::before{content:"";position:absolute;inset:5px 8px 5px 6px;border:2px solid currentColor;transform:perspective(70px) rotateY(-28deg);transform-origin:left}
+.open-signal .window-mini::after{content:"";position:absolute;width:4px;height:4px;border-radius:50%;background:currentColor;right:10px;top:28px}
+.open-signal .wave{position:absolute;right:3px;width:18px;height:18px;border:2px solid currentColor;border-left:0;border-bottom:0;border-radius:0 100% 0 0;transform:rotate(45deg);opacity:.7}
+.open-signal .wave.w1{top:23px}.open-signal .wave.w2{top:17px;right:-4px;width:28px;height:28px;opacity:.35}
+@media (max-width:768px){
+  .smart-handle-grid{grid-template-columns:1fr;gap:14px;margin-top:28px;padding:8px}
+  .smart-handle-grid::before{display:none}
+  .mobile-card-carousel>.smart-handle-grid>.handle-item{flex:0 0 210px!important;width:210px!important;max-width:210px!important;padding:28px 22px}
+}
+@media(max-width:420px){.mobile-card-carousel>.smart-handle-grid>.handle-item{flex-basis:190px!important;width:190px!important;max-width:190px!important;padding:24px 18px}.sensor-viz{width:64px;height:64px}.handle-item h5{font-size:16px}.handle-item p{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.handle-item{transition:none}}
+/* === LX 제품 선택 — 제품 4카드 (완성창 · 제작창 · 유로9 PL · AL) === */
+.vhead{text-align:center;max-width:720px;margin:0 auto;padding:24px 0 4px}
+.vhead .eyebrow{color:var(--accent);font-weight:700;margin-bottom:12px}
+.vhead .h2{margin-bottom:14px}
+.family-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px}
+.family-card{min-width:0}
+.family-card .bnr{width:100%;aspect-ratio:16/9}
+.family-thumbs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.family-thumb{display:grid;grid-template-columns:112px 1fr;align-items:center;gap:14px;min-width:0;padding:0 0 12px;border-bottom:1px solid #AEB9A7;text-align:left;color:#1F3822;cursor:pointer;transition:color .2s,border-color .2s}
+.family-thumb:hover{color:var(--accent);border-color:var(--accent)}
+.family-thumb .ft-img{position:relative;display:block;width:112px;aspect-ratio:4/3;overflow:hidden;background:#D8DDD5}
+.family-thumb .ft-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.family-thumb:hover .ft-img img{transform:scale(1.07)}
+.family-thumb .ft-copy{min-width:0}
+.family-thumb small{display:block;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;letter-spacing:.08em;color:#6E7C64;text-transform:uppercase}
+.family-thumb strong{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:3px;font-size:16px;line-height:1.35}
+.family-thumb .ft-sub{display:block;margin-top:2px;color:#6E7C64;font-size:11px;font-weight:500;line-height:1.35}
+.family-operation-note{display:flex;align-items:center;justify-content:flex-start;gap:10px;margin-top:16px;padding:12px 0;color:#6E7C64;font-size:11px;line-height:1.5;white-space:nowrap}
+.family-operation-note strong{color:#1F3822;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.family-operation-lines{display:inline-flex;align-items:center;gap:5px}
+.family-operation-lines span+span::before{content:'·';margin-right:5px}
+@media(max-width:760px){
+  .family-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-top:24px}
+  .family-card .bnr{aspect-ratio:1/1}
+  .family-card .bnr .tx{left:12px;right:12px;bottom:12px}
+  .family-card .bnr .tx h3{font-size:15px}
+  .family-card .bnr .tx p{font-size:13px}
+  .family-card .bnr .tx .desc{display:block;max-height:0;margin-top:0;overflow:hidden;font-size:13px;line-height:1.35;opacity:0;transform:translateY(7px)}
+  .family-card .bnr:hover .tx .desc,
+  .family-card .bnr:focus-visible .tx .desc,
+  .family-card .bnr.is-preview .tx .desc{max-height:58px;margin-top:5px;opacity:.95;transform:none}
+  .family-thumbs{grid-template-columns:1fr;gap:8px;margin-top:8px}
+  .family-thumb{grid-template-columns:48px minmax(0,1fr);gap:8px;padding-bottom:8px}
+  .family-thumb .ft-img{width:48px;aspect-ratio:1/1}
+  .family-thumb small{font-size:13px;letter-spacing:.04em}
+  .family-thumb strong{font-size:13px}
+  .family-thumb .ft-sub{margin-top:1px;font-size:10px}
+  .family-thumbs .family-thumb:last-child{border-bottom:0}
+  .family-operation-note{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;justify-content:stretch;gap:8px;margin-top:4px;padding:10px 0;font-size:10px;white-space:normal;word-break:keep-all}
+  .family-operation-note strong{white-space:nowrap}
+  .family-operation-lines{display:block}
+  .family-operation-lines span{display:block}
+  .family-operation-lines span+span::before{content:none}
+}
+.bnr{position:relative;display:block;border-radius:0;overflow:hidden;aspect-ratio:16/9;cursor:pointer;background:#e8e8ec;transition:transform .45s cubic-bezier(.16,1,.3,1),box-shadow .45s}
+.bnr:hover{transform:translateY(-5px);box-shadow:0 24px 52px rgba(0,0,0,.16)}
+.bnr:active{transform:scale(.985)}
+.bnr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.16,1,.3,1)}
+.bnr:hover img{transform:scale(1.05)}
+.bnr .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 30%,rgba(0,0,0,.62) 100%)}
+.bnr .tx{position:absolute;left:26px;right:26px;bottom:24px;color:#fff;transform:translateY(18px);transition:transform .38s cubic-bezier(.16,1,.3,1)}
+.bnr .tx small{display:block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;opacity:.85;margin-bottom:6px}
+.bnr .tx h3{font-size:clamp(22px,2.8vw,32px);font-weight:700;letter-spacing:-.01em;line-height:1.2;color:#fff}
+.bnr .tx p{font-size:14px;opacity:.85;margin-top:4px}
+.bnr .tx .desc{max-width:430px;max-height:0;margin-top:10px;overflow:hidden;font-size:13px;line-height:1.55;opacity:0;transform:translateY(12px);transition:max-height .38s cubic-bezier(.16,1,.3,1),opacity .25s ease,transform .38s cubic-bezier(.16,1,.3,1)}
+.bnr:hover .tx,.bnr:focus-visible .tx,.bnr.is-preview .tx{transform:translateY(0)}
+.bnr:hover .tx .desc,.bnr:focus-visible .tx .desc,.bnr.is-preview .tx .desc{max-height:64px;opacity:.95;transform:translateY(0)}
+@media(max-width:760px){
+  .bnr{aspect-ratio:3/4}
+  .bnr .tx{left:16px;right:16px;bottom:16px}
+  .bnr .tx small{font-size:13px}
+  .bnr .tx h3{font-size:18px}
+  .bnr .tx p{font-size:13px}
+  .bnr .tx{transform:none}
+  .bnr .tx .desc{max-height:none;margin-top:7px;font-size:13px;line-height:1.4;opacity:.92;transform:none}
+}
+</style>
+<link rel="stylesheet" href="../../responsive.css?v=r4">
+</head>
+<body>
+
+<section class="brand-hero vue-hero" id="lxHero">
+  <div class="hero-visual vue-visual">
+    <video autoplay muted loop playsinline preload="metadata" poster="../../assets/vue-frame-poster.jpg?v=p1">
+      <source src="../../assets/vue-frame-web.mp4?v=w1" type="video/mp4">
+    </video>
+    <div class="vue-copy">
+      <div class="eyebrow">LX Z:IN · VUE FRAME · EURO SYSTEM 9</div>
+      <h1 class="display">일상을 지키는<br>품격있는 창호.</h1>
+      <p class="subtitle">2024 한국산업의 브랜드파워 창호 부문 최다 1위 (18회).<br>LX Z:IN 뷰프레임 완성창·제작창과 유로시스템9 시스템창.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LX 제품 선택 — 제품 4카드 (완성창 · 제작창 · 유로9 PL · AL) -->
+<section class="section" id="explore">
+  <div class="container">
+    <div class="vhead">
+      <div class="eyebrow">PRODUCT</div>
+      <h2 class="h2">제품 살펴보기.</h2>
+      <p class="body-lg">LX하우시스 창호는 뷰프레임(일반창)과 유로시스템9(시스템창)으로 나뉩니다.</p>
+    </div>
+    <div class="family-grid">
+      <div class="family-card">
+        <a class="bnr" href="viewframe/finished/" aria-label="뷰프레임 완성창 보기">
+          <img src="../../assets/lx-view-frame-hero-v2.jpg" alt="넓은 조망을 강조한 LX 뷰프레임 적용 거실" loading="lazy">
+          <div class="shade"></div>
+          <div class="tx"><small>View Frame</small><h3>뷰프레임(일반창)</h3><p>완성창 · 제작창</p><p class="desc">슬림한 프레임과 넓은 유리면으로 탁 트인 조망을 완성하는 프리미엄 일반창.</p></div>
+        </a>
+        <div class="family-thumbs" aria-label="뷰프레임 세부 제품">
+          <a class="family-thumb" href="viewframe/finished/">
+            <span class="ft-img"><img src="../../assets/lx-vue-finished-official.jpg" alt="LX Z:IN 뷰프레임 완성창 적용 공간" loading="lazy"></span>
+            <span class="ft-copy"><small>Finished</small><strong>완성창</strong><span class="ft-sub">뷰프레임</span></span>
+          </a>
+          <a class="family-thumb" href="viewframe/custom/">
+            <span class="ft-img"><img src="../../assets/lx-vue-custom-official.jpg" alt="LX Z:IN 뷰프레임 제작창 적용 공간" loading="lazy"></span>
+            <span class="ft-copy"><small>Custom</small><strong>제작창</strong><span class="ft-sub">뷰프레임S</span></span>
+          </a>
+        </div>
+      </div>
+      <div class="family-card">
+        <a class="bnr" href="euro-system-9/pl/">
+          <img src="../../assets/lx-system-window-hero-v2.jpg" alt="단열 프레임과 정원 개방감을 강조한 LX 시스템창 적용 주택" loading="lazy">
+          <div class="shade"></div>
+          <div class="tx"><small>Euro System 9</small><h3>유로시스템9(시스템창)</h3><p>PL · AL</p><p class="desc">뛰어난 단열·기밀 성능과 다양한 개폐방식을 갖춘 LX하우시스 프리미엄 시스템창.</p></div>
+        </a>
+        <div class="family-thumbs" aria-label="유로시스템9 소재별 제품">
+          <a class="family-thumb" href="euro-system-9/pl/">
+            <span class="ft-img"><img src="../../assets/lx-system-pl-official.jpg" alt="LX Z:IN PL 시스템창 Lift and Slide 제품" loading="lazy"></span>
+            <span class="ft-copy"><small>PVC</small><strong>PL 시스템창</strong></span>
+          </a>
+          <a class="family-thumb" href="euro-system-9/al/">
+            <span class="ft-img"><img src="../../assets/lx-system-al-official.jpg" alt="LX Z:IN AL 시스템창 Lift and Slide 제품" loading="lazy"></span>
+            <span class="ft-copy"><small>Aluminium</small><strong>AL 시스템창</strong></span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <p class="family-operation-note"><strong>운영 안내</strong><span class="family-operation-lines"><span>완성창·PL·AL 시스템창 본사운영</span><span>제작창 본사직영 대리점 운영</span></span></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header centered">
+      <div class="eyebrow">BRAND</div>
+      <h2 class="h2">대한민국 NO.1 창호.</h2>
+      <p class="body-lg">LX하우시스는 LG화학 산업재 사업본부에서 분사한<br>대한민국을 대표하는 건축 인테리어 자재 기업입니다.</p>
+    </div>
+    <div class="stats-row stats-row-3 reveal">
+      <div class="stat"><div class="stat-num">18회</div><div class="stat-label">K-BPI 1위</div></div>
+      <div class="stat"><div class="stat-num">2025</div><div class="stat-label">최신 카탈로그</div></div>
+      <div class="stat"><div class="stat-num">9종</div><div class="stat-label">제품 라인업</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-gray" id="solution">
+  <div class="container">
+    <div class="section-header centered reveal">
+      <div class="eyebrow">SOLUTION</div>
+      <h2 class="h2">3대 차별화 솔루션.</h2>
+      <p class="body-lg">클린·안전·에너지 — 일상의 모든 순간을 케어합니다.</p>
+    </div>
+    <div class="lineup-carousel mobile-card-carousel">
+      <button class="lc-arrow lc-prev" aria-label="이전 솔루션" type="button" disabled>‹</button>
+      <div class="lc-track mobile-card-track grid-3">
+      <div class="solution-card clean reveal">
+        <span class="solution-tag">Clean</span>
+        <h3>클린</h3>
+        <p class="sub">맑은 공기, 깨끗한 환기</p>
+        <div class="solution-visual" aria-hidden="true">
+          <svg viewBox="0 0 320 230" role="img" aria-label="외부 공기가 H13 필터를 거쳐 실내로 흐르는 구조">
+            <defs><marker id="airArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="currentColor"/></marker></defs>
+            <path class="fine air-line" d="M18 73H82" marker-end="url(#airArrow)"/>
+            <path class="fine air-line" d="M18 115H82" marker-end="url(#airArrow)"/>
+            <path class="fine air-line" d="M18 157H82" marker-end="url(#airArrow)"/>
+            <rect class="frame" x="90" y="34" width="182" height="160"/>
+            <rect class="fine" x="90" y="34" width="36" height="160"/>
+            <path class="fine soft" d="M97 48l22 18m-22 0l22 18m-22 0l22 18m-22 0l22 18m-22 0l22 18m-22 0l22 18"/>
+            <path class="fine air-line" d="M139 78h104M139 116h104M139 154h104" marker-end="url(#airArrow)"/>
+            <circle cx="225" cy="58" r="5" fill="currentColor"/><path class="fine" d="M225 58c18 4 24 16 25 31"/>
+            <text class="label" x="91" y="218">H13 FILTER</text><text class="label" x="18" y="49">OUTSIDE AIR</text>
+          </svg>
+        </div>
+        <ul class="solution-points">
+          <li><b>01</b><span>자동환기 · H13 헤파필터</span></li>
+          <li><b>02</b><span>자동환기 Slim · 침실 최적</span></li>
+          <li><b>03</b><span>먼지필터 방충망</span></li>
+          <li><b>04</b><span>CO₂·VOC·온습도 센서</span></li>
+        </ul>
+      </div>
+      <div class="solution-card safety reveal">
+        <span class="solution-tag">Safety</span>
+        <h3>안전</h3>
+        <p class="sub">든든한 잠금, 안심한 일상</p>
+        <div class="solution-visual" aria-hidden="true">
+          <svg viewBox="0 0 320 230" role="img" aria-label="창틀의 세 지점을 동시에 고정하는 3중 잠금 구조">
+            <rect class="frame" x="34" y="28" width="178" height="174"/>
+            <path class="bold" d="M72 38v154M174 38v154"/>
+            <path class="fine" d="M74 66h76M74 115h76M74 164h76"/>
+            <g class="lock-bolt"><rect x="144" y="57" width="48" height="18" fill="currentColor"/><circle cx="198" cy="66" r="9" fill="currentColor"/></g>
+            <g class="lock-bolt"><rect x="144" y="106" width="48" height="18" fill="currentColor"/><circle cx="198" cy="115" r="9" fill="currentColor"/></g>
+            <g class="lock-bolt"><rect x="144" y="155" width="48" height="18" fill="currentColor"/><circle cx="198" cy="164" r="9" fill="currentColor"/></g>
+            <path class="fine" d="M252 54l34 13v36c0 31-15 52-34 64-19-12-34-33-34-64V67z"/>
+            <path class="bold" d="M236 108l11 11 23-28"/>
+            <text class="label" x="216" y="195">3-POINT LOCK</text>
+          </svg>
+        </div>
+        <ul class="solution-points">
+          <li><b>01</b><span>안전강화 방충망 · 1톤 강도</span></li>
+          <li><b>02</b><span>3중 잠금 시스템</span></li>
+          <li><b>03</b><span>이지오픈핸들 · 지렛대 원리</span></li>
+          <li><b>04</b><span>스마트핸들 · 옵션</span></li>
+        </ul>
+      </div>
+      <div class="solution-card energy reveal">
+        <span class="solution-tag">Energy</span>
+        <h3>에너지</h3>
+        <p class="sub">새는 열 막고, 절약</p>
+        <div class="solution-visual" aria-hidden="true">
+          <svg viewBox="0 0 320 230" role="img" aria-label="여러 겹의 유리와 간봉이 실내 열의 유출을 차단하는 구조">
+            <defs><marker id="heatArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="currentColor"/></marker></defs>
+            <path class="fine heat-line" d="M18 70c18-15 31 15 49 0s31 15 49 0" marker-end="url(#heatArrow)"/>
+            <path class="fine heat-line" d="M18 116c18-15 31 15 49 0s31 15 49 0" marker-end="url(#heatArrow)"/>
+            <path class="fine heat-line" d="M18 162c18-15 31 15 49 0s31 15 49 0" marker-end="url(#heatArrow)"/>
+            <rect class="frame" x="128" y="28" width="134" height="176"/>
+            <path class="bold" d="M151 35v162M195 35v162M239 35v162"/>
+            <path class="fine soft" d="M160 45h26v142h-26zm44 0h26v142h-26z"/>
+            <path class="bold" d="M116 47v136"/><path class="fine" d="M106 58l10-12 10 12m-20 114l10 12 10-12"/>
+            <text class="label" x="143" y="222">LOW-E · TPS · 3 LAYERS</text>
+          </svg>
+        </div>
+        <ul class="solution-points">
+          <li><b>01</b><span>수퍼더블로이유리 · 은 2겹</span></li>
+          <li><b>02</b><span>TPS 단열간봉</span></li>
+          <li><b>03</b><span>다중챔버 구조</span></li>
+          <li><b>04</b><span>차폐 + 단열 동시</span></li>
+        </ul>
+      </div>
+      </div>
+      <button class="lc-arrow lc-next" aria-label="다음 솔루션" type="button">›</button>
+    </div>
+  </div>
+</section>
+
+<section class="section section-gray" id="smart-handle">
+  <div class="container">
+    <div class="section-header centered reveal">
+      <div class="eyebrow">SMART HANDLE</div>
+      <h2 class="h2">손잡이가 알려주는 일상.</h2>
+      <p class="body-lg">뷰프레임 145 / 265 / 285 옵션 — 핸들 내장 센서로 환경 정보 제공.</p>
+    </div>
+    <div class="lineup-carousel mobile-card-carousel">
+      <button class="lc-arrow lc-prev" aria-label="이전 스마트핸들 기능" type="button" disabled>‹</button>
+      <div class="lc-track mobile-card-track smart-handle-grid">
+      <div class="handle-item">
+        <div class="num">01</div>
+        <div class="sensor-viz dust-scale" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <h5>미세먼지 알림</h5>
+        <p>App 연결 시 실시간 외부 미세먼지를 4단계 색상으로</p>
+      </div>
+      <div class="handle-item">
+        <div class="num">02</div>
+        <div class="sensor-viz tvoc-gauge" aria-hidden="true"><b>TVOC</b></div>
+        <h5>공기질 (TVOC) 알림</h5>
+        <p>핸들 내부 센서로 실내 공기질 측정·4단계 표시</p>
+      </div>
+      <div class="handle-item">
+        <div class="num">03</div>
+        <div class="sensor-viz open-signal" aria-hidden="true"><span class="window-mini"></span><i class="wave w1"></i><i class="wave w2"></i></div>
+        <h5>개폐 알림</h5>
+        <p>열림·닫힘 시 부저음으로 개폐 상태 안내</p>
+      </div>
+      </div>
+      <button class="lc-arrow lc-next" aria-label="다음 스마트핸들 기능" type="button">›</button>
+    </div>
+  </div>
+</section>
+
+<div id="mm-related"></div>
+
+<div id="mm-cta"></div>
+
+<div id="mm-footer"></div>
+
+<script src="../../consult.js?v=c3"></script>
+<script src="../../common.js?v=g62"></script>
+<script src="../../sitenav.js?v=g51"></script>
+<script>
+/* 터치 화면은 첫 탭에서 설명을 열고, 두 번째 탭에서 상세 페이지로 이동 */
+(function(){
+  var cards=document.querySelectorAll('#explore .family-card .bnr');
+  cards.forEach(function(card){
+    card.addEventListener('click',function(e){
+      if(innerWidth>760||card.classList.contains('is-preview'))return;
+      e.preventDefault();e.stopImmediatePropagation();
+      cards.forEach(function(other){other.classList.toggle('is-preview',other===card);});
+    },true);
+  });
+})();
+</script>
+</body>
+</html>
