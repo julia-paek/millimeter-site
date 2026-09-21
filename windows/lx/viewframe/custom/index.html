@@ -129,6 +129,36 @@ button{font:inherit;border-radius:0}
   .option-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}.option-card{flex:0 0 min(82vw,330px);scroll-snap-align:start}.option-visual{height:230px}.option-copy{min-height:164px}
 }
 @media(prefers-reduced-motion:reduce){.product-card img,.detail-visual img{transition:none}}
+
+.vf-handle-grid.is-six{grid-template-columns:repeat(6,minmax(0,1fr))}
+@media(max-width:900px){.vf-handle-grid.is-six{grid-template-columns:repeat(3,minmax(0,1fr))}.vf-handle-grid.is-six .vf-handle-card:nth-child(4n){border-right:1px solid #E0E4DB}.vf-handle-grid.is-six .vf-handle-card:nth-child(3n){border-right:0}}
+@media(max-width:600px){.vf-handle-grid.is-six{grid-template-columns:repeat(2,minmax(0,1fr))}.vf-handle-grid.is-six .vf-handle-card:last-child{grid-column:auto}.vf-handle-grid.is-six .vf-handle-card:nth-last-child(2){border-bottom:0!important}}
+
+/* Mobile catalog: preserve desktop layout and keep labels readable. */
+@media(max-width:600px){
+  html{-webkit-text-size-adjust:100%;scroll-padding-top:76px}
+  .vfs-main{overflow-wrap:break-word;word-break:keep-all}
+  .vfs-hero h1{font-size:clamp(34px,9.2vw,44px);line-height:1.12;word-break:keep-all;overflow-wrap:normal}
+  #options .section-title,#finish .section-title{font-size:clamp(30px,8.2vw,38px);line-height:1.2;word-break:keep-all;text-wrap:balance}
+  #options,#finish{scroll-margin-top:16px}
+  .vf-handle-banner{grid-template-columns:minmax(0,1fr) minmax(88px,30%);gap:14px;padding:22px 18px}
+  .vf-handle-banner-copy{min-width:0}
+  .vf-handle-banner-copy h3{font-size:24px;line-height:1.25;word-break:keep-all}
+  .vf-handle-banner-copy p,.vf-handle-family-copy p{font-size:14px;line-height:1.7}
+  .vf-handle-card strong{font-size:13px;line-height:1.45}
+  .vf-handle-card span,.vf-handle-color{font-size:11px}
+  .vf-sheet-card strong{font-size:14px;line-height:1.45}
+  .vf-sheet-card span{font-size:12px;line-height:1.5}
+  .vf-sheet-card code{font-size:11px;line-height:1.5}
+  .vf-catalog-note,.source-note{font-size:12px;line-height:1.7}
+  .vf-sheet-head p,.option-card p{font-size:14px;line-height:1.7}
+  .vf-exterior-column{font-size:12px;letter-spacing:0;padding:12px}
+  .model-arrows button{min-width:44px}
+}
+@media(max-width:360px){
+  .vf-handle-banner{grid-template-columns:1fr}
+  .vf-handle-banner img{height:140px}
+}
 </style>
 </head>
 <body>
@@ -243,20 +273,19 @@ button{font:inherit;border-radius:0}
       </div>
 
       <div class="vf-handle-banner">
-        <div class="vf-handle-banner-copy"><div class="eyebrow">ANTIBACTERIAL HANDLE</div><h3>항균 성능 핸들</h3><p>디자인과 소재가 다른 세 가지 핸들 라인으로 창의 사용감과 분위기를 완성합니다.</p></div>
-        <img src="../../../../assets/viewframe-finished/handles/handle-family.webp?v=g2026073101" alt="프리마, 스퀘마, 아노다이징 핸들 비교" loading="lazy">
+        <div class="vf-handle-banner-copy"><div class="eyebrow">ANTIBACTERIAL HANDLE</div><h3>항균 성능 핸들</h3><p>디자인과 소재가 다른 두 가지 핸들 라인으로 창의 사용감과 분위기를 완성합니다.</p></div>
+        <img src="../../../../assets/viewframe-finished/handles/handle-family.webp?v=g2026073101" alt="핸들 디자인 비교" loading="lazy">
       </div>
 
       <article class="vf-handle-family">
         <div class="vf-handle-family-copy"><small>01 · PRIMA</small><h4>프리마 라인</h4><p>이탈리아어로 ‘최고’를 뜻하는 프리마는 전체 실버 색상의 다이캐스팅 금속 재질을 적용해 심플한 디자인에 고급스러움을 강조한 핸들 라인입니다.</p></div>
-        <div class="vf-handle-grid" aria-label="프리마 핸들 종류">
+        <div class="vf-handle-grid is-six" aria-label="프리마 핸들 종류">
           <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/prima-large.webp?v=g2026073101" alt="프리마 대형핸들" loading="lazy"></div><strong>대형핸들</strong></div>
           <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/prima-small.webp?v=g2026073101" alt="프리마 소형핸들" loading="lazy"></div><strong>소형핸들</strong></div>
           <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/prima-grip.webp?v=g2026073101" alt="프리마 Grip 핸들" loading="lazy"></div><strong>Grip</strong></div>
           <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/prima-pocket.webp?v=g2026073101" alt="프리마 Pocket 핸들" loading="lazy"></div><strong>Pocket</strong></div>
           <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/prima-crescent.webp?v=g2026073101" alt="프리마 Crescent 핸들" loading="lazy"></div><strong>Crescent</strong></div>
           <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/prima-door.webp?v=g2026073101" alt="프리마 Door 핸들" loading="lazy"></div><strong>Door</strong></div>
-          <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/prima-smart.webp?v=g2026073101" alt="프리마 스마트핸들" loading="lazy"></div><strong>스마트핸들</strong></div>
         </div>
       </article>
 
@@ -273,14 +302,6 @@ button{font:inherit;border-radius:0}
         </div>
       </article>
 
-      <article class="vf-handle-family">
-        <div class="vf-handle-family-copy"><small>03 · ANODIZING</small><h4>아노다이징 라인</h4><p>알루미늄 소재로 제작해 내구성을 높였으며, 세련된 광택을 내는 표면처리 기술을 적용한 최고급 핸들 라인입니다.</p></div>
-        <div class="vf-handle-grid is-three" aria-label="아노다이징 핸들 종류">
-          <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/anodizing-large.webp?v=g2026073101" alt="아노다이징 대형핸들" loading="lazy"></div><strong>대형핸들</strong></div>
-          <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/anodizing-small.webp?v=g2026073101" alt="아노다이징 소형핸들" loading="lazy"></div><strong>소형핸들</strong></div>
-          <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/anodizing-lock.webp?v=g2026073101" alt="아노다이징 꺾임핸들" loading="lazy"></div><strong>꺾임핸들</strong></div>
-        </div>
-      </article>
       <p class="vf-catalog-note">※ 항균 테스트 기준 ISO 22196:2011 준용. 선택 가능한 핸들 종류와 색상은 모델 사양에 따라 달라질 수 있습니다.</p>
 
       <div class="vf-sheet-panel">

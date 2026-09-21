@@ -124,6 +124,58 @@ button{font:inherit;border-radius:0}
   .fit-hotspot{width:28px;height:28px;box-shadow:0 0 0 6px rgba(47,82,51,.12)}.fit-hotspot::before{inset:9px}.fit-hotspot::after{top:36px;max-width:145px;padding:5px 7px;font-size:9px}
 }
 @media(prefers-reduced-motion:reduce){.product-card img,.detail-visual img,.vf-scene,.vf-story-status i::after{transition:none}}
+.option-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.option-card{min-width:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--paper)}
+.option-visual{height:clamp(190px,18vw,260px);margin:0;border-bottom:1px solid var(--line);overflow:hidden;background:#ECEAE2}
+.option-visual img{display:block;width:100%;height:100%;object-fit:cover}
+.option-card:nth-child(1) .option-visual img,.option-card:nth-child(2) .option-visual img{object-position:center 54%}
+.option-copy{min-height:174px;padding:19px 20px 22px}
+.option-card .num{font:500 11px "JetBrains Mono",monospace;letter-spacing:.08em;color:var(--sage)}
+.option-card strong{display:block;margin-top:15px;font-family:"Gmarket Sans","SUIT Variable",sans-serif;font-size:18px;line-height:1.35;color:var(--green);word-break:keep-all}
+.option-card p{margin:10px 0 0;color:var(--sage);font-size:13px;line-height:1.6;word-break:keep-all}
+/* 핸들 · 내부 컬러 시트 · 외부 사양 — LX 카탈로그 기준 */
+.vf-handle-banner{display:grid;grid-template-columns:minmax(0,1fr) 250px;align-items:center;min-height:210px;padding:26px 32px;border:1px solid #BFC9BA;background:#fff}.vf-handle-banner-copy h3{margin:0;font-family:"Gmarket Sans","SUIT Variable",Pretendard,sans-serif;font-weight:700;letter-spacing:-.045em;font-size:clamp(26px,2.6vw,36px);line-height:1.1;color:var(--green)}.vf-handle-banner-copy .eyebrow{color:var(--sage)}.vf-handle-banner-copy p{max-width:570px;margin:12px 0 0;font-size:14px;line-height:1.65;color:var(--sage);word-break:keep-all}.vf-handle-banner img{display:block;width:100%;height:170px;object-fit:contain}
+.vf-handle-family{display:grid;grid-template-columns:250px minmax(0,1fr);border-left:1px solid #BFC9BA;border-right:1px solid #BFC9BA;border-bottom:1px solid #BFC9BA;background:#fff}.vf-handle-family-copy{padding:26px 25px;border-right:1px solid #BFC9BA}.vf-handle-family-copy small{font:500 10px "JetBrains Mono",ui-monospace,monospace;letter-spacing:.11em;color:var(--sage)}.vf-handle-family-copy h4{margin:7px 0 0;font-family:"Gmarket Sans","SUIT Variable",Pretendard,sans-serif;font-weight:700;font-size:22px;line-height:1.25;color:var(--green)}.vf-handle-family-copy p{margin:11px 0 0;font-size:12.5px;line-height:1.7;color:var(--sage);word-break:keep-all}.vf-handle-colors{display:flex;gap:15px;margin-top:18px}.vf-handle-color{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--sage)}.vf-handle-color::before{content:"";width:18px;height:18px;border:1px solid #C5CABB;border-radius:50%;background:var(--chip)}
+.vf-handle-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));min-width:0}.vf-handle-grid.is-three{grid-template-columns:repeat(3,minmax(0,1fr))}.vf-handle-card{min-width:0;padding:14px 8px 13px;border-right:1px solid #E0E4DB;text-align:center}.vf-handle-card:last-child{border-right:0}.vf-handle-media{display:flex;align-items:center;justify-content:center;height:124px;gap:2px;background:#FAFAF7;overflow:hidden}.vf-handle-media img{display:block;max-width:52%;height:108px;object-fit:contain}.vf-handle-card:not(.is-pair) .vf-handle-media img{max-width:80%;height:112px}.vf-handle-card strong{display:block;margin-top:10px;font-size:12px;line-height:1.3;color:var(--green);word-break:keep-all}.vf-handle-card span{display:block;margin-top:3px;font:500 9px "JetBrains Mono",ui-monospace,monospace;letter-spacing:.06em;color:#8A9484}
+.vf-catalog-note{margin:14px 0 0;font-size:10.5px;line-height:1.65;color:#879180}
+.vf-sheet-panel{margin-top:74px;padding-top:28px;border-top:1px solid var(--lx)}.vf-sheet-head{display:grid;grid-template-columns:250px 1fr;align-items:end;gap:34px;margin-bottom:22px}.vf-sheet-head h3{margin:9px 0 0;font-family:"Gmarket Sans","SUIT Variable",Pretendard,sans-serif;font-weight:700;letter-spacing:-.045em;font-size:clamp(27px,2.7vw,36px);line-height:1.1;color:var(--green)}.vf-sheet-head .eyebrow{color:var(--sage)}.vf-sheet-head p{margin:0;font-size:14px;line-height:1.65;color:var(--sage);word-break:keep-all}.vf-sheet-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid #BFC9BA;border-left:1px solid #BFC9BA}.vf-sheet-card{display:flex;min-width:0;align-items:center;gap:13px;padding:17px;border-right:1px solid #BFC9BA;border-bottom:1px solid #BFC9BA;background:#fff}.vf-sheet-swatch{flex:0 0 62px;width:62px;height:62px;border:1px solid #CCD1C7;border-radius:50%;object-fit:cover}.vf-sheet-card strong{display:block;font-size:12px;line-height:1.3;color:var(--green);word-break:keep-all}.vf-sheet-card span{display:block;margin-top:3px;font-size:10px;line-height:1.3;color:var(--sage)}.vf-sheet-card code{display:block;margin-top:2px;font:500 9px "JetBrains Mono",ui-monospace,monospace;color:#8A9484}
+.vf-exterior-panel{margin-top:44px;padding-top:28px;border-top:1px solid #BFC9BA}.vf-exterior-table{border-top:1px solid #BFC9BA;border-left:1px solid #BFC9BA;background:#fff}.vf-exterior-columns,.vf-exterior-row{display:grid;grid-template-columns:minmax(220px,1.35fr) repeat(2,minmax(170px,1fr))}.vf-exterior-columns{background:var(--cream)}.vf-exterior-column{padding:11px 18px;border-right:1px solid #BFC9BA;border-bottom:1px solid #BFC9BA;font:500 10px "JetBrains Mono",ui-monospace,monospace;letter-spacing:.08em;color:var(--sage)}.vf-exterior-cell{min-width:0;min-height:146px;border-right:1px solid #BFC9BA;border-bottom:1px solid #BFC9BA}.vf-exterior-finish{display:flex;align-items:center;gap:20px;padding:22px}.vf-exterior-finish strong{display:block;font-size:16px;line-height:1.2;color:var(--green)}.vf-exterior-finish span{display:block;margin-top:5px;font:500 10px "JetBrains Mono",ui-monospace,monospace;color:var(--sage)}.vf-exterior-swatch{flex:0 0 76px;width:76px;height:76px;border:1px solid #C8CEC3;border-radius:50%;background:#F8F7F2}.vf-exterior-swatch.is-asa{border-color:#60675F;background:linear-gradient(145deg,#5E625E 0 28%,#252B2B 29% 63%,#4A4C48 64% 100%);box-shadow:inset 0 0 0 8px rgba(255,255,255,.08)}.vf-exterior-product{display:flex;align-items:center;justify-content:center;padding:12px 20px}.vf-exterior-product img{display:block;width:100%;height:120px;object-fit:contain}.vf-exterior-notes{display:grid;gap:3px;margin-top:14px}
+@media(max-width:900px){
+  .vf-handle-family{grid-template-columns:1fr}.vf-handle-family-copy{border-right:0;border-bottom:1px solid #BFC9BA}.vf-handle-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.vf-handle-grid.is-three{grid-template-columns:repeat(3,minmax(0,1fr))}.vf-handle-card{border-bottom:1px solid #E0E4DB}.vf-handle-card:nth-child(4n){border-right:0}.vf-handle-card:nth-last-child(-n+3){border-bottom:0}.vf-sheet-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.vf-sheet-head{grid-template-columns:1fr}
+  .option-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:600px){
+  .vf-handle-banner{grid-template-columns:1fr 120px;min-height:170px;padding:20px 18px}.vf-handle-banner-copy p{font-size:12.5px}.vf-handle-banner img{height:120px}
+  .vf-handle-family-copy{padding:22px 18px}.vf-handle-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.vf-handle-grid.is-three{grid-template-columns:repeat(3,minmax(0,1fr))}.vf-handle-card{min-width:0;padding:12px 7px 13px;border-right:1px solid #E0E4DB!important;border-bottom:1px solid #E0E4DB!important}.vf-handle-grid:not(.is-three) .vf-handle-card:nth-child(even){border-right:0!important}.vf-handle-grid:not(.is-three) .vf-handle-card:last-child{grid-column:1/-1;border-right:0!important;border-bottom:0!important}.vf-handle-grid.is-three .vf-handle-card{border-bottom:0!important}.vf-handle-grid.is-three .vf-handle-card:last-child{border-right:0!important}.vf-handle-media{height:104px}.vf-handle-media img{height:88px}.vf-handle-card:not(.is-pair) .vf-handle-media img{height:92px}.vf-handle-card strong{margin-top:8px;font-size:11.5px}.vf-handle-card span{font-size:8px}
+  .vf-sheet-panel{margin-top:54px;padding-top:22px}.vf-sheet-head{gap:10px}.vf-sheet-head p{font-size:13px}.vf-sheet-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.vf-sheet-card{display:block;padding:15px 12px;text-align:center}.vf-sheet-swatch{width:72px;height:72px;margin:0 auto 10px}.vf-catalog-note{font-size:9.5px}.vf-exterior-panel{margin-top:34px;padding-top:22px}.vf-exterior-columns,.vf-exterior-row{grid-template-columns:repeat(2,minmax(0,1fr))}.vf-exterior-column--finish{display:none}.vf-exterior-finish{grid-column:1/-1;min-height:112px;padding:17px 18px;border-bottom:1px solid #BFC9BA}.vf-exterior-swatch{flex-basis:64px;width:64px;height:64px}.vf-exterior-cell{min-height:122px}.vf-exterior-product{padding:9px 12px}.vf-exterior-product img{height:102px}
+  .option-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}.option-card{flex:0 0 min(82vw,330px);scroll-snap-align:start}.option-visual{height:230px}.option-copy{min-height:164px}
+}
+
+/* Mobile catalog: preserve desktop layout and keep labels readable. */
+@media(max-width:600px){
+  html{-webkit-text-size-adjust:100%;scroll-padding-top:76px}
+  .vfs-main{overflow-wrap:break-word;word-break:keep-all}
+  .vfs-hero h1{font-size:clamp(34px,9.2vw,44px);line-height:1.12;word-break:keep-all;overflow-wrap:normal}
+  #options .section-title,#finish .section-title{font-size:clamp(30px,8.2vw,38px);line-height:1.2;word-break:keep-all;text-wrap:balance}
+  #options,#finish{scroll-margin-top:16px}
+  .vf-handle-banner{grid-template-columns:minmax(0,1fr) minmax(88px,30%);gap:14px;padding:22px 18px}
+  .vf-handle-banner-copy{min-width:0}
+  .vf-handle-banner-copy h3{font-size:24px;line-height:1.25;word-break:keep-all}
+  .vf-handle-banner-copy p,.vf-handle-family-copy p{font-size:14px;line-height:1.7}
+  .vf-handle-card strong{font-size:13px;line-height:1.45}
+  .vf-handle-card span,.vf-handle-color{font-size:11px}
+  .vf-sheet-card strong{font-size:14px;line-height:1.45}
+  .vf-sheet-card span{font-size:12px;line-height:1.5}
+  .vf-sheet-card code{font-size:11px;line-height:1.5}
+  .vf-catalog-note,.source-note{font-size:12px;line-height:1.7}
+  .vf-sheet-head p,.option-card p{font-size:14px;line-height:1.7}
+  .vf-exterior-column{font-size:12px;letter-spacing:0;padding:12px}
+  .model-arrows button{min-width:44px}
+}
+@media(max-width:360px){
+  .vf-handle-banner{grid-template-columns:1fr}
+  .vf-handle-banner img{height:140px}
+}
 </style>
 </head>
 <body>
@@ -246,6 +298,131 @@ button{font:inherit;border-radius:0}
         </div>
       </div>
       <p class="source-note">제품 이미지와 사양은 LX하우시스 창호 카탈로그를 기준으로 구성했으며, 실제 적용 가능 여부는 현장과 선택 옵션에 따라 달라질 수 있습니다.</p>
+    </div>
+  </section>
+  <section class="vfs-section" id="options">
+    <div class="vfs-wrap">
+      <div class="section-head">
+        <div><div class="eyebrow">CUSTOM OPTIONS</div><h2 class="section-title">선택 가능한 주요 사양.</h2></div>
+        <p class="section-desc">모델과 시공 조건에 따라 적용 여부가 달라질 수 있습니다.</p>
+      </div>
+      <div class="option-grid">
+        <article class="option-card">
+          <figure class="option-visual"><img src="../../../../assets/viewframe-s/options/option-01.webp?v=g2026073019" alt="창짝 하부의 플랫 방충배수캡" loading="lazy" decoding="async"></figure>
+          <div class="option-copy"><div class="num">01</div><strong>플랫 방충배수캡</strong><p>벌레 유입을 줄여주는 플랫 방충배수캡입니다.</p></div>
+        </article>
+        <article class="option-card">
+          <figure class="option-visual"><img src="../../../../assets/viewframe-s/options/option-02.webp?v=g2026073019" alt="창틀에 적용된 플랫 스트라이커" loading="lazy" decoding="async"></figure>
+          <div class="option-copy"><div class="num">02</div><strong>플랫 스트라이커</strong><p>심플한 디자인의 플랫 스트라이커입니다.</p></div>
+        </article>
+        <article class="option-card">
+          <figure class="option-visual"><img src="../../../../assets/viewframe-s/options/option-03.webp?v=g2026073019" alt="내부에서 보이지 않는 히든 안전스토퍼" loading="lazy" decoding="async"></figure>
+          <div class="option-copy"><div class="num">03</div><strong>히든 안전스토퍼</strong><p>내부에서 보이지 않고 핸들 파손을 방지합니다.</p></div>
+        </article>
+        <article class="option-card">
+          <figure class="option-visual"><img src="../../../../assets/viewframe-s/options/option-05.webp?v=g2026073019" alt="창짝 하부의 플랫 디자인 마감재" loading="lazy" decoding="async"></figure>
+          <div class="option-copy"><div class="num">05</div><strong>플랫 디자인 마감재</strong><p>창짝 하부 틈새를 막아주는 플랫 디자인 마감재입니다.</p></div>
+        </article>
+      </div>
+      <p class="source-note">제품 이미지와 사양은 LX하우시스 창호 카탈로그를 기준으로 구성했으며, 실제 적용 가능 여부는 현장과 선택 옵션에 따라 달라질 수 있습니다.</p>
+    </div>
+  </section>
+
+  <section class="vfs-section" id="finish">
+    <div class="vfs-wrap">
+      <div class="section-head">
+        <div><div class="eyebrow">HANDLE · INTERIOR SHEET</div><h2 class="section-title" id="vfFinishOptionsTitle">핸들과 컬러를 고르세요.</h2></div>
+        <p class="section-desc">공간의 분위기와 사용 방식에 맞춰 핸들 라인과 내부 컬러 시트를 선택할 수 있습니다.</p>
+      </div>
+
+      <div class="vf-handle-banner">
+        <div class="vf-handle-banner-copy"><div class="eyebrow">ANTIBACTERIAL HANDLE</div><h3>항균 성능 핸들</h3><p>디자인과 소재가 다른 세 가지 핸들 라인으로 창의 사용감과 분위기를 완성합니다.</p></div>
+        <img src="../../../../assets/viewframe-finished/handles/handle-family.webp?v=g2026073101" alt="프리마, 스퀘마, 아노다이징 핸들 비교" loading="lazy">
+      </div>
+
+      <article class="vf-handle-family">
+        <div class="vf-handle-family-copy"><small>01 · PRIMA</small><h4>프리마 라인</h4><p>이탈리아어로 ‘최고’를 뜻하는 프리마는 전체 실버 색상의 다이캐스팅 금속 재질을 적용해 심플한 디자인에 고급스러움을 강조한 핸들 라인입니다.</p></div>
+        <div class="vf-handle-grid" aria-label="프리마 핸들 종류">
+          <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/prima-large.webp?v=g2026073101" alt="프리마 대형핸들" loading="lazy"></div><strong>대형핸들</strong></div>
+          <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/prima-small.webp?v=g2026073101" alt="프리마 소형핸들" loading="lazy"></div><strong>소형핸들</strong></div>
+          <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/prima-grip.webp?v=g2026073101" alt="프리마 Grip 핸들" loading="lazy"></div><strong>Grip</strong></div>
+          <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/prima-pocket.webp?v=g2026073101" alt="프리마 Pocket 핸들" loading="lazy"></div><strong>Pocket</strong></div>
+          <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/prima-crescent.webp?v=g2026073101" alt="프리마 Crescent 핸들" loading="lazy"></div><strong>Crescent</strong></div>
+          <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/prima-door.webp?v=g2026073101" alt="프리마 Door 핸들" loading="lazy"></div><strong>Door</strong></div>
+          <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/prima-smart.webp?v=g2026073101" alt="프리마 스마트핸들" loading="lazy"></div><strong>스마트핸들</strong></div>
+        </div>
+      </article>
+
+      <article class="vf-handle-family">
+        <div class="vf-handle-family-copy"><small>02 · SQUAMA</small><h4>스퀘마 라인</h4><p>라틴어로 물고기를 뜻하는 ‘스퀘마’는 재운과 행복을 가져다준다는 의미를 담았습니다. 유선형 디자인과 컬러 옵션, 편의성을 강화한 핸들 라인입니다.</p><div class="vf-handle-colors"><span class="vf-handle-color" style="--chip:#9A7A48">Gold</span><span class="vf-handle-color" style="--chip:#AEB2B4">Silver</span></div></div>
+        <div class="vf-handle-grid" aria-label="스퀘마 핸들 종류">
+          <div class="vf-handle-card is-pair"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/squama-manual-gold.webp?v=g2026073101" alt="골드 스퀘마 수동핸들" loading="lazy"><img src="../../../../assets/viewframe-finished/handles/squama-manual-silver.webp?v=g2026073101" alt="실버 스퀘마 수동핸들" loading="lazy"></div><strong>수동핸들</strong><span>GOLD · SILVER</span></div>
+          <div class="vf-handle-card is-pair"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/squama-large-gold.webp?v=g2026073101" alt="골드 스퀘마 대형핸들" loading="lazy"><img src="../../../../assets/viewframe-finished/handles/squama-large-silver.webp?v=g2026073101" alt="실버 스퀘마 대형핸들" loading="lazy"></div><strong>대형핸들</strong><span>GOLD · SILVER</span></div>
+          <div class="vf-handle-card is-pair"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/squama-small-gold.webp?v=g2026073101" alt="골드 스퀘마 소형핸들" loading="lazy"><img src="../../../../assets/viewframe-finished/handles/squama-small-silver.webp?v=g2026073101" alt="실버 스퀘마 소형핸들" loading="lazy"></div><strong>소형핸들</strong><span>GOLD · SILVER</span></div>
+          <div class="vf-handle-card is-pair"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/squama-grip-gold.webp?v=g2026073101" alt="골드 스퀘마 Grip 핸들" loading="lazy"><img src="../../../../assets/viewframe-finished/handles/squama-grip-silver.webp?v=g2026073101" alt="실버 스퀘마 Grip 핸들" loading="lazy"></div><strong>Grip</strong><span>GOLD · SILVER</span></div>
+          <div class="vf-handle-card is-pair"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/squama-pocket-gold.webp?v=g2026073101" alt="골드 스퀘마 Pocket 핸들" loading="lazy"><img src="../../../../assets/viewframe-finished/handles/squama-pocket-silver.webp?v=g2026073101" alt="실버 스퀘마 Pocket 핸들" loading="lazy"></div><strong>Pocket</strong><span>GOLD · SILVER</span></div>
+          <div class="vf-handle-card is-pair"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/squama-crescent-gold.webp?v=g2026073101" alt="골드 스퀘마 Crescent 핸들" loading="lazy"><img src="../../../../assets/viewframe-finished/handles/squama-crescent-silver.webp?v=g2026073101" alt="실버 스퀘마 Crescent 핸들" loading="lazy"></div><strong>Crescent</strong><span>GOLD · SILVER</span></div>
+          <div class="vf-handle-card is-pair"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/squama-door-gold.webp?v=g2026073101" alt="골드 스퀘마 Door 핸들" loading="lazy"><img src="../../../../assets/viewframe-finished/handles/squama-door-silver.webp?v=g2026073101" alt="실버 스퀘마 Door 핸들" loading="lazy"></div><strong>Door</strong><span>GOLD · SILVER</span></div>
+        </div>
+      </article>
+
+      <article class="vf-handle-family">
+        <div class="vf-handle-family-copy"><small>03 · ANODIZING</small><h4>아노다이징 라인</h4><p>알루미늄 소재로 제작해 내구성을 높였으며, 세련된 광택을 내는 표면처리 기술을 적용한 최고급 핸들 라인입니다.</p></div>
+        <div class="vf-handle-grid is-three" aria-label="아노다이징 핸들 종류">
+          <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/anodizing-large.webp?v=g2026073101" alt="아노다이징 대형핸들" loading="lazy"></div><strong>대형핸들</strong></div>
+          <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/anodizing-small.webp?v=g2026073101" alt="아노다이징 소형핸들" loading="lazy"></div><strong>소형핸들</strong></div>
+          <div class="vf-handle-card"><div class="vf-handle-media"><img src="../../../../assets/viewframe-finished/handles/anodizing-lock.webp?v=g2026073101" alt="아노다이징 꺾임핸들" loading="lazy"></div><strong>꺾임핸들</strong></div>
+        </div>
+      </article>
+      <p class="vf-catalog-note">※ 항균 테스트 기준 ISO 22196:2011 준용. 선택 가능한 핸들 종류와 색상은 모델 사양에 따라 달라질 수 있습니다.</p>
+
+      <div class="vf-sheet-panel">
+        <div class="vf-sheet-head"><div><div class="eyebrow">INTERIOR COLOR SHEET</div><h3>내부 컬러 시트</h3></div><p>트렌디한 화이트톤 컬러와 텍스처가 풍부한 우드컬러로 조화로운 인테리어를 연출할 수 있습니다.</p></div>
+        <div class="vf-sheet-grid" aria-label="내부 컬러 시트 13종">
+          <div class="vf-sheet-card"><img class="vf-sheet-swatch" src="../../../../assets/viewframe-finished/sheets/off-white.webp?v=g2026073101" alt="오프 화이트 컬러 시트" loading="lazy"><div><strong>오프 화이트</strong><span>Off White</span><code>WAU65</code></div></div>
+          <div class="vf-sheet-card"><img class="vf-sheet-swatch" src="../../../../assets/viewframe-finished/sheets/pure-white.webp?v=g2026073101" alt="퓨어 화이트 컬러 시트" loading="lazy"><div><strong>퓨어 화이트</strong><span>Pure White</span><code>WAP97</code></div></div>
+          <div class="vf-sheet-card"><img class="vf-sheet-swatch" src="../../../../assets/viewframe-finished/sheets/snow-white.webp?v=g2026073101" alt="스노우 화이트 컬러 시트" loading="lazy"><div><strong>스노우 화이트</strong><span>Snow White</span><code>WAQ76</code></div></div>
+          <div class="vf-sheet-card"><img class="vf-sheet-swatch" src="../../../../assets/viewframe-finished/sheets/cream-white.webp?v=g2026073101" alt="크림 화이트 컬러 시트" loading="lazy"><div><strong>크림 화이트</strong><span>Cream White</span><code>WAR89</code></div></div>
+          <div class="vf-sheet-card"><img class="vf-sheet-swatch" src="../../../../assets/viewframe-finished/sheets/mono-white.webp?v=g2026073101" alt="모노 화이트 컬러 시트" loading="lazy"><div><strong>모노 화이트</strong><span>Mono White</span><code>WAU51</code></div></div>
+          <div class="vf-sheet-card"><img class="vf-sheet-swatch" src="../../../../assets/viewframe-finished/sheets/creamy.webp?v=g2026073101" alt="크리미 컬러 시트" loading="lazy"><div><strong>크리미</strong><span>Creamy</span><code>NQ904</code></div></div>
+          <div class="vf-sheet-card"><img class="vf-sheet-swatch" src="../../../../assets/viewframe-finished/sheets/wash-beige.webp?v=g2026073101" alt="워시 베이지 컬러 시트" loading="lazy"><div><strong>워시 베이지</strong><span>Wash Beige</span><code>AJI04</code></div></div>
+          <div class="vf-sheet-card"><img class="vf-sheet-swatch" src="../../../../assets/viewframe-finished/sheets/light-beige.webp?v=g2026073101" alt="라이트 베이지 컬러 시트" loading="lazy"><div><strong>라이트 베이지</strong><span>Light Beige</span><code>NCBS2</code></div></div>
+          <div class="vf-sheet-card"><img class="vf-sheet-swatch" src="../../../../assets/viewframe-finished/sheets/crema.webp?v=g2026073101" alt="크레마 컬러 시트" loading="lazy"><div><strong>크레마</strong><span>Crema</span><code>NQ903</code></div></div>
+          <div class="vf-sheet-card"><img class="vf-sheet-swatch" src="../../../../assets/viewframe-finished/sheets/natural-oak.webp?v=g2026073101" alt="내추럴 오크 컬러 시트" loading="lazy"><div><strong>내추럴 오크</strong><span>Natural Oak</span><code>NQ901</code></div></div>
+          <div class="vf-sheet-card"><img class="vf-sheet-swatch" src="../../../../assets/viewframe-finished/sheets/modern-gray.webp?v=g2026073101" alt="모던 그레이 컬러 시트" loading="lazy"><div><strong>모던 그레이</strong><span>Modern Gray</span><code>KAFM8</code></div></div>
+          <div class="vf-sheet-card"><img class="vf-sheet-swatch" src="../../../../assets/viewframe-finished/sheets/modern-black.webp?v=g2026073101" alt="모던 블랙 컬러 시트" loading="lazy"><div><strong>모던 블랙</strong><span>Modern Black</span><code>KDB86</code></div></div>
+          <div class="vf-sheet-card"><img class="vf-sheet-swatch" src="../../../../assets/viewframe-finished/sheets/urban-gray.webp?v=g2026073101" alt="어반 그레이 컬러 시트" loading="lazy"><div><strong>어반 그레이</strong><span>Urban Gray</span><code>KAEC4</code></div></div>
+        </div>
+        <p class="vf-catalog-note">※ 내부 컬러 시트는 모델별 선택 가능 사양이 다를 수 있으며, 화면과 실제 색상에는 차이가 있을 수 있습니다.</p>
+
+        <section class="vf-exterior-panel" aria-labelledby="vfExteriorTitle">
+          <div class="vf-sheet-head">
+            <div><div class="eyebrow">EXTERIOR</div><h3 id="vfExteriorTitle">외부</h3></div>
+            <p>내구성이 강한 외부 Color(ASA*)를 선택하면 건축물 디자인과 어울리는 고급스러운 외관을 구현할 수 있습니다. 여름철 고온과 스크래치에 강해 건물 외부에 안전하게 사용할 수 있습니다.</p>
+          </div>
+          <div class="vf-exterior-table" role="table" aria-label="외부 컬러와 부품 사양">
+            <div class="vf-exterior-columns" role="row">
+              <div class="vf-exterior-column vf-exterior-column--finish" role="columnheader">외부 마감</div>
+              <div class="vf-exterior-column" role="columnheader">방충배수캡</div>
+              <div class="vf-exterior-column" role="columnheader">안전스토퍼</div>
+            </div>
+            <div class="vf-exterior-row" role="row">
+              <div class="vf-exterior-cell vf-exterior-finish" role="cell"><span class="vf-exterior-swatch" aria-hidden="true"></span><div><strong>화이트</strong><span>White</span></div></div>
+              <div class="vf-exterior-cell vf-exterior-product" role="cell"><img src="../../../../assets/viewframe-finished/exterior/drain-cap-white.png?v=g2026073140" alt="화이트 방충배수캡" loading="lazy"></div>
+              <div class="vf-exterior-cell vf-exterior-product" role="cell"><img src="../../../../assets/viewframe-finished/exterior/safety-stopper-white.png?v=g2026073140" alt="화이트 안전스토퍼" loading="lazy"></div>
+            </div>
+            <div class="vf-exterior-row" role="row">
+              <div class="vf-exterior-cell vf-exterior-finish" role="cell"><span class="vf-exterior-swatch is-asa" aria-hidden="true"></span><div><strong>ASA</strong><span>D/Brown</span></div></div>
+              <div class="vf-exterior-cell vf-exterior-product" role="cell"><img src="../../../../assets/viewframe-finished/exterior/drain-cap-asa.png?v=g2026073140" alt="ASA D/Brown 방충배수캡" loading="lazy"></div>
+              <div class="vf-exterior-cell vf-exterior-product" role="cell"><img src="../../../../assets/viewframe-finished/exterior/safety-stopper-asa.png?v=g2026073140" alt="ASA D/Brown 안전스토퍼" loading="lazy"></div>
+            </div>
+          </div>
+          <div class="vf-exterior-notes">
+            <p class="vf-catalog-note">* ASA 수지는 충격과 열에 강하고 광택을 높인 외장용 소재입니다.</p>
+            <p class="vf-catalog-note">※ 터닝도어, 광폭단창 등 일부 제품은 외부 ASA 사양이 없습니다.</p>
+          </div>
+        </section>
+      </div>
     </div>
   </section>
 </main>
