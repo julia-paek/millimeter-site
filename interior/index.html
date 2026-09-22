@@ -300,6 +300,38 @@ h1,h2{font-family:'SUIT Variable','SUIT','Pretendard Variable',Pretendard,sans-s
 
 /* 타이틀 메인카피 — Gmarket Sans Bold */
 .hero h1,.phead .pname,.fnode h3,.proj-name,.lb-cap .t,.modal h3{font-family:'Gmarket Sans','Pretendard Variable',Pretendard,sans-serif!important;font-weight:700!important}
+
+/* Gongbagong: keep the existing catalog, make room comparisons explicit. */
+#partner-space-changing .pname{font-size:clamp(24px,3vw,36px);line-height:1.45;word-break:keep-all;overflow-wrap:break-word}
+#partner-space-changing .proj{flex-basis:calc((100% - 40px)/3);max-width:calc((100% - 40px)/3)}
+.lb-view-controls{display:flex;gap:8px;width:min(440px,86vw);margin-bottom:10px}
+.lb-view-controls button{flex:1;min-height:44px;padding:8px 12px;border:1px solid #8e9784;background:transparent;color:#f4f0e6;font:inherit;font-size:14px}
+.lb-view-controls button[aria-pressed="true"]{background:#f4f0e6;color:#1f3822}
+.lb-room-select{display:flex;align-items:center;gap:12px;width:min(440px,86vw);color:#f4f0e6;font-size:14px;margin-bottom:12px}
+.lb-room-select select{flex:1;min-width:0;min-height:44px;padding:8px 12px;background:#242723;color:#f4f0e6;border:1px solid #8e9784;font:inherit;font-size:16px}
+.lb-view-controls[hidden],.lb-room-select[hidden]{display:none}
+.lb{visibility:hidden}.lb.open{visibility:visible}
+.lb.has-room-pairs{padding-top:72px;padding-bottom:24px}
+.lb.has-room-pairs>img{min-height:0;flex:0 1 auto;max-height:calc(100dvh - 360px)}
+.lb.has-room-pairs .lb-cap{max-width:86vw;margin-top:10px;flex-shrink:0}
+.lb.has-room-pairs .lb-cap .t{font-size:15px;line-height:1.6}
+.lb.has-room-pairs .lb-thumbs{flex-shrink:0}
+.lb.has-room-pairs .lb-x{top:16px}
+.lb :focus-visible{outline:2px solid #f4f0e6;outline-offset:3px}
+@media(max-width:1024px){#partner-space-changing .proj{flex-basis:calc((100% - 20px)/2);max-width:calc((100% - 20px)/2)}}
+@media(max-width:640px){
+  #partner-space-changing .proj{flex-basis:84%;max-width:84%}
+  .lb.has-room-pairs{padding:68px 14px 70px!important}
+  .lb.has-room-pairs>img{max-height:calc(100dvh - 425px)!important;max-width:84vw!important}
+  .lb-view-controls,.lb-room-select{width:84vw;flex-shrink:0}
+  .lb.has-room-pairs .lb-tabs{flex-shrink:0}.lb.has-room-pairs .lb-tab{height:44px}
+  .lb.has-room-pairs .lb-cap .t{font-size:13px}
+  .lb.has-room-pairs .lb-cap .s{font-size:13px}
+  .lb.has-room-pairs .lb-nav{top:auto;bottom:14px;transform:none}
+  .lb.has-room-pairs .lb-cap{max-width:calc(100% - 96px)}
+}
+@media(max-height:560px){.lb.has-room-pairs .lb-thumbs{display:none}.lb.has-room-pairs{padding:64px 70px 16px!important}.lb.has-room-pairs>img{max-height:calc(100dvh - 295px)!important}.lb.has-room-pairs .lb-cap .t{display:none}}
+
 </style>
 <link rel="stylesheet" href="../responsive.css?v=r4">
 </head>
@@ -412,13 +444,18 @@ h1,h2{font-family:'SUIT Variable','SUIT','Pretendard Variable',Pretendard,sans-s
 <div class="lb" id="lb" aria-hidden="true" role="dialog" aria-modal="true" aria-label="현장 사진">
   <button class="lb-x" onclick="closeLb()" aria-label="닫기">×</button>
   <button class="lb-nav lb-prev" onclick="stepLb(-1)" aria-label="이전 사진">‹</button>
+  <div class="lb-view-controls" id="lbViewControls" role="group" aria-label="사진 보기 방식" hidden>
+    <button type="button" data-view="pairs" aria-pressed="true">공간별 비교</button>
+    <button type="button" data-view="all" aria-pressed="false">전체 사진</button>
+  </div>
+  <div class="lb-room-select" id="lbRoomControl" hidden><label for="lbRoomSelect">공간 선택</label><select id="lbRoomSelect"></select></div>
   <div class="lb-tabs" id="lbTabs" role="tablist" aria-label="사진 구분" hidden>
     <button class="lb-tab active" type="button" role="tab" data-set="before" aria-selected="true">BEFORE <span class="count" id="lbBeforeCount"></span></button>
     <button class="lb-tab" type="button" role="tab" data-set="after" aria-selected="false">AFTER <span class="count" id="lbAfterCount"></span></button>
   </div>
   <img id="lbImg" alt="">
   <div class="lb-thumbs" id="lbThumbs" aria-label="사진 목록" hidden></div>
-  <div class="lb-cap"><div class="t" id="lbT"></div><div class="s" id="lbS"></div></div>
+  <div class="lb-cap"><div class="t" id="lbT"></div><div class="s" id="lbS" aria-live="polite"></div></div>
   <button class="lb-nav lb-next" onclick="stepLb(1)" aria-label="다음 사진">›</button>
 </div>
 
@@ -492,7 +529,25 @@ function partnerProject(id,name,vendor,project,afterCount,beforeCount,coverIndex
   }
   return item;
 }
+// Explicit room pairs keep both sides linked even when the full galleries differ in length.
+function roomProject(id,name,vendor,project,afterCount,beforeCount,coverIndex,pairs){
+  var item=partnerProject(id,name,vendor,project,afterCount,beforeCount,coverIndex);
+  item.roomPairs=pairs.map(function(pair){
+    return {room:pair[2],before:item.beforePhotos[pair[0]-1],after:item.photos[pair[1]-1]};
+  });
+  item.afterCover=item.cover;
+  item.beforeCover=item.roomPairs[0].before.image;
+  return item;
+}
 var PARTNERS=[
+  {id:'space-changing', short:'공바공', name:'공바공 / 공간을 바꾸는 공간', tagline:'주거 공간 리모델링 — 실제 시공 현장', specialty:['아파트','주거 리모델링'], status:'active',
+   socials:[{type:'naver',label:'블로그',href:'https://m.blog.naver.com/0-0design'}],
+   projects:[
+     roomProject('sc-gwangjang','광장 현대파크빌 10차','space-changing','gwangjang-hyundai-parkvill-10',203,29,55,[[19,55,'거실'],[3,128,'현관'],[21,85,'주방'],[13,23,'침실'],[9,3,'작은방'],[26,47,'서재'],[1,10,'욕실 · 욕조'],[14,33,'욕실 · 샤워']]),
+     partnerProject('sc-wangsimni','왕십리 텐즈힐','space-changing','wangsimni-tenz-hill',244,0,146),
+     partnerProject('sc-haengdang','행당 대림','space-changing','haengdang-daerim',193,0,166)
+   ]},
+
   {id:'jiwoo', short:'지우', name:'지우인테리어디자인', tagline:'아파트 전체 리모델링 — 실제 시공 현장', specialty:['아파트','전체 리모델링'], status:'active',
    socials:[
      {type:'youtube',label:'시공 영상 보기',href:'https://www.youtube.com/@지우인테리어디자인'},
@@ -503,12 +558,6 @@ var PARTNERS=[
      {id:'jw-gwanak', name:'관악드림타운 30평형', photos:jw('gwanak','KakaoTalk_20260622_172435157',7)},
      {id:'jw-gileum', name:'길음 경남아너스빌 32평형', photos:jw('gileum','KakaoTalk_20260622_172443870',7)},
      {id:'jw-daebang', name:'대방 대림 59평형', photos:jw('daebang','KakaoTalk_20260622_172426216',7)}
-   ]},
-  {id:'space-changing', short:'공간', name:'공간을바꾸는공간', tagline:'주거 공간 리모델링 — 실제 시공 현장', specialty:['아파트','주거 리모델링'], status:'active',
-   projects:[
-     partnerProject('sc-gwangjang','광장 현대파크빌 10차','space-changing','gwangjang-hyundai-parkvill-10',203,29,59,[[3,127,'현관'],[19,55,'거실 전면'],[29,72,'거실 벽면'],[21,85,'주방'],[9,47,'방·서재'],[13,23,'안방'],[1,10,'욕실'],[14,33,'욕실']]),
-     partnerProject('sc-wangsimni','왕십리 텐즈힐','space-changing','wangsimni-tenz-hill',244,0,140),
-     partnerProject('sc-haengdang','행당 대림','space-changing','haengdang-daerim',193,0,166)
    ]},
   {id:'dowoo', short:'도우', name:'도우건축', tagline:'아파트 리모델링 — 실제 시공 현장', specialty:['아파트','주거 리모델링'], status:'active',
    projects:[
@@ -627,39 +676,81 @@ if('IntersectionObserver' in window){
   document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
 }else{document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');});}
 
-/* lightbox — 클릭한 현장의 사진만 좌우로 */
+/* Lightbox: explicit room pairs plus the complete original galleries. */
 var lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg'),lbT=document.getElementById('lbT'),lbS=document.getElementById('lbS');
 var lbTabs=document.getElementById('lbTabs'),lbThumbs=document.getElementById('lbThumbs'),lbAfterCount=document.getElementById('lbAfterCount'),lbBeforeCount=document.getElementById('lbBeforeCount');
-var curPhotos=[],curSets={after:[],before:[]},curMode='after',curName='',lbI=0,lbFocus=null;
+var lbViewControls=document.getElementById('lbViewControls'),lbRoomControl=document.getElementById('lbRoomControl'),lbRoomSelect=document.getElementById('lbRoomSelect');
+var curPhotos=[],curSets={after:[],before:[]},curPairs=[],curView='all',curMode='after',curName='',lbI=0,lbFocus=null;
+var lastPair=0,allPositions={before:0,after:0},lbSavedOverflow='';
+function pairedPhotos(mode){return curPairs.map(function(pair){return pair[mode];});}
+function findPair(photo){return curPairs.findIndex(function(pair){return pair.before.id===photo.id||pair.after.id===photo.id;});}
 document.getElementById('list').addEventListener('click',function(e){
-  var b=e.target.closest('.proj'); if(!b)return;
-  var p=PARTNERS[+b.dataset.p], pr=p.projects[+b.dataset.j];
-  curSets={after:pr.photos||[],before:pr.beforePhotos||[]};curMode=curSets.before.length?'before':'after';curPhotos=curSets[curMode];curName=p.name+' · '+pr.name;prepareLbSets();openLb(0);
+  var b=e.target.closest('.proj');if(!b)return;
+  var p=PARTNERS[+b.dataset.p],pr=p.projects[+b.dataset.j];
+  curSets={after:pr.photos||[],before:pr.beforePhotos||[]};curPairs=pr.roomPairs||[];
+  curView=curPairs.length?'pairs':'all';curMode=curPairs.length?'after':curSets.before.length?'before':'after';
+  curName=p.name+' · '+pr.name;lastPair=0;allPositions={before:0,after:0};
+  curPhotos=curView==='pairs'?pairedPhotos(curMode):curSets[curMode];
+  lbI=curView==='pairs'?0:Math.max(0,curPhotos.findIndex(function(photo){return photo.image===pr.cover;}));
+  prepareLbSets();openLb(lbI);
 });
 function prepareLbSets(){
   var hasBefore=curSets.before.length>0;
-  lb.classList.toggle('has-photo-sets',hasBefore);lbTabs.hidden=!hasBefore;lbThumbs.hidden=!hasBefore;
-  if(hasBefore){lbAfterCount.textContent=curSets.after.length;lbBeforeCount.textContent=curSets.before.length;renderLbThumbs();updateLbTabs();}
-  else{lbThumbs.innerHTML='';}
+  lb.classList.toggle('has-photo-sets',hasBefore);lb.classList.toggle('has-room-pairs',!!curPairs.length);
+  lbTabs.hidden=!hasBefore;lbThumbs.hidden=!hasBefore;
+  lbViewControls.hidden=!curPairs.length;lbRoomControl.hidden=curView!=='pairs';
+  lbRoomSelect.innerHTML=curPairs.map(function(pair,i){return '<option value="'+i+'">'+esc(pair.room)+'</option>';}).join('');
+  lbViewControls.querySelectorAll('button').forEach(function(button){button.setAttribute('aria-pressed',button.dataset.view===curView?'true':'false');});
+  if(hasBefore){lbAfterCount.textContent=curView==='pairs'?curPairs.length:curSets.after.length;lbBeforeCount.textContent=curView==='pairs'?curPairs.length:curSets.before.length;renderLbThumbs();updateLbTabs();}
+  else lbThumbs.innerHTML='';
 }
 function updateLbTabs(){
-  lbTabs.querySelectorAll('.lb-tab').forEach(function(tab){var on=tab.dataset.set===curMode;tab.classList.toggle('active',on);tab.setAttribute('aria-selected',on?'true':'false');});
+  lbTabs.querySelectorAll('.lb-tab').forEach(function(tab){var on=tab.dataset.set===curMode;tab.classList.toggle('active',on);tab.setAttribute('aria-selected',on?'true':'false');tab.tabIndex=on?0:-1;});
 }
 function renderLbThumbs(){
-  lbThumbs.innerHTML=curPhotos.map(function(photo,i){return '<button class="lb-thumb'+(i===lbI?' active':'')+'" type="button" data-i="'+i+'" aria-label="'+(i+1)+'번 사진 보기"><img src="'+(photo.thumb||photo.image)+'" alt="" loading="lazy"></button>';}).join('');
+  lbThumbs.innerHTML=curPhotos.map(function(photo,i){var label=curView==='pairs'?curPairs[i].room:(i+1)+'번 사진';return '<button type="button" class="lb-thumb'+(i===lbI?' active':'')+'" data-i="'+i+'" aria-label="'+esc(label)+' 보기" aria-pressed="'+(i===lbI)+'"><img loading="lazy" src="'+(photo.thumb||photo.image)+'" alt=""></button>';}).join('');
 }
 function setLb(){
-  var photo=curPhotos[lbI];lbImg.src=photo.image;lbImg.alt=curName+' '+(curMode==='before'?'시공 전':'시공 후');lbT.textContent=curName;
-  lbS.textContent=(curMode==='before'?'BEFORE':'AFTER')+' · '+(lbI+1)+' / '+curPhotos.length;
-  if(!lbThumbs.hidden){lbThumbs.querySelectorAll('.lb-thumb').forEach(function(thumb,i){thumb.classList.toggle('active',i===lbI);});var active=lbThumbs.querySelector('.lb-thumb.active');if(active)active.scrollIntoView({block:'nearest',inline:'nearest'});}
+  var photo=curPhotos[lbI];if(!photo)return;
+  var room=curView==='pairs'?curPairs[lbI].room:'';
+  lbImg.src=photo.image;lbImg.alt=curName+(room?' · '+room:'')+' · '+(curMode==='before'?'시공 전':'시공 후');lbT.textContent=curName;
+  lbS.textContent=(room?room+' · ':'전체 사진 · ')+(curMode==='before'?'BEFORE':'AFTER')+' · '+(lbI+1)+' / '+curPhotos.length;
+  if(curView==='pairs'){lastPair=lbI;lbRoomSelect.value=String(lbI);}else allPositions[curMode]=lbI;
+  if(!lbThumbs.hidden){lbThumbs.querySelectorAll('.lb-thumb').forEach(function(thumb,i){thumb.classList.toggle('active',i===lbI);thumb.setAttribute('aria-pressed',i===lbI?'true':'false');});var active=lbThumbs.querySelector('.lb-thumb.active');if(active)active.scrollIntoView({block:'nearest',inline:'nearest'});}
 }
-function openLb(i){lbI=i;lbFocus=document.activeElement;setLb();lb.classList.add('open');lb.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';lb.querySelector('.lb-x').focus();}
+function openLb(i){lbI=i;lbFocus=document.activeElement;lbSavedOverflow=document.body.style.overflow;lb.setAttribute('aria-hidden','false');lb.classList.add('open');document.body.style.overflow='hidden';setLb();lb.querySelector('.lb-x').focus();}
 function stepLb(d){lbI=(lbI+d+curPhotos.length)%curPhotos.length;setLb();}
-lbTabs.addEventListener('click',function(e){var tab=e.target.closest('.lb-tab');if(!tab||tab.dataset.set===curMode)return;curMode=tab.dataset.set;curPhotos=curSets[curMode];lbI=0;updateLbTabs();renderLbThumbs();setLb();});
-lbThumbs.addEventListener('click',function(e){var thumb=e.target.closest('.lb-thumb');if(!thumb)return;lbI=+thumb.dataset.i;setLb();});
-function closeLb(){lb.classList.remove('open');lb.setAttribute('aria-hidden','true');document.body.style.overflow='';if(lbFocus&&lbFocus.focus){lbFocus.focus();lbFocus=null;}}
+function switchLbSet(mode){
+  if(mode===curMode)return;
+  var photo=curPhotos[lbI],pairIndex=curPairs.length?findPair(photo):-1;
+  curMode=mode;curPhotos=curView==='pairs'?pairedPhotos(mode):curSets[mode];
+  if(curView!=='pairs')lbI=!curPairs.length?Math.min(lbI,curPhotos.length-1):pairIndex>=0?curPhotos.findIndex(function(item){return item.id===curPairs[pairIndex][mode].id;}):Math.min(allPositions[mode],curPhotos.length-1);
+  updateLbTabs();renderLbThumbs();setLb();
+}
+lbTabs.addEventListener('click',function(e){var tab=e.target.closest('.lb-tab');if(tab)switchLbSet(tab.dataset.set);});
+lbTabs.addEventListener('keydown',function(e){if(['ArrowLeft','ArrowRight','Home','End'].indexOf(e.key)<0)return;e.preventDefault();e.stopPropagation();var mode=e.key==='Home'?'before':e.key==='End'?'after':curMode==='before'?'after':'before';switchLbSet(mode);lbTabs.querySelector('[data-set="'+mode+'"]').focus();});
+lbViewControls.addEventListener('click',function(e){
+  var button=e.target.closest('[data-view]');if(!button||button.dataset.view===curView)return;
+  var photo=curPhotos[lbI];curView=button.dataset.view;
+  if(curView==='pairs'){var pairIndex=findPair(photo);lbI=pairIndex>=0?pairIndex:lastPair;curPhotos=pairedPhotos(curMode);}
+  else{curPhotos=curSets[curMode];lbI=Math.max(0,curPhotos.findIndex(function(item){return item.id===photo.id;}));}
+  prepareLbSets();setLb();
+});
+lbRoomSelect.addEventListener('change',function(){lbI=Number(lbRoomSelect.value);setLb();});
+lbThumbs.addEventListener('click',function(e){var thumb=e.target.closest('.lb-thumb');if(thumb){lbI=+thumb.dataset.i;setLb();}});
+function closeLb(){lb.classList.remove('open');lb.setAttribute('aria-hidden','true');document.body.style.overflow=lbSavedOverflow;if(lbFocus&&lbFocus.focus)lbFocus.focus();}
 lb.addEventListener('click',function(e){if(e.target===lb)closeLb();});
-addEventListener('keydown',function(e){if(lb.classList.contains('open')){if(e.key==='Escape')closeLb();else if(e.key==='ArrowRight')stepLb(1);else if(e.key==='ArrowLeft')stepLb(-1);}});
+addEventListener('keydown',function(e){
+  if(!lb.classList.contains('open'))return;
+  if(e.key==='Escape'){e.preventDefault();closeLb();return;}
+  if(e.key==='Tab'){
+    var focusable=Array.prototype.slice.call(lb.querySelectorAll('button,select')).filter(function(el){return !el.disabled&&el.tabIndex>=0&&el.getClientRects().length;});
+    var first=focusable[0],last=focusable[focusable.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}return;
+  }
+  if(e.target.tagName==='SELECT'||e.target.closest('.lb-tabs'))return;
+  if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();stepLb(e.key==='ArrowRight'?1:-1);}
+});
 
 /* modal */
 var modal=document.getElementById('modal'),mFocus=null;
