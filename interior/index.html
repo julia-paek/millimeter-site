@@ -332,6 +332,100 @@ h1,h2{font-family:'SUIT Variable','SUIT','Pretendard Variable',Pretendard,sans-s
 }
 @media(max-height:560px){.lb.has-room-pairs .lb-thumbs{display:none}.lb.has-room-pairs{padding:64px 70px 16px!important}.lb.has-room-pairs>img{max-height:calc(100dvh - 295px)!important}.lb.has-room-pairs .lb-cap .t{display:none}}
 
+
+/* Consulting partner, distinct from the construction photo galleries. */
+.partner-jump.monsteras-jump{border:2px solid #F37021;min-height:44px;background:#FFF0E2;color:var(--headline);box-shadow:4px 4px 0 #F37021}
+.partner-jump.monsteras-jump:hover,.partner-jump.monsteras-jump.active{background:#FFF0E2;color:var(--headline);box-shadow:4px 4px 0 #F37021}
+#partner-monsteras{padding-top:0;border-top:0;padding-bottom:64px;scroll-margin-top:calc(var(--nav-h) + 112px)}
+#partner-monsteras .phead{margin-bottom:24px;justify-content:flex-start;gap:22px;align-items:flex-end}
+#partner-monsteras .phead .monsteras-link{margin-bottom:7px}
+#partner-monsteras + #list > .partner:first-child{border-top:1px solid var(--line);padding-top:48px}
+#partner-monsteras .ptag{color:#A64B12}
+#partner-monsteras .pname{font-family:'Gmarket Sans','Pretendard Variable',Pretendard,sans-serif}
+.monsteras-layout{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
+.monsteras-photo{margin:0;min-width:0}
+.monsteras-photo img{display:block;width:100%;height:auto;aspect-ratio:1.47;object-fit:cover}
+.monsteras-photo figcaption{margin-top:12px;font-size:13px;line-height:1.6;color:var(--headline)}
+.monsteras-photo figcaption a{text-decoration:underline;text-underline-offset:3px}
+.monsteras-copy{min-width:0;max-width:460px}
+.monsteras-copy h3{font-family:'Gmarket Sans','Pretendard Variable',Pretendard,sans-serif;font-weight:700;font-size:clamp(26px,2.6vw,36px);line-height:1.35;letter-spacing:-.035em;color:var(--headline);word-break:keep-all;overflow-wrap:break-word}
+.monsteras-copy p{font-size:16px;line-height:1.85;color:var(--headline);word-break:keep-all;overflow-wrap:break-word;margin-top:16px}
+.monsteras-copy .monsteras-lead{font-weight:600;font-size:18px;line-height:1.65;margin-top:22px;max-width:24ch}
+.monsteras-link{display:inline-flex;flex-shrink:0;align-items:center;justify-content:center;gap:8px;min-height:44px;margin-top:0;padding:9px 14px;border:1px solid #F37021;color:var(--headline);font-size:14px;font-weight:500;line-height:1.6}
+.monsteras-link{transition:background .18s ease,border-color .18s ease}
+.monsteras-link .homepage-icon{width:18px;height:17px;flex:none;display:block}
+.monsteras-link:hover{background:#FFF0E2}
+.monsteras-link:active{background:#FCE0C4}
+.monsteras a:focus-visible,.monsteras-jump:focus-visible{outline:3px solid #A64B12;outline-offset:4px}
+@media(max-width:767px){
+  .monsteras-layout{grid-template-columns:minmax(0,1fr);gap:24px}
+  #partner-monsteras .phead{margin-bottom:20px}
+  .monsteras-photo img{aspect-ratio:16/9;height:auto;object-fit:cover;object-position:center 48%}
+  .monsteras-photo figcaption{font-size:12px;margin-top:8px}
+  .monsteras-copy{max-width:none}
+  .monsteras-copy h3{font-size:clamp(25px,6.5vw,30px);line-height:1.38}
+  .monsteras-copy p{margin-top:12px;font-size:16px;line-height:1.75}
+  .monsteras-copy .monsteras-lead{font-size:17px;margin-top:16px;max-width:none}
+  .monsteras-link{width:auto;margin-top:0;min-height:44px;padding:8px 14px;font-size:14px;gap:8px}
+  #partner-monsteras .phead{align-items:flex-end;justify-content:space-between;flex-wrap:nowrap;gap:12px}
+  #partner-monsteras .phead .monsteras-link{margin-bottom:0}
+  #partner-monsteras .pname{font-size:28px}
+  #partner-monsteras .ptag{font-size:11px}
+  #partner-monsteras{padding-bottom:36px}
+  #partner-monsteras + #list > .partner:first-child{padding-top:36px}
+}
+@media(max-width:640px){
+  #partnerIndex{display:grid;grid-template-columns:max-content repeat(4,minmax(0,1fr));gap:6px;overflow:visible!important;padding:4px 0 6px!important}
+  #partnerIndex .partner-jump{min-width:0;min-height:44px;height:44px;padding:0 4px;font-size:13px;transform:none;box-shadow:none}
+  #partnerIndex .monsteras-jump,#partnerIndex .monsteras-jump.active{padding-inline:10px;background:#FFF0E2;color:var(--headline);border-width:2px;box-shadow:3px 3px 0 #F37021}
+  .partner-index-shell{padding:8px 0;margin:22px 0 24px}
+}
+
+/* Interior page rhythm: consistent galleries and compact partner navigation. */
+#partners .partner-jump.monsteras-jump{padding-inline:12px}
+#list .partner{padding:44px 0 36px;scroll-margin-top:calc(var(--nav-h) + 104px)}
+#list .phead{align-items:flex-start;gap:16px;margin-bottom:20px}
+#list .phead>div:first-child{min-width:0;flex:1 1 360px}
+#list .chips{align-self:flex-end;gap:6px}
+#list .chip{border-color:var(--line);padding:5px 10px;font-size:12px;color:#58694F}
+#list .pdesc{line-height:1.65;color:#63725B}
+#list .proj{flex-basis:calc((100% - 40px)/3);max-width:calc((100% - 40px)/3)}
+#list .proj-meta{display:block;margin-top:13px}
+#list .proj-name{display:block;height:auto;min-height:0;overflow:visible;font-size:19px;line-height:1.45;-webkit-line-clamp:unset}
+#list .proj-go{display:inline-flex;margin-top:7px;font-size:13px}
+#list .pc-arrow{width:44px;height:44px;border-color:var(--line);background:var(--bg);color:var(--headline)}
+#list .pc-arrow:hover{background:var(--headline);color:white}
+#list .partner-social{min-width:44px;min-height:44px}
+#list .partner-title-row{gap:6px}
+#partners a:focus-visible,#partners button:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.system-notes{border-color:var(--line)}
+@media(max-width:1024px){
+ #list .proj{flex-basis:calc((100% - 20px)/2);max-width:calc((100% - 20px)/2)}
+}
+@media(max-width:640px){
+ #partners .partner-jump.monsteras-jump{padding-inline:8px}
+ #list .partner{padding:30px 0 24px}
+ #list .phead{gap:12px;margin-bottom:16px}
+ #list .phead>div:first-child{flex-basis:100%}
+ #list .pname{font-size:clamp(23px,5.5vw,30px);line-height:1.35}
+ #list .pdesc{font-size:14px;margin-top:6px}
+ #list .chips{align-self:auto}
+ #list .proj{flex-basis:86%;max-width:86%}
+ #list .proj-name{font-size:18px}
+ #list .pgrid{gap:14px;padding-bottom:12px}
+ #list .pc-arrow{top:38%}
+ .system-note p{font-size:13px;line-height:1.7}
+ .criterion p,.fnode p{font-size:14px;line-height:1.7}
+ .system-notes{grid-template-columns:1fr}
+ .system-note{padding:20px}
+ .system-note+.system-note{border-left:0;border-top:1px solid var(--line)}
+ .system-note h3{font-size:18px;overflow-wrap:normal}
+}
+@media(prefers-reduced-motion:reduce){
+ html,.pgrid,.flow{scroll-behavior:auto}
+ .partner-jump,.proj-cover i,.node-circle,.partner-social{transition:none}
+}
+
 </style>
 <link rel="stylesheet" href="../responsive.css?v=r4">
 </head>
@@ -420,11 +514,26 @@ h1,h2{font-family:'SUIT Variable','SUIT','Pretendard Variable',Pretendard,sans-s
       <div style="text-align:center;margin-bottom:18px">
         <p class="eyebrow">Partners</p>
         <h2 style="font-size:clamp(28px,4vw,48px);font-weight:700;letter-spacing:-.02em;margin-top:10px">검증된 협력 인테리어 업체</h2>
-        <p style="font-size:17px;color:var(--muted);margin-top:12px">현장 카드를 누르면 그 현장의 사진을 넘겨볼 수 있어요.</p>
+        <p style="font-size:17px;color:var(--muted);margin-top:12px">컨설팅 서비스와 업체별 시공 사례를 만나보세요.</p>
       </div>
       <div class="partner-index-shell">
         <nav class="partner-index" id="partnerIndex" aria-label="협력 인테리어 업체 바로가기"></nav>
       </div>
+      <section class="partner monsteras" id="partner-monsteras" aria-labelledby="monsteras-title">
+        <div class="phead"><div><div class="ptag">INTERIOR CONSULTING</div><h2 class="pname" id="monsteras-title">몬스테라즈</h2></div><a class="monsteras-link" aria-label="몬스테라즈 홈페이지 바로가기 (새 탭)" href="https://www.monsteras.co.kr/" target="_blank" rel="noopener noreferrer"><svg class="homepage-icon" viewBox="0 0 24 22" aria-hidden="true" focusable="false"><path d="M12 2L22 9.8V20H2V9.8Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span>홈페이지</span></a></div>
+        <div class="monsteras-layout">
+          <figure class="monsteras-photo">
+            <img src="../assets/interior/monsteras/suji-kitchen.webp" width="1440" height="977" loading="lazy" alt="원목 수납장과 조명이 어우러진 몬스테라즈 용인 수지 주방">
+            <figcaption><a href="https://www.monsteras.co.kr/Interview/?idx=168820775&amp;bmode=view" target="_blank" rel="noopener noreferrer">몬스테라즈와 함께한 공간 · 용인 수지 ↗</a></figcaption>
+          </figure>
+          <div class="monsteras-copy">
+            <h3>D.I.Y. 인테리어를<br>계획하고 계신가요?</h3>
+            <p class="monsteras-lead">직접 만드는 우리 집, 준비부터 막막하지 않도록.</p>
+            <p>몬스테라즈는 공간의 방향을 정하고, 업체·견적·자재·일정을 준비하는 과정을 함께하는 인테리어 컨설팅입니다.</p>
+
+          </div>
+        </div>
+      </section>
       <div id="list"></div>
     </div>
   </section>
@@ -575,7 +684,7 @@ var PARTNERS=[
    ]}
 ];
 
-document.getElementById('partnerIndex').innerHTML='<a class="partner-jump active" href="#partners" data-partner="partners">전체</a>'
+document.getElementById('partnerIndex').innerHTML='<a class="partner-jump monsteras-jump active" href="#partner-monsteras" data-partner="partner-monsteras">몬스테라즈</a>'
   +PARTNERS.map(function(p){return '<a class="partner-jump" href="#partner-'+p.id+'" data-partner="partner-'+p.id+'">'+esc(p.short)+'</a>';}).join('');
 
 function socialLinksHtml(p){
@@ -626,13 +735,14 @@ document.getElementById('list').innerHTML=PARTNERS.map(function(p,pi){
     buttons.forEach(function(button){
       var on=button.dataset.partner===id;
       button.classList.toggle('active',on);
+      if(on)button.setAttribute('aria-current','location');else button.removeAttribute('aria-current');
       if(on)index.scrollTo({left:button.offsetLeft-(index.clientWidth-button.offsetWidth)/2,behavior:reduce?'auto':'smooth'});
     });
   }
   function update(){
     var navHeight=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h'))||54;
     var guide=scrollY+navHeight+document.querySelector('.partner-index-shell').offsetHeight+56;
-    var current='partners';
+    var current='partner-monsteras';
     sections.forEach(function(section){if(section.offsetTop<=guide)current=section.id;});
     activate(current);ticking=false;
   }
