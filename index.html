@@ -321,39 +321,28 @@ body{counter-reset:mmsec}
 .hero-ed{position:relative;min-height:clamp(460px,60vh,620px);display:flex;align-items:center}
 .hero-photo{position:absolute;top:0;right:0;width:66%;height:100%;overflow:hidden;background:#EAE4D6;z-index:1}
 .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:60% 50%;filter:saturate(.9) brightness(1.03) contrast(.97)}
-/* 히어로 슬라이드 — 나갈 때 창짝이 열리듯 세 쪽으로 갈라져 오른쪽으로 밀린다 */
-/* 사진은 화면에 있는 내내 오른쪽으로 천천히 흐른다 — 정지 화면이 아니라 공간으로 읽히게 */
-.hp-slide{position:absolute;inset:0;visibility:hidden;will-change:transform}
-.hp-slide.is-on,.hp-slide.is-out{animation:mmDrift 14s linear forwards}
-@keyframes mmDrift{from{transform:scale(1.12) translate3d(-3.5%,0,0)}to{transform:scale(1.12) translate3d(3.5%,0,0)}}
-.hp-slide.is-on{visibility:visible;z-index:2}
-.hp-slide.is-out{visibility:visible;z-index:1}
-.hp-pane{position:absolute;inset:0;background-image:var(--src);background-size:cover;background-position:60% 50%;filter:saturate(.9) brightness(1.03) contrast(.97);transition:transform 2.6s cubic-bezier(.4,.05,.25,1),opacity 2.2s cubic-bezier(.4,.05,.25,1)}
-.hp-pane:nth-child(1){clip-path:inset(0 66.4% 0 0)}
-.hp-pane:nth-child(2){clip-path:inset(0 33.2% 0 33.3%)}
-.hp-pane:nth-child(3){clip-path:inset(0 0 0 66.5%)}
-.hp-slide.is-prep .hp-pane{transform:translate3d(-72px,0,0);opacity:0;transition:none}
-.hp-slide.is-out .hp-pane{transform:translate3d(124px,0,0);opacity:0}
-.hp-slide.is-out .hp-pane:nth-child(2){transition-delay:.2s}
-.hp-slide.is-out .hp-pane:nth-child(3){transition-delay:.4s}
+/* One full image per slide; opacity preserves a smooth interrupted crossfade. */
+.hp-slide{position:absolute;inset:0;opacity:0;z-index:0;pointer-events:none;transition:opacity 1.2s ease-in-out}
+.hp-slide.is-on{opacity:1;z-index:2}
+.hp-slide.is-out{z-index:1}
+.hp-pane{position:absolute;inset:0;background-image:var(--src);background-size:cover;background-position:60% 50%;filter:saturate(.9) brightness(1.03) contrast(.97)}
+.hp-pane:not(:first-child){display:none}
+.hero-ed{cursor:pointer}
+@media(prefers-reduced-motion:reduce){.hp-slide{transition:none}}
 /* 사진 왼쪽을 배경색으로 풀어 어떤 헤드라인이 올라와도 읽히게 한다 */
 .hp-fade{position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(90deg,var(--bg) 0%,rgba(244,240,230,.92) 18%,rgba(244,240,230,.6) 36%,rgba(244,240,230,.3) 54%,rgba(244,240,230,.08) 68%,rgba(244,240,230,0) 78%)}
-/* 카피 교체 — 첫 등장 규칙(.hero.ready .a)보다 우선하도록 선택자를 한 단계 더 준다.
-   등장은 퇴장보다 확실히 느리게 둔다. 급하게 나타나면 값싸 보인다. */
-/* 이징을 완만하게. --ease-soft는 앞 0.9초에 65%가 끝나 버려 아무리 늘려도 빨라 보인다 */
-.hero .hero-copy h1{transition:opacity 6s cubic-bezier(.35,.1,.25,1),transform 6s cubic-bezier(.35,.1,.25,1)}
-.hero .hero-copy .lead{transition:opacity 6s cubic-bezier(.35,.1,.25,1) .5s,transform 6s cubic-bezier(.35,.1,.25,1) .5s}
-.hero .hero-ed.swap h1,.hero .hero-ed.swap .lead{opacity:0;transform:translateY(-14px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
-.hero .hero-ed.rise h1,.hero .hero-ed.rise .lead{opacity:0;transform:translateY(26px);transition:none}
+.hero.ready .hero-copy h1,.hero.ready .hero-copy .lead{transition:opacity .65s ease;transform:none}
+.hero.ready .hero-ed.swap h1,.hero.ready .hero-ed.swap .lead{opacity:0;transform:none;transition:opacity .25s ease}
+@media(prefers-reduced-motion:reduce){.hero.ready .hero-copy h1,.hero.ready .hero-copy .lead{transition:none}}
 /* 진행 게이지 */
 .hero-gauge{display:flex;gap:8px;margin-top:26px}
 .hero-gauge .hg{position:relative;width:56px;height:3px;padding:0;border:0;border-radius:0;background:rgba(47,82,51,.2);overflow:hidden;cursor:pointer}
 .hero-gauge .hg::after{content:"";position:absolute;inset:-13px -4px} /* 터치 영역 확보 */
 .hero-gauge .hg i{position:absolute;inset:0;background:var(--accent);transform:scaleX(0);transform-origin:left}
 .hero-gauge .hg.done i{transform:scaleX(1)}
-.hero-gauge .hg.on i{animation:mmGauge 8s linear forwards}
+.hero-gauge .hg.on i{animation:mmGauge 5s linear forwards}
 @keyframes mmGauge{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-.hero-ed:hover .hero-gauge .hg.on i,.hero-gauge:focus-within .hg.on i{animation-play-state:paused}
+
 .hero-copy{position:relative;z-index:2;max-width:84%}
 .hero .cards{margin-top:64px}
 /* 히어로 스택 전환은 컴팩트 내비(860px)와 같은 지점에서 — 태블릿 구간에서 카피가 사진 위에 얹히지 않게 */
@@ -370,7 +359,7 @@ body{counter-reset:mmsec}
   .hp-fade{background:linear-gradient(180deg,rgba(244,240,230,0) 28%,rgba(244,240,230,.5) 58%,rgba(244,240,230,.92) 100%)}
   .hp-pane:nth-child(1),.hp-pane:nth-child(2),.hp-pane:nth-child(3){clip-path:none}
   .hp-pane:nth-child(2),.hp-pane:nth-child(3){display:none}
-  .hp-slide.is-out .hp-pane{transform:translate3d(48px,0,0)}
+
   .hero .cards{margin-top:44px}
 }
 .nav{background:rgba(244,240,230,.88);border-bottom:1px solid #2F5233}
@@ -440,6 +429,11 @@ body{counter-reset:mmsec}
 #about .about-hd h2,#why-t,.about-hd h2{
   font-family:'Gmarket Sans','SUIT Variable','Pretendard Variable',sans-serif!important;font-weight:700!important;
 }
+.warranty-note{display:block;font:400 12px/1.5 "Pretendard Variable",sans-serif;margin-top:6px;color:#63725B}
+.ev-card.is-expanded{transform:scale(1.08);box-shadow:4px 4px 0 var(--accent);z-index:2}.ev-track{padding-top:24px;padding-bottom:24px}
+@media(max-width:900px){.ev-card.is-expanded{transform:scale(1.06)}}.ev-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media(hover:hover) and (pointer:fine){.ev-card:hover{transform:scale(1.08);box-shadow:4px 4px 0 var(--accent);z-index:2}}
+@media(max-width:900px) and (hover:hover) and (pointer:fine){.ev-card:hover{transform:scale(1.06)}}
 </style>
 <link rel="stylesheet" href="responsive.css?v=r4">
 </head>
@@ -517,9 +511,9 @@ body{counter-reset:mmsec}
       </div>
     </div>
     <div class="about-stats">
-      <div class="ast"><div class="fig"><span data-count="1200">0</span><span class="u">+</span></div><div class="lab">누적 시공 세대<small>아파트·주택·상가</small></div></div>
+      <div class="ast"><div class="fig"><span data-count="1600">0</span><span class="u">+</span></div><div class="lab">누적 시공 세대<small>아파트·주택</small></div></div>
       <div class="ast"><div class="fig"><span data-count="4">0</span><span class="u">+</span></div><div class="lab">본사 정품 브랜드<small>KCC·LX·독일·고구려</small></div></div>
-      <div class="ast"><div class="fig"><span data-count="10">0</span><span class="u">년</span></div><div class="lab">본사 품질 보증<small>LX하우시스 본사제품 기준</small></div></div>
+      <div class="ast"><div class="fig"><span data-count="10">0</span><span class="u">년</span></div><div class="lab">본사 품질 보증<small>브랜드별 상이</small></div></div>
     </div>
   </div>
 </section>
@@ -568,8 +562,8 @@ body{counter-reset:mmsec}
       <a class="ev-card" href="about/#model" aria-label="창호 단독 시공과 본사 직거래 방식 자세히 보기">
         <div class="ev-body">
           <div class="ev-sub">WINDOW FIRST</div>
-          <div class="ev-title">창호만 따로<br>시공할 수 있어요</div>
-          <p class="ev-desc">창호만 단독으로도, 인테리어와 함께도 원하는 방식으로 진행합니다.<br>거주 중에도 시공할 수 있습니다.</p>
+          <div class="ev-title">창호만 따로<br>1 DAY 시공</div>
+          <p class="ev-desc">창호만 단독으로도, 인테리어와 함께도 원하는 방식으로 진행합니다.<br>거주 중에도 시공할 수 있습니다.<small class="warranty-note">시공 범위와 현장 조건에 따라 일정이 달라질 수 있습니다.</small></p>
         </div>
         <!-- 집은 그대로 두고 창만 교체 -->
         <div class="ev-ill" aria-hidden="true"><svg viewBox="0 0 150 100">
@@ -602,7 +596,7 @@ body{counter-reset:mmsec}
       <a class="ev-card" href="about/#brand-warranty" aria-label="본사 품질 보증 안내 자세히 보기">
         <div class="ev-body">
           <div class="ev-sub">WARRANTY</div>
-          <div class="ev-title">본사 품질 보증<br>10년</div>
+          <div class="ev-title">본사 품질 보증<br>10년<small class="warranty-note">브랜드별 상이</small></div>
           <p class="ev-desc">LX하우시스 본사 품질 보증 10년.</p>
         </div>
         <!-- 본사 품질 보증 방패 -->
@@ -622,7 +616,7 @@ body{counter-reset:mmsec}
 <!-- CASES — Apple Arcade 스타일 자동 캐러셀 -->
 <section class="sec reveal" id="cases" aria-labelledby="cases-t" style="overflow:hidden">
   <div class="ev-head">
-    <h2 id="cases-t">실제 시공 사례<br><span>사진 한 장이 백 마디 설명보다 정확합니다.</span></h2>
+    <h2 id="cases-t">실제 시공 사례<br><span>실제 현장의 시공 전후와 완성된 공간을 확인해보세요.</span></h2>
     <a href="projects/">전체 시공사례 보기</a>
   </div>
   <div class="cs-wrap">
@@ -651,14 +645,14 @@ body{counter-reset:mmsec}
     <div class="mi"><b>LX하우시스</b><span>본사 정품 직거래</span></div><span class="dot"></span>
     <div class="mi"><b>KBE</b><span>독일 직수입</span></div><span class="dot"></span>
     <div class="mi"><b>고구려안전방충망</b><span>안전·기밀</span></div><span class="dot"></span>
-    <div class="mi"><b>10년 보증</b><span>본사 품질 보증</span></div><span class="dot"></span>
+    <div class="mi"><b>10년 보증 <small class="warranty-note">브랜드별 상이</small></b><span>본사 품질 보증</span></div><span class="dot"></span>
     <div class="mi"><b>거주 시공</b><span>살면서 시공 가능</span></div><span class="dot"></span>
     <div class="mi"><b>20% 절감</b><span>유통 마진 직거래</span></div><span class="dot"></span>
     <div class="mi"><b>KCC</b><span>본사 정품 직거래</span></div><span class="dot"></span>
     <div class="mi"><b>LX하우시스</b><span>본사 정품 직거래</span></div><span class="dot"></span>
     <div class="mi"><b>KBE</b><span>독일 직수입</span></div><span class="dot"></span>
     <div class="mi"><b>고구려안전방충망</b><span>안전·기밀</span></div><span class="dot"></span>
-    <div class="mi"><b>10년 보증</b><span>본사 품질 보증</span></div><span class="dot"></span>
+    <div class="mi"><b>10년 보증 <small class="warranty-note">브랜드별 상이</small></b><span>본사 품질 보증</span></div><span class="dot"></span>
     <div class="mi"><b>거주 시공</b><span>살면서 시공 가능</span></div><span class="dot"></span>
     <div class="mi"><b>20% 절감</b><span>유통 마진 직거래</span></div><span class="dot"></span>
   </div>
@@ -727,9 +721,10 @@ setTimeout(function(){document.getElementById('hero').classList.add('ready');},4
     {h1:['DIRECT','PRICE'],
      lead:'30평 기준 약 200만 원을 아낍니다.<br>중간유통과정을 거치지 않아 유통 마진이 빠집니다.'},
     {h1:['STAY','HOME'],
-     lead:'이사 없이 창만 바꿉니다.<br>살던 집 그대로, 거주 중에도 시공할 수 있습니다.'}
+     lead:'이사 없이 창만 바꿉니다.<br>살던 집 그대로, 거주 중에도 시공할 수 있습니다.<small class="warranty-note">시공 범위와 현장 조건에 따라 일정이 달라질 수 있습니다.</small>'}
   ];
-  var idx=0,busy=false;
+  var idx=0;
+  slides.forEach(function(s,i){s.setAttribute('aria-hidden',String(i!==0));});
 
   /* 세 컷 모두 같은 글자 크기. 화면 폭에 비례해 잡는다 */
   var SIZE=0;
@@ -739,65 +734,53 @@ setTimeout(function(){document.getElementById('hero').classList.add('ready');},4
     h1.style.fontSize=SIZE.toFixed(1)+'px';
   }
 
-  var timers=[];
+  var timers=[],autoTimer;
+  function scheduleNext(){clearTimeout(autoTimer);if(!reduce)autoTimer=setTimeout(function(){go((idx+1)%slides.length);},5000);}
   function clearTimers(){timers.forEach(clearTimeout);timers=[];}
 
   function go(next){
-    if(busy||next===idx)return;
-    busy=true;clearTimers();
-    var prev=idx;idx=next;
-
-    /* 사진 — 나가는 장은 세 쪽으로 갈라지고, 들어오는 장은 한 몸으로 */
-    slides.forEach(function(s,i){if(i!==prev&&i!==idx)s.classList.remove('is-on','is-out','is-prep');});
-    slides[prev].classList.remove('is-on');slides[prev].classList.add('is-out');
-    slides[idx].classList.remove('is-out');slides[idx].classList.add('is-prep','is-on');
-    requestAnimationFrame(function(){requestAnimationFrame(function(){
-      slides[idx].classList.remove('is-prep');
-    });});
-
-    /* 카피 — 사진이 먼저 움직이고 글자가 아주 천천히 뒤따른다 */
-    timers.push(setTimeout(function(){
-      ed.classList.add('swap');
-      timers.push(setTimeout(function(){
-        h1.innerHTML=COPY[idx].h1.join('<br>');
-        lead.innerHTML=COPY[idx].lead;
-        ed.classList.remove('swap');ed.classList.add('rise');
-        requestAnimationFrame(function(){requestAnimationFrame(function(){
-          ed.classList.remove('rise');
-        });});
-      },620));
-    },160));
-
-    bars.forEach(function(b,i){
-      b.classList.remove('on','done');
-      if(i<idx)b.classList.add('done');
-    });
+    if(next===idx)return;
+    clearTimers();var prev=idx;idx=next;
+    slides.forEach(function(s,i){s.classList.toggle('is-out',i===prev);s.classList.toggle('is-on',i===idx);s.setAttribute('aria-hidden',String(i!==idx));});
+    ed.classList.add('swap');
+    function changeCopy(){h1.innerHTML=COPY[idx].h1.join('<br>');lead.innerHTML=COPY[idx].lead;ed.classList.remove('swap');}
+    if(reduce)changeCopy();else timers.push(setTimeout(changeCopy,250));
+    bars.forEach(function(b,i){b.classList.remove('on','done');b.setAttribute('aria-pressed',String(i===idx));if(i<idx)b.classList.add('done');});
+    void gauge.offsetWidth;
     if(!reduce)bars[idx].classList.add('on');
-
-    timers.push(setTimeout(function(){slides[prev].classList.remove('is-out');},3200));
-    timers.push(setTimeout(function(){busy=false;},900));
+    scheduleNext();
   }
-
-  bars.forEach(function(b,i){b.addEventListener('click',function(){go(i);});});
-  gauge.addEventListener('animationend',function(e){
-    if(e.animationName==='mmGauge')go((idx+1)%slides.length);
+  bars.forEach(function(b,i){b.addEventListener('click',function(e){e.stopPropagation();go(i);});});
+  ed.addEventListener('click',function(e){
+    if(e.target.closest('a,button,input,select,textarea'))return;
+    go((idx+1)%slides.length);
   });
+
 
   fit();addEventListener('resize',fit);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
 
-  /* 첫 등장이 끝난 뒤 게이지를 돌리고, 다음 사진들을 미리 받아 둔다 */
-  addEventListener('load',function(){
-    setTimeout(function(){
-      if(!reduce)bars[0].classList.add('on');
-      slides.slice(1).forEach(function(s){
-        var u=s.style.getPropertyValue('--src').replace(/^url\(['"]?|['"]?\)$/g,'');
-        if(u)(new Image()).src=u;
-      });
-    },1200);
+  /* Start independently of load and CSS animation events. */
+  if(!reduce)bars[idx].classList.add('on');
+  scheduleNext();
+  slides.slice(1).forEach(function(s){
+    var u=s.style.getPropertyValue('--src').replace(/^url\(['"]?|['"]?\)$/g,'');
+    if(u)(new Image()).src=u;
   });
 })();
 
+/* WHY cards enlarge in place; drag remains a carousel gesture. */
+(function(){
+ var startX=0,startY=0;
+ document.querySelectorAll('.ev-card').forEach(function(card){
+  card.setAttribute('role','button');card.setAttribute('aria-expanded','false');
+  card.setAttribute('aria-label',card.querySelector('.ev-title').textContent+' 설명 확대');
+  card.addEventListener('pointerdown',function(e){startX=e.clientX;startY=e.clientY;});
+  function toggle(){var on=!card.classList.contains('is-expanded');document.querySelectorAll('.ev-card').forEach(function(c){c.classList.remove('is-expanded');c.setAttribute('aria-expanded','false');});card.classList.toggle('is-expanded',on);card.setAttribute('aria-expanded',String(on));}
+  card.addEventListener('click',function(e){e.preventDefault();if(e.detail&&Math.abs(e.clientX-startX)+Math.abs(e.clientY-startY)>12)return;toggle();});
+  card.addEventListener('keydown',function(e){if(e.key===' '){e.preventDefault();toggle();}if(e.key==='Escape'){card.classList.remove('is-expanded');card.setAttribute('aria-expanded','false');}});
+ });
+})();
 /* WHY 카드 라인 일러스트 — 화면에 들어오면 선이 그려지고, 호버 때 다시 그려진다 */
 (function(){
   var cards=document.querySelectorAll('.ev-card');

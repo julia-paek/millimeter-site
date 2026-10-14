@@ -334,8 +334,6 @@ h1,h2{font-family:'SUIT Variable','SUIT','Pretendard Variable',Pretendard,sans-s
 
 
 /* Consulting partner, distinct from the construction photo galleries. */
-.partner-jump.monsteras-jump{border:2px solid #F37021;min-height:44px;background:#FFF0E2;color:var(--headline);box-shadow:4px 4px 0 #F37021}
-.partner-jump.monsteras-jump:hover,.partner-jump.monsteras-jump.active{background:#FFF0E2;color:var(--headline);box-shadow:4px 4px 0 #F37021}
 #partner-monsteras{padding-top:0;border-top:0;padding-bottom:64px;scroll-margin-top:calc(var(--nav-h) + 112px)}
 #partner-monsteras .phead{margin-bottom:24px;justify-content:flex-start;gap:22px;align-items:flex-end}
 #partner-monsteras .phead .monsteras-link{margin-bottom:7px}
@@ -377,7 +375,7 @@ h1,h2{font-family:'SUIT Variable','SUIT','Pretendard Variable',Pretendard,sans-s
 @media(max-width:640px){
   #partnerIndex{display:grid;grid-template-columns:max-content repeat(4,minmax(0,1fr));gap:6px;overflow:visible!important;padding:4px 0 6px!important}
   #partnerIndex .partner-jump{min-width:0;min-height:44px;height:44px;padding:0 4px;font-size:13px;transform:none;box-shadow:none}
-  #partnerIndex .monsteras-jump,#partnerIndex .monsteras-jump.active{padding-inline:10px;background:#FFF0E2;color:var(--headline);border-width:2px;box-shadow:3px 3px 0 #F37021}
+  #partnerIndex .monsteras-jump{padding-inline:10px;border-width:2px}
   .partner-index-shell{padding:8px 0;margin:22px 0 24px}
 }
 
@@ -426,6 +424,17 @@ h1,h2{font-family:'SUIT Variable','SUIT','Pretendard Variable',Pretendard,sans-s
  .partner-jump,.proj-cover i,.node-circle,.partner-social{transition:none}
 }
 
+@media(max-width:640px){#partnerIndex{grid-template-columns:repeat(3,minmax(0,1fr))}.partner{scroll-margin-top:180px}#partner-monsteras{scroll-margin-top:180px}}
+/* One interaction model for every partner; only the accent changes. */
+#partnerIndex .partner-jump{--partner-color:var(--accent);--partner-tint:#E8EDE3;border:1px solid var(--partner-color);background:var(--bg);color:var(--headline);box-shadow:none;transform:none;transition:background .2s ease,color .2s ease,transform .2s ease,box-shadow .2s ease}
+#partnerIndex .monsteras-jump{--partner-color:#F37021;--partner-tint:#FFF0E2}
+#partnerIndex .partner-jump:hover,#partnerIndex .partner-jump:focus-visible,#partnerIndex .partner-jump.active{background:var(--partner-tint);transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--partner-color)}
+#partnerIndex .partner-jump:focus-visible{outline:2px solid var(--partner-color);outline-offset:5px}
+@media(prefers-reduced-motion:reduce){#partnerIndex .partner-jump{transition:none}}
+/* Match the visible logo height to Naver, excluding the supplied image margins. */
+.social-thumb.ohou{--logo-height:23px;width:calc(var(--logo-height)*3.54);height:var(--logo-height);padding:0;border:0;overflow:hidden;mix-blend-mode:multiply}
+.social-thumb.ohou img{position:absolute;display:block;width:calc(var(--logo-height)*4.7);max-width:none;height:auto;left:calc(var(--logo-height)*-.6);top:calc(var(--logo-height)*-.433)}
+@media(max-width:640px){.social-thumb.ohou{--logo-height:22px}}
 </style>
 <link rel="stylesheet" href="../responsive.css?v=r4">
 </head>
@@ -630,6 +639,7 @@ function partnerProject(id,name,vendor,project,afterCount,beforeCount,coverIndex
   if(matchedPairs&&matchedPairs.length&&item.beforePhotos){
     var livingPair=matchedPairs.find(function(pair){return String(pair[2]||'').indexOf('거실')>-1;})||matchedPairs[0];
     var livingBefore=item.beforePhotos[livingPair[0]-1],livingAfter=item.photos[livingPair[1]-1];
+    item.roomPairs=matchedPairs.map(function(pair){return {room:pair[2],before:item.beforePhotos[pair[0]-1],after:item.photos[pair[1]-1]};});
     item.beforePhotos=prioritizePhotos(item.beforePhotos,matchedPairs.map(function(pair){return pair[0];}));
     item.photos=prioritizePhotos(item.photos,matchedPairs.map(function(pair){return pair[1];}));
     item.beforeCover=livingBefore.image;
@@ -656,6 +666,15 @@ var PARTNERS=[
      partnerProject('sc-wangsimni','왕십리 텐즈힐','space-changing','wangsimni-tenz-hill',244,0,146),
      partnerProject('sc-haengdang','행당 대림','space-changing','haengdang-daerim',193,0,166)
    ]},
+
+  {id:'double-m', short:'DOUBLE M', name:'DOUBLE M 인테리어', tagline:'아파트 리모델링 — 공간별 시공 전·후', specialty:['아파트','주거 리모델링'], status:'active', socials:[{type:'ohou',label:'오늘의집',href:'https://o2o.ohou.se/partner/myhome/12656906'}], projects:[
+roomProject('dm-donam-samsung','돈암 삼성','double-m','donam-samsung',3,3,1,[[1, 1, "거실"], [2, 2, "주방"], [3, 3, "욕실"]]),
+roomProject('dm-changjeon-hometown','창전동 현대홈타운','double-m','changjeon-hometown',3,3,1,[[1, 1, "거실"], [2, 2, "주방"], [3, 3, "현관·복도"]]),
+roomProject('dm-mapo-poonglim','마포 풍림1차','double-m','mapo-poonglim',3,3,1,[[1, 1, "거실"], [2, 2, "거실·주방"], [3, 3, "욕실"]]),
+roomProject('dm-daeheung-taeyoung','대흥동 태영','double-m','daeheung-taeyoung',3,3,1,[[1, 1, "거실"], [2, 2, "주방"], [3, 3, "발코니"]]),
+roomProject('dm-dohwa-hyundai','도화 현대1차','double-m','dohwa-hyundai',3,3,1,[[1, 1, "거실·주방"], [2, 2, "주방"], [3, 3, "욕실"]]),
+roomProject('dm-oryu-youngpoong','오류동 영풍마드레빌','double-m','oryu-youngpoong',1,1,1,[[1, 1, "거실"]])
+  ]},
 
   {id:'jiwoo', short:'지우', name:'지우인테리어디자인', tagline:'아파트 전체 리모델링 — 실제 시공 현장', specialty:['아파트','전체 리모델링'], status:'active',
    socials:[
@@ -684,14 +703,14 @@ var PARTNERS=[
    ]}
 ];
 
-document.getElementById('partnerIndex').innerHTML='<a class="partner-jump monsteras-jump active" href="#partner-monsteras" data-partner="partner-monsteras">몬스테라즈</a>'
+document.getElementById('partnerIndex').innerHTML='<a class="partner-jump monsteras-jump" href="#partner-monsteras" data-partner="partner-monsteras">몬스테라즈</a>'
   +PARTNERS.map(function(p){return '<a class="partner-jump" href="#partner-'+p.id+'" data-partner="partner-'+p.id+'">'+esc(p.short)+'</a>';}).join('');
 
 function socialLinksHtml(p){
   if(!p.socials||!p.socials.length)return '';
   return '<span class="partner-socials" aria-label="'+esc(p.name)+' 외부 채널">'+p.socials.map(function(s){
-    var thumb=s.type==='youtube'?'':s.type==='naver'?'N':'↗';
-    var brand=s.type==='youtube'?'YouTube':s.type==='naver'?'Naver Blog':'Website';
+    var thumb=s.type==='youtube'?'':s.type==='naver'?'N':s.type==='ohou'?'<img src="../assets/interior/double-m/ohou-logo.png" alt="">':'↗';
+    var brand=s.type==='youtube'?'YouTube':s.type==='naver'?'Naver Blog':s.type==='ohou'?'오늘의집':'Website';
     return '<a class="partner-social" href="'+esc(s.href)+'" target="_blank" rel="noopener noreferrer" aria-label="'+esc(p.name)+' '+esc(s.label)+' 바로가기" title="'+esc(s.label)+' 바로가기"><span class="social-thumb '+esc(s.type)+'" aria-hidden="true">'+thumb+'</span><span class="social-copy"><strong>'+brand+'</strong><small>'+esc(s.label)+'</small></span></a>';
   }).join('')+'</span>';
 }
@@ -702,7 +721,7 @@ document.getElementById('list').innerHTML=PARTNERS.map(function(p,pi){
     body='<div class="project-carousel">'
       +'<button class="pc-arrow pc-prev" type="button" aria-label="이전 시공사례">‹</button>'
       +'<div class="pgrid">'+p.projects.map(function(pr,ji){
-      var cover=pr.cover||pr.photos[0].image,hasBefore=pr.beforePhotos&&pr.beforePhotos.length,total=pr.photos.length+(hasBefore?pr.beforePhotos.length:0);
+      var cover=pr.cover||pr.photos[0].image,hasBefore=pr.beforePhotos&&pr.beforePhotos.length,total=pr.roomPairs&&pr.roomPairs.length?pr.roomPairs.length*2:pr.photos.length+(hasBefore?pr.beforePhotos.length:0);
       var coverHtml=hasBefore
         ?'<span class="proj-cover compare-cover"><span class="compare-shot compare-before"><i style="--img:url(\''+(pr.beforeCover||pr.beforePhotos[0].image)+'\')"></i><span class="compare-label">BEFORE</span></span><span class="compare-shot compare-after"><i style="--img:url(\''+(pr.afterCover||cover)+'\')"></i><span class="compare-label">AFTER</span></span></span>'
         :'<span class="proj-cover"><i style="--img:url(\''+cover+'\')"></i><span class="badge">'+pr.photos.length+'</span></span>';
@@ -742,7 +761,7 @@ document.getElementById('list').innerHTML=PARTNERS.map(function(p,pi){
   function update(){
     var navHeight=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h'))||54;
     var guide=scrollY+navHeight+document.querySelector('.partner-index-shell').offsetHeight+56;
-    var current='partner-monsteras';
+    var current='';
     sections.forEach(function(section){if(section.offsetTop<=guide)current=section.id;});
     activate(current);ticking=false;
   }
@@ -808,7 +827,7 @@ function prepareLbSets(){
   var hasBefore=curSets.before.length>0;
   lb.classList.toggle('has-photo-sets',hasBefore);lb.classList.toggle('has-room-pairs',!!curPairs.length);
   lbTabs.hidden=!hasBefore;lbThumbs.hidden=!hasBefore;
-  lbViewControls.hidden=!curPairs.length;lbRoomControl.hidden=curView!=='pairs';
+  lbViewControls.hidden=true;lbRoomControl.hidden=curView!=='pairs';
   lbRoomSelect.innerHTML=curPairs.map(function(pair,i){return '<option value="'+i+'">'+esc(pair.room)+'</option>';}).join('');
   lbViewControls.querySelectorAll('button').forEach(function(button){button.setAttribute('aria-pressed',button.dataset.view===curView?'true':'false');});
   if(hasBefore){lbAfterCount.textContent=curView==='pairs'?curPairs.length:curSets.after.length;lbBeforeCount.textContent=curView==='pairs'?curPairs.length:curSets.before.length;renderLbThumbs();updateLbTabs();}

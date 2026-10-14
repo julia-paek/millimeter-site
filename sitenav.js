@@ -124,7 +124,7 @@ var WINDOW_SECTIONS=[
     {href:site('windows/lx/euro-system-9/al/'),name:'유로시스템9 AL'}
   ]},
   {href:site('windows/kcc/'),name:'KCC',color:'#5C4433',items:[
-    {href:site('windows/kcc/#lineup'),name:'발코니창'},
+    {href:site('windows/kcc/#lineup'),name:'발코니창(외창)'},
     {href:site('windows/kcc/#lineup-inner'),name:'일반창(내창)'}
   ]},
   {href:site('windows/kbe/'),name:'독일시스템창호',color:'#464B52',items:[
@@ -230,13 +230,6 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDrops()
 var burger=document.getElementById('mgBurger'),mob=document.getElementById('mgMobile');
 function setMobile(open){mob.classList.toggle('open',open);burger.textContent=open?'CLOSE':'MENU';burger.setAttribute('aria-expanded',String(open));}
 burger.addEventListener('click',function(){setMobile(!mob.classList.contains('open'));});
-if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
-  var mobileHoverTimer=null;
-  function openMobileHover(){clearTimeout(mobileHoverTimer);setMobile(true);}
-  function closeMobileHover(){mobileHoverTimer=setTimeout(function(){setMobile(false);},180);}
-  burger.addEventListener('mouseenter',openMobileHover);burger.addEventListener('mouseleave',closeMobileHover);
-  mob.addEventListener('mouseenter',openMobileHover);mob.addEventListener('mouseleave',closeMobileHover);
-}
 mob.querySelectorAll('.mg-mtoggle').forEach(function(toggle){
   toggle.addEventListener('click',function(){
     var panel=toggle.nextElementSibling,open=!panel.classList.contains('open');
@@ -248,6 +241,18 @@ document.querySelectorAll('[data-inquiry]').forEach(function(link){
   link.addEventListener('click',function(e){e.preventDefault();closeDrops();setMobile(false);if(window.openModal)window.openModal();});
 });
 mob.querySelectorAll('.mg-mpanel a,.mg-mlink').forEach(function(a){if(!a.hasAttribute('data-inquiry'))a.addEventListener('click',function(){setMobile(false);});});
+document.querySelectorAll('#mmGnb a[href],#mgMobile a[href]').forEach(function(a){
+ a.addEventListener('click',function(e){
+  if(e.defaultPrevented||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||e.button!==0||a.hasAttribute('data-inquiry'))return;
+  var target=new URL(a.href,location.href);
+  if(target.origin!==location.origin||routeOf(target.href)!==here)return;
+  var section=target.hash&&document.getElementById(decodeURIComponent(target.hash.slice(1)));
+  if(target.hash&&!section)return;
+  e.preventDefault();closeDrops();setMobile(false);
+  if(target.hash)history.replaceState(null,'',target.hash);else history.replaceState(null,'',target.pathname+target.search);
+  scrollTo({top:section?section.getBoundingClientRect().top+scrollY-72:0,behavior:'instant'});
+ });
+});
 document.addEventListener('click',function(e){if(mob.classList.contains('open')&&!mob.contains(e.target)&&!burger.contains(e.target))setMobile(false);});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')setMobile(false);});
 })();

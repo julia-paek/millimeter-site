@@ -74,7 +74,7 @@ if(cta){
 var ft=document.getElementById('mm-footer');
 if(ft){
   ft.outerHTML='<footer class="footer-full">'
-   +'<div class="footer-certs"><span>K-BPI 창호 1위</span><span>KS 인증</span><span>ISO 9001</span><span>본사 10년 보증</span><span>정품 직거래</span><span>거주 시공 가능</span></div>'
+   +'<div class="footer-certs"><span>K-BPI 창호 1위</span><span>KS 인증</span><span>ISO 9001</span><span>본사 10년 보증 <small>브랜드별 상이</small></span><span>정품 직거래</span><span>거주 시공 가능</span></div>'
    +'<div class="footer-info-grid">'
    +'<div><a href="'+site('')+'" aria-label="MM LAB 홈"><img src="'+site('assets/brand/mm-lab-lockup-horizontal-green.png?v=b1')+'" width="1489" height="393" alt="MM LAB" style="display:block;width:148px;max-width:100%;height:auto;margin-bottom:14px;"></a><p>정밀한 자재, 합리적인 가치.<br>본사 정품 창호 직거래의 구조.</p>'
    +'<p style="margin-top:12px;"><a href="'+site('windows/kcc/')+'">KCC</a> · <a href="'+site('windows/lx/viewframe/finished/')+'">LX 뷰프레임 완성창</a> · <a href="'+site('windows/lx/euro-system-9/pl/')+'">유로시스템9</a> · <a href="'+site('windows/kbe/')+'">KBE</a> · <a href="'+site('screens/kogo/')+'">고구려</a></p></div>'

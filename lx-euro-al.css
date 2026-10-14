@@ -1721,12 +1721,8 @@ body[data-e9-material="al"] .e9-pl-card[data-e9-pl-family="slide"] strong {
 }
 
 @media (min-width: 769px) {
-  .e9-pl-features .e9-feature-grid[data-feature-count="2"]::after {
-    content: "";
-    grid-column: 3;
-    align-self: start;
-    border-top: 1px solid var(--e9-green);
-  }
+  .e9-pl-features .e9-feature-grid[data-feature-count="2"] { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .e9-pl-features .e9-feature-grid[data-feature-count="2"]::after { content:none; }
 }
 
 .e9-pl-features .e9-feature-card > img {
