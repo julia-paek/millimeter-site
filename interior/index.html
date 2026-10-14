@@ -432,7 +432,10 @@ h1,h2{font-family:'SUIT Variable','SUIT','Pretendard Variable',Pretendard,sans-s
 #partnerIndex .partner-jump:focus-visible{outline:2px solid var(--partner-color);outline-offset:5px}
 @media(prefers-reduced-motion:reduce){#partnerIndex .partner-jump{transition:none}}
 /* Match the visible logo height to Naver, excluding the supplied image margins. */
-.social-thumb.ohou{--logo-height:23px;width:calc(var(--logo-height)*3.54);height:var(--logo-height);padding:0;border:0;overflow:hidden;mix-blend-mode:multiply}
+.social-thumb.ohou{--logo-height:23px;width:calc(var(--logo-height)*3.54);height:var(--logo-height);padding:0;border:0;overflow:hidden}
+.partner-social:has(.social-thumb.ohou){position:relative;mix-blend-mode:multiply;border:0}
+.partner-social:has(.social-thumb.ohou):focus-visible{outline:none;box-shadow:none;text-decoration:none}
+.partner-social:has(.social-thumb.ohou):focus-visible::after{content:"";position:absolute;left:0;right:0;bottom:-5px;border-bottom:2px solid currentColor}
 .social-thumb.ohou img{position:absolute;display:block;width:calc(var(--logo-height)*4.7);max-width:none;height:auto;left:calc(var(--logo-height)*-.6);top:calc(var(--logo-height)*-.433)}
 @media(max-width:640px){.social-thumb.ohou{--logo-height:22px}}
 </style>

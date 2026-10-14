@@ -322,7 +322,7 @@ body{counter-reset:mmsec}
 .hero-photo{position:absolute;top:0;right:0;width:66%;height:100%;overflow:hidden;background:#EAE4D6;z-index:1}
 .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:60% 50%;filter:saturate(.9) brightness(1.03) contrast(.97)}
 /* One full image per slide; opacity preserves a smooth interrupted crossfade. */
-.hp-slide{position:absolute;inset:0;opacity:0;z-index:0;pointer-events:none;transition:opacity 1.2s ease-in-out}
+.hp-slide{position:absolute;inset:0;opacity:0;z-index:0;pointer-events:none;transition:opacity .8s ease-in-out}
 .hp-slide.is-on{opacity:1;z-index:2}
 .hp-slide.is-out{z-index:1}
 .hp-pane{position:absolute;inset:0;background-image:var(--src);background-size:cover;background-position:60% 50%;filter:saturate(.9) brightness(1.03) contrast(.97)}
@@ -340,7 +340,7 @@ body{counter-reset:mmsec}
 .hero-gauge .hg::after{content:"";position:absolute;inset:-13px -4px} /* 터치 영역 확보 */
 .hero-gauge .hg i{position:absolute;inset:0;background:var(--accent);transform:scaleX(0);transform-origin:left}
 .hero-gauge .hg.done i{transform:scaleX(1)}
-.hero-gauge .hg.on i{animation:mmGauge 5s linear forwards}
+.hero-gauge .hg.on i{animation:mmGauge 3.5s linear forwards}
 @keyframes mmGauge{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
 .hero-copy{position:relative;z-index:2;max-width:84%}
@@ -430,8 +430,8 @@ body{counter-reset:mmsec}
   font-family:'Gmarket Sans','SUIT Variable','Pretendard Variable',sans-serif!important;font-weight:700!important;
 }
 .warranty-note{display:block;font:400 12px/1.5 "Pretendard Variable",sans-serif;margin-top:6px;color:#63725B}
-.ev-card.is-expanded{transform:scale(1.08);box-shadow:4px 4px 0 var(--accent);z-index:2}.ev-track{padding-top:24px;padding-bottom:24px}
-@media(max-width:900px){.ev-card.is-expanded{transform:scale(1.06)}}.ev-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.ev-track{padding-top:24px;padding-bottom:24px}
+.ev-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 @media(hover:hover) and (pointer:fine){.ev-card:hover{transform:scale(1.08);box-shadow:4px 4px 0 var(--accent);z-index:2}}
 @media(max-width:900px) and (hover:hover) and (pointer:fine){.ev-card:hover{transform:scale(1.06)}}
 </style>
@@ -574,7 +574,7 @@ body{counter-reset:mmsec}
         </svg></div>
       </a>
 
-      <a class="ev-card" href="interior/" aria-label="검증된 협력사 인테리어 안내 보기">
+      <a class="ev-card" href="interior/#partners" aria-label="검증된 협력사 인테리어 안내 보기">
         <div class="ev-body">
           <div class="ev-sub">VERIFIED NETWORK</div>
           <div class="ev-title">검증된 협력사와<br>연결해 드려요</div>
@@ -735,7 +735,7 @@ setTimeout(function(){document.getElementById('hero').classList.add('ready');},4
   }
 
   var timers=[],autoTimer;
-  function scheduleNext(){clearTimeout(autoTimer);if(!reduce)autoTimer=setTimeout(function(){go((idx+1)%slides.length);},5000);}
+  function scheduleNext(){clearTimeout(autoTimer);if(!reduce)autoTimer=setTimeout(function(){go((idx+1)%slides.length);},3500);}
   function clearTimers(){timers.forEach(clearTimeout);timers=[];}
 
   function go(next){
@@ -769,18 +769,6 @@ setTimeout(function(){document.getElementById('hero').classList.add('ready');},4
   });
 })();
 
-/* WHY cards enlarge in place; drag remains a carousel gesture. */
-(function(){
- var startX=0,startY=0;
- document.querySelectorAll('.ev-card').forEach(function(card){
-  card.setAttribute('role','button');card.setAttribute('aria-expanded','false');
-  card.setAttribute('aria-label',card.querySelector('.ev-title').textContent+' 설명 확대');
-  card.addEventListener('pointerdown',function(e){startX=e.clientX;startY=e.clientY;});
-  function toggle(){var on=!card.classList.contains('is-expanded');document.querySelectorAll('.ev-card').forEach(function(c){c.classList.remove('is-expanded');c.setAttribute('aria-expanded','false');});card.classList.toggle('is-expanded',on);card.setAttribute('aria-expanded',String(on));}
-  card.addEventListener('click',function(e){e.preventDefault();if(e.detail&&Math.abs(e.clientX-startX)+Math.abs(e.clientY-startY)>12)return;toggle();});
-  card.addEventListener('keydown',function(e){if(e.key===' '){e.preventDefault();toggle();}if(e.key==='Escape'){card.classList.remove('is-expanded');card.setAttribute('aria-expanded','false');}});
- });
-})();
 /* WHY 카드 라인 일러스트 — 화면에 들어오면 선이 그려지고, 호버 때 다시 그려진다 */
 (function(){
   var cards=document.querySelectorAll('.ev-card');
@@ -903,7 +891,7 @@ function initCarousel(trackId,prevId,nextId){
   track.addEventListener('pointerdown',function(e){down=true;moved=0;sx=e.clientX;sl=track.scrollLeft;track.classList.add('drag');});
   addEventListener('pointermove',function(e){if(!down)return;var dx=e.clientX-sx;moved+=Math.abs(dx);track.scrollLeft=sl-dx;});
   addEventListener('pointerup',function(){if(!down)return;down=false;track.classList.remove('drag');});
-  track.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(e){if(moved>8)e.preventDefault();});});
+  track.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(e){if(e.detail && moved>8)e.preventDefault();});});
 }
 /* ═══════════ 콘텐츠 데이터 (→ 나중에 관리자/Supabase 연결 시 이 배열만 교체) ═══════════ */
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
