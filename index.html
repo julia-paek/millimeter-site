@@ -345,6 +345,7 @@ body{counter-reset:mmsec}
 
 .hero-copy{position:relative;z-index:2;max-width:84%}
 .hero .cards{margin-top:64px}
+@media(max-width:900px){#cards{transform:none!important}}
 /* 히어로 스택 전환은 컴팩트 내비(860px)와 같은 지점에서 — 태블릿 구간에서 카피가 사진 위에 얹히지 않게 */
 @media(max-width:860px){
   .hero-ed{display:grid;grid-template-columns:1fr;min-height:0}
@@ -896,7 +897,14 @@ if('IntersectionObserver' in window){
 /* hero parallax (subtle, desktop only) */
 if(!reduce){
   var cards=document.getElementById('cards');
-  addEventListener('scroll',function(){if(innerWidth<=900||!cards)return;var y=scrollY*0.04;cards.style.transform='translateY('+(-y)+'px)';},{passive:true});
+  function updateCardParallax(){
+    if(!cards)return;
+    if(innerWidth<=900){cards.style.removeProperty('transform');return;}
+    var y=scrollY*0.04;cards.style.transform='translateY('+(-y)+'px)';
+  }
+  addEventListener('scroll',updateCardParallax,{passive:true});
+  addEventListener('resize',updateCardParallax);
+  updateCardParallax();
 }
 
 /* carousel: arrows + drag (범용) */
