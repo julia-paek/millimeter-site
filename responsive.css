@@ -83,7 +83,7 @@ button,input,select,textarea{max-width:100%}
   #about .ast{display:block!important;padding:22px 4px 20px!important;border-right:1px solid #D9D1C1!important;border-bottom:0!important}
   #about .ast:last-child{border-right:0!important}
   #about .ast .ic{display:block!important}
-  #about .ast .fig{font-size:clamp(30px,10vw,40px)!important;white-space:nowrap!important}
+  #about .ast .fig{display:flex;align-items:baseline;gap:2px;font-size:clamp(24px,7.5vw,40px)!important;white-space:nowrap!important;max-width:100%}
   #about .ast .lab{margin-top:12px!important;font-size:clamp(10px,3vw,12px)!important;line-height:1.4!important;white-space:nowrap!important}
   #about .ast .lab small{font-size:clamp(8px,2.45vw,10px)!important;line-height:1.4!important;white-space:nowrap!important}
   .ev-track,.cs-track,.pc-track{padding-left:var(--mobile-edge)!important;padding-right:var(--mobile-edge)!important}
@@ -140,7 +140,6 @@ button,input,select,textarea{max-width:100%}
   :root{--mobile-edge:14px}
   .mg-logo small{display:none!important}
   .hero h1,.display{font-size:clamp(36px,11.5vw,46px)!important}
-  #about .ast .fig{font-size:clamp(28px,9.5vw,37px)!important}
   .ev-card{flex-basis:min(76vw,282px)!important;max-width:min(76vw,282px)!important}
   .brand,.pc-card{flex-basis:min(76vw,276px)!important;max-width:min(76vw,276px)!important}
   .vf-location-stage{grid-template-columns:1fr!important}
