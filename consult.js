@@ -2,14 +2,14 @@
    ─────────────────────────────────────────────────────────────
    · 창호 페이지는 창호 상담, 인테리어 페이지는 인테리어 상담이 기본입니다.
    · 방문자는 상담창 상단에서 상담 종류를 바꿀 수 있습니다.
-   · 접수 방식은 기존 mailto(메일 앱 열기)를 유지합니다.
-   · 'service'와 'demo' 모드는 추후 필요할 때 그대로 사용할 수 있습니다. */
+   · 상담 내용은 Google 웹 앱을 통해 지정된 운영자에게 직접 전송합니다.
+   · 서버가 접수 번호와 성공 응답을 반환한 경우에만 접수 완료를 표시합니다. */
 (function(){
 'use strict';
 window.MM_CONSULT = window.MM_CONSULT || {
-  mode: 'mailto',
-  endpoint: '',                    /* 예: 'https://formspree.io/f/xxxxxxx' */
-  email: 'urbanroad@mmlab.co.kr',
+  mode: 'service',
+  endpoint: 'https://script.google.com/macros/s/AKfycby9BjPJYWaBcjMN5tgiYQj6KqSRMtorRgzGsL1Dh8-Dk-fqMKDdn8vmYkqp73uF3fObqw/exec',
+  email: 'urbanroad@millimeter.co.kr',
   tel: '02-6012-0033',
   kakao: ''                        /* 값을 넣으면 카카오톡 상담 링크가 표시됩니다 */
 };
@@ -177,7 +177,10 @@ function enhanceForm(form){
     setTimeout(function(){ setType(form, form.dataset.defaultConsultType, false); }, 0);
   });
   var status=document.createElement('p');status.className='mm-consult-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');form.appendChild(status);
-  var submit=form.querySelector('[type=submit]');if(submit) submit.textContent='상담 메일 작성하기';
+  function clearStatus(){if(!form._mmSending)status.textContent='';}
+  form.addEventListener('input',clearStatus);form.addEventListener('change',clearStatus);
+  chooser.addEventListener('click',clearStatus);
+  var submit=form.querySelector('[type=submit]');if(submit) submit.textContent=C.mode==='service'?'상담 신청하기':'상담 메일 작성하기';
   form.addEventListener('submit',function(e){
     e.preventDefault();e.stopImmediatePropagation();
     if(!form.reportValidity()) return;
@@ -189,19 +192,38 @@ function enhanceForm(form){
   setType(form, defaultType, false);
 }
 
-/* 폼 제출 공용 처리 — 기존 메일 앱 열기 방식을 그대로 유지합니다. */
+/* 폼 제출 공용 처리 — 서버 응답을 확인한 직접 접수. */
 window.mmConsultSubmit = function(form, cb){
   var d = fields(form);
-  if(C.mode === 'service' && C.endpoint){
-    fetch(C.endpoint, {method:'POST', body:new FormData(form), headers:{'Accept':'application/json'}})
-      .then(function(r){
-        if(!r.ok) throw new Error(r.status);
-        cb({ok:true, title:'접수됐습니다', message:'영업일 24시간 안에 연락드릴게요.'});
+  if(C.mode === 'service'){
+    if(form._mmSending) return;
+    if(!C.endpoint){cb({ok:false,title:'접수 연결을 준비 중입니다',message:C.tel+' 로 문의해주세요.'});return;}
+    var payload=new FormData(form),fingerprint=JSON.stringify(Array.from(payload.entries()));
+    if(!form._mmRequest || form._mmRequest.fingerprint!==fingerprint){
+      form._mmRequest={fingerprint:fingerprint,id:crypto.randomUUID()};
+    }
+    var requestId=form._mmRequest.id;
+    payload.set('requestId',requestId);
+    var controller=new AbortController(),timer=setTimeout(function(){controller.abort();},60000);
+    var button=form.querySelector('[type=submit]');
+    form._mmSending=true;form.setAttribute('aria-busy','true');
+    if(button){button.disabled=true;button.textContent='접수 중…';}
+    cb({ok:false,pending:true,title:'상담 내용을 보내고 있습니다',message:'잠시만 기다려주세요.'});
+    return fetch(C.endpoint,{method:'POST',body:payload,signal:controller.signal,credentials:'omit',redirect:'follow'})
+      .then(function(r){if(!r.ok)throw new Error('http');return r.json();})
+      .then(function(result){
+        if(result.ok!==true || result.requestId!==requestId){
+          cb({ok:false,title:'접수되지 않았습니다',message:'입력 내용을 확인하거나 '+C.tel+' 로 문의해주세요.'});return;
+        }
+        cb({ok:true,title:'상담이 접수됐습니다',message:'영업일 24시간 안에 연락드릴게요.'});
       })
       .catch(function(){
-        cb({ok:false, title:'접수에 실패했습니다', message:'잠시 후 다시 시도하시거나 ' + C.tel + ' 로 전화 주세요.'});
+        cb({ok:false,title:'접수 결과를 확인하지 못했습니다',message:'입력 내용은 유지됩니다. 잠시 후 다시 시도하거나 '+C.tel+' 로 확인해주세요.'});
+      })
+      .finally(function(){
+        clearTimeout(timer);form._mmSending=false;form.removeAttribute('aria-busy');
+        if(button){button.disabled=false;button.textContent='상담 신청하기';}
       });
-    return;
   }
   if(C.mode === 'mailto'){
     location.href = mailtoUrl(d);
