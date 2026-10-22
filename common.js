@@ -81,7 +81,7 @@ if(ft){
    +'<div><h5>고객 지원</h5><ul>'
    +'<li><a href="#" onclick="openModal();return false;">상담신청</a></li>'
    +'<li><a href="mailto:urbanroad@millimeter.co.kr">urbanroad@millimeter.co.kr</a></li>'
-   +'<li><a href="tel:02-6012-0033">02-6012-0033 (평일 09:00~18:00)</a></li>'
+   +'<li>(평일 09:00~18:00)</li>'
    +'<li><a href="'+site('projects/')+'">시공사례</a></li>'
    +'<li><a href="'+site('interior/')+'">인테리어 협력</a></li></ul></div>'
    +'<div><h5>B2B / 도매 문의</h5><ul>'

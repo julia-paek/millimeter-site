@@ -10,10 +10,11 @@ window.MM_CONSULT = window.MM_CONSULT || {
   mode: 'service',
   endpoint: 'https://script.google.com/macros/s/AKfycby9BjPJYWaBcjMN5tgiYQj6KqSRMtorRgzGsL1Dh8-Dk-fqMKDdn8vmYkqp73uF3fObqw/exec',
   email: 'urbanroad@millimeter.co.kr',
-  tel: '02-6012-0033',
+  tel: '',                         /* 전화 접수 재개 시 '02-6012-0033' 입력 */
   kakao: ''                        /* 값을 넣으면 카카오톡 상담 링크가 표시됩니다 */
 };
 var C = window.MM_CONSULT;
+function contact(){ return C.tel || C.email; }
 var formCount = 0;
 
 function routeDefaultType(){
@@ -197,7 +198,7 @@ window.mmConsultSubmit = function(form, cb){
   var d = fields(form);
   if(C.mode === 'service'){
     if(form._mmSending) return;
-    if(!C.endpoint){cb({ok:false,title:'접수 연결을 준비 중입니다',message:C.tel+' 로 문의해주세요.'});return;}
+    if(!C.endpoint){cb({ok:false,title:'접수 연결을 준비 중입니다',message:contact()+' 로 문의해주세요.'});return;}
     var payload=new FormData(form),fingerprint=JSON.stringify(Array.from(payload.entries()));
     if(!form._mmRequest || form._mmRequest.fingerprint!==fingerprint){
       form._mmRequest={fingerprint:fingerprint,id:crypto.randomUUID()};
@@ -213,12 +214,12 @@ window.mmConsultSubmit = function(form, cb){
       .then(function(r){if(!r.ok)throw new Error('http');return r.json();})
       .then(function(result){
         if(result.ok!==true || result.requestId!==requestId){
-          cb({ok:false,title:'접수되지 않았습니다',message:'입력 내용을 확인하거나 '+C.tel+' 로 문의해주세요.'});return;
+          cb({ok:false,title:'접수되지 않았습니다',message:'입력 내용을 확인하거나 '+contact()+' 로 문의해주세요.'});return;
         }
         cb({ok:true,title:'상담이 접수됐습니다',message:'영업일 24시간 안에 연락드릴게요.'});
       })
       .catch(function(){
-        cb({ok:false,title:'접수 결과를 확인하지 못했습니다',message:'입력 내용은 유지됩니다. 잠시 후 다시 시도하거나 '+C.tel+' 로 확인해주세요.'});
+        cb({ok:false,title:'접수 결과를 확인하지 못했습니다',message:'입력 내용은 유지됩니다. 잠시 후 다시 시도하거나 '+contact()+' 로 확인해주세요.'});
       })
       .finally(function(){
         clearTimeout(timer);form._mmSending=false;form.removeAttribute('aria-busy');
@@ -227,7 +228,7 @@ window.mmConsultSubmit = function(form, cb){
   }
   if(C.mode === 'mailto'){
     location.href = mailtoUrl(d);
-    cb({ok:true, title:'메일 앱에서 발송을 완료해주세요', message:'메일 초안 열기를 요청했습니다. 아직 발송되지 않았습니다. 초안을 확인하고 메일 앱에서 보내기를 눌러주세요.\n메일 앱이 없다면 ' + C.tel + ' 로 전화 주세요.'});
+    cb({ok:true, title:'메일 앱에서 발송을 완료해주세요', message:'메일 초안 열기를 요청했습니다. 아직 발송되지 않았습니다. 초안을 확인하고 메일 앱에서 보내기를 눌러주세요.' + (C.tel ? '\n메일 앱이 없다면 ' + C.tel + ' 로 전화 주세요.' : '')});
     return;
   }
   cb({ok:true, title:'데모 화면입니다', message:'실제 발송은 사이트 오픈 시 연결됩니다.'});
@@ -237,7 +238,7 @@ function addAltRow(form){
   if(!form || form.querySelector('.mm-consult-alt')) return;
   var p = document.createElement('p');
   p.className = 'mm-consult-alt';
-  var links = '<a href="tel:' + C.tel.replace(/-/g, '') + '">전화 ' + C.tel + '</a> · <a href="mailto:' + C.email + '">이메일 보내기</a>';
+  var links = (C.tel ? '<a href="tel:' + C.tel.replace(/-/g, '') + '">전화 ' + C.tel + '</a> · ' : '') + '<a href="mailto:' + C.email + '">이메일 보내기</a>';
   if(C.kakao){ links += ' · <a href="' + C.kakao + '" target="_blank" rel="noopener">카카오톡 상담</a>'; }
   p.innerHTML = '폼이 번거로우시면 — ' + links;
   form.appendChild(p);

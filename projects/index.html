@@ -59,9 +59,16 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .fbtn:hover{border-color:#1F3822}
 .fbtn.on{background:#1F3822;color:#fff;border-color:#1F3822}
 
+/* region filter */
+.region-filter{display:flex;align-items:center;justify-content:center;gap:10px;margin:12px 0 0}
+.region-filter label{font-size:13px;font-weight:600;color:var(--ink)}
+.region-filter select{min-width:220px;padding:9px 36px 9px 14px;border:1px solid var(--line-strong);border-radius:0;font:500 14px/1.3 inherit;font-family:inherit;color:var(--ink);background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%231F3822' stroke-width='1.6'/%3E%3C/svg%3E") right 14px center/12px 8px no-repeat;-webkit-appearance:none;appearance:none;cursor:pointer}
+.region-filter select:focus{outline:2px solid #1F3822;outline-offset:2px}
+@media(max-width:740px){.region-filter select{flex:1;min-width:0;max-width:320px;font-size:16px}}
+
 /* gallery */
 .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px;padding:48px 0 40px}
-@media(max-width:740px){.gallery{grid-template-columns:1fr;gap:18px}}
+@media(max-width:740px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 10px;padding:28px 0 32px}}
 .gcard{cursor:pointer;opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease-soft),transform .8s var(--ease-soft)}
 .gcard.in{opacity:1;transform:none}
 .gcard.hide{display:none}
@@ -166,6 +173,8 @@ h1,h2{font-family:'SUIT Variable','SUIT','Pretendard Variable',Pretendard,sans-s
 
 /* 타이틀 메인카피 — Gmarket Sans Bold */
 .head h1,.gtitle,.lb-cap .t,.modal h3{font-family:'Gmarket Sans','Pretendard Variable',Pretendard,sans-serif!important;font-weight:700!important}
+/* mobile 2-column cards */
+@media(max-width:740px){.gbadge{margin-top:9px;font-size:10px}.gtitle{font-size:14px;line-height:1.35;margin-top:3px;word-break:keep-all;overflow-wrap:anywhere}.gsub{font-size:12px;line-height:1.4;word-break:keep-all}.gcount{left:6px;bottom:6px;padding:4px 6px;font-size:9px}.gcompare-label{left:5px;top:5px;padding:3px 5px;font-size:8px}.gvideo-label{top:6px!important;left:6px!important;padding:4px 5px;font-size:7px}.gvideo-play{width:38px!important;height:38px!important;box-shadow:3px 3px 0 rgba(31,56,34,.72)!important}.gvideo-action{display:none}}
 </style>
 <link rel="stylesheet" href="../responsive.css?v=r4">
 </head>
@@ -190,19 +199,20 @@ h1,h2{font-family:'SUIT Variable','SUIT','Pretendard Variable',Pretendard,sans-s
       <h1>실제 시공 사례</h1>
       <p>실제 현장의 시공 전후와 완성된 공간을 확인해보세요.</p>
       <div class="filter" id="filter" role="group" aria-label="시공사례 유형 필터"></div>
+      <div class="region-filter" id="regionFilter"><label for="regionSelect">지역</label><select id="regionSelect" aria-label="시공사례 지역 필터"></select></div>
     </div>
   </section>
 
   <section class="wrap" aria-label="시공사례 갤러리">
     <div class="gallery" id="gallery"></div>
-    <p class="empty" id="empty">해당 유형의 시공사례가 아직 없습니다.</p>
+    <p class="empty" id="empty">해당 조건의 시공사례가 아직 없습니다.</p>
   </section>
 </main>
 
 <footer class="footer">
   <div class="wrap">
     <div class="footer-grid">
-      <div><a href="../" aria-label="MM LAB 홈" style="display:inline-block;line-height:0;margin-bottom:14px"><img src="../assets/brand/mm-lab-lockup-horizontal-green.png?v=b1" width="1489" height="393" alt="MM LAB" style="display:block;width:148px;height:auto"></a><p>공간의 완성은 밀리미터의 차이에서 시작됩니다.</p><p style="margin-top:12px"><a href="mailto:urbanroad@millimeter.co.kr">urbanroad@millimeter.co.kr</a><br><a href="tel:02-6012-0033">02-6012-0033</a> (평일 09:00~18:00)</p></div>
+      <div><a href="../" aria-label="MM LAB 홈" style="display:inline-block;line-height:0;margin-bottom:14px"><img src="../assets/brand/mm-lab-lockup-horizontal-green.png?v=b1" width="1489" height="393" alt="MM LAB" style="display:block;width:148px;height:auto"></a><p>공간의 완성은 밀리미터의 차이에서 시작됩니다.</p><p style="margin-top:12px"><a href="mailto:urbanroad@millimeter.co.kr">urbanroad@millimeter.co.kr</a>(평일 09:00~18:00)</p></div>
       <div><h4>창호 브랜드</h4><a href="../windows/lx/">LX하우시스</a><a href="../windows/kcc/">KCC</a><a href="../windows/kbe/">독일 시스템창호</a><a href="../screens/kogo/">고구려안전방충망</a></div>
       <div><h4>바로가기</h4><a href="../">홈</a><a href="../#cases">메인 시공사례</a><a href="#" onclick="openModal();return false;">상담신청</a></div>
     </div>
@@ -276,11 +286,136 @@ var CASES = [
   ]},
   {id:'daebang-daerim-59', brand:'창호시공', status:'published', price:null, purchasable:false, title:'대방대림 59평형 창호 시공', location:'서울 · 동작구 · 대방대림', image:'../assets/projects/daebang-daerim-59/01.webp', images:[
     {src:'../assets/projects/daebang-daerim-59/01.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-59/02.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-59/03.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-59/04.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-59/05.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-59/06.webp',label:'창호시공'}
+  ]},
+  {id:'amsa-prior-palace-01', brand:'창호시공', status:'published', price:null, purchasable:false, title:'암사 프라이어팰리스 창호 시공 · 01', location:'서울 · 강동구 · 암사 프라이어팰리스', image:'../assets/projects/amsa-prior-palace-01/01.webp', thumb:'../assets/projects/amsa-prior-palace-01/cover.webp', images:[
+    {src:'../assets/projects/amsa-prior-palace-01/01.webp',label:'창호시공'},{src:'../assets/projects/amsa-prior-palace-01/02.webp',label:'창호시공'},{src:'../assets/projects/amsa-prior-palace-01/03.webp',label:'창호시공'},{src:'../assets/projects/amsa-prior-palace-01/04.webp',label:'창호시공'},{src:'../assets/projects/amsa-prior-palace-01/05.webp',label:'창호시공'},{src:'../assets/projects/amsa-prior-palace-01/06.webp',label:'창호시공'},{src:'../assets/projects/amsa-prior-palace-01/07.webp',label:'창호시공'},{src:'../assets/projects/amsa-prior-palace-01/08.webp',label:'창호시공'}
+  ]},
+  {id:'amsa-prior-palace-02', brand:'창호시공', status:'published', price:null, purchasable:false, title:'암사 프라이어팰리스 창호 시공 · 02', location:'서울 · 강동구 · 암사 프라이어팰리스', image:'../assets/projects/amsa-prior-palace-02/01.webp', thumb:'../assets/projects/amsa-prior-palace-02/cover.webp', images:[
+    {src:'../assets/projects/amsa-prior-palace-02/01.webp',label:'창호시공'},{src:'../assets/projects/amsa-prior-palace-02/02.webp',label:'창호시공'},{src:'../assets/projects/amsa-prior-palace-02/03.webp',label:'창호시공'},{src:'../assets/projects/amsa-prior-palace-02/04.webp',label:'창호시공'},{src:'../assets/projects/amsa-prior-palace-02/05.webp',label:'창호시공'},{src:'../assets/projects/amsa-prior-palace-02/06.webp',label:'창호시공'},{src:'../assets/projects/amsa-prior-palace-02/07.webp',label:'창호시공'},{src:'../assets/projects/amsa-prior-palace-02/08.webp',label:'창호시공'}
+  ]},
+  {id:'magok-woorim-feelu', brand:'창호시공', status:'published', price:null, purchasable:false, title:'마곡 우림필유 창호 시공', location:'서울 · 강서구 · 마곡 우림필유', image:'../assets/projects/magok-woorim-feelu/01.webp', thumb:'../assets/projects/magok-woorim-feelu/cover.webp', images:[
+    {src:'../assets/projects/magok-woorim-feelu/01.webp',label:'창호시공'},{src:'../assets/projects/magok-woorim-feelu/02.webp',label:'창호시공'},{src:'../assets/projects/magok-woorim-feelu/03.webp',label:'창호시공'},{src:'../assets/projects/magok-woorim-feelu/04.webp',label:'창호시공'},{src:'../assets/projects/magok-woorim-feelu/05.webp',label:'창호시공'},{src:'../assets/projects/magok-woorim-feelu/06.webp',label:'창호시공'},{src:'../assets/projects/magok-woorim-feelu/07.webp',label:'창호시공'},{src:'../assets/projects/magok-woorim-feelu/08.webp',label:'창호시공'}
+  ]},
+  {id:'gwanak-byeoksan-blooming-1', brand:'창호시공', status:'published', price:null, purchasable:false, title:'관악 벽산블루밍1차 창호 시공', location:'서울 · 관악구 · 관악 벽산블루밍1차', image:'../assets/projects/gwanak-byeoksan-blooming-1/01.webp', thumb:'../assets/projects/gwanak-byeoksan-blooming-1/cover.webp', images:[
+    {src:'../assets/projects/gwanak-byeoksan-blooming-1/01.webp',label:'창호시공'},{src:'../assets/projects/gwanak-byeoksan-blooming-1/02.webp',label:'창호시공'},{src:'../assets/projects/gwanak-byeoksan-blooming-1/03.webp',label:'창호시공'},{src:'../assets/projects/gwanak-byeoksan-blooming-1/04.webp',label:'창호시공'},{src:'../assets/projects/gwanak-byeoksan-blooming-1/05.webp',label:'창호시공'},{src:'../assets/projects/gwanak-byeoksan-blooming-1/06.webp',label:'창호시공'},{src:'../assets/projects/gwanak-byeoksan-blooming-1/07.webp',label:'창호시공'},{src:'../assets/projects/gwanak-byeoksan-blooming-1/08.webp',label:'창호시공'},{src:'../assets/projects/gwanak-byeoksan-blooming-1/09.webp',label:'창호시공'},{src:'../assets/projects/gwanak-byeoksan-blooming-1/10.webp',label:'창호시공'}
+  ]},
+  {id:'gwanak-woosung', brand:'창호시공', status:'published', price:null, purchasable:false, title:'관악 우성 창호 시공', location:'서울 · 관악구 · 관악 우성', image:'../assets/projects/gwanak-woosung/01.webp', thumb:'../assets/projects/gwanak-woosung/cover.webp', images:[
+    {src:'../assets/projects/gwanak-woosung/01.webp',label:'창호시공'},{src:'../assets/projects/gwanak-woosung/02.webp',label:'창호시공'},{src:'../assets/projects/gwanak-woosung/03.webp',label:'창호시공'},{src:'../assets/projects/gwanak-woosung/04.webp',label:'창호시공'},{src:'../assets/projects/gwanak-woosung/05.webp',label:'창호시공'},{src:'../assets/projects/gwanak-woosung/06.webp',label:'창호시공'},{src:'../assets/projects/gwanak-woosung/07.webp',label:'창호시공'},{src:'../assets/projects/gwanak-woosung/08.webp',label:'창호시공'},{src:'../assets/projects/gwanak-woosung/09.webp',label:'창호시공'},{src:'../assets/projects/gwanak-woosung/10.webp',label:'창호시공'}
+  ]},
+  {id:'gwanak-dreamtown-01', brand:'창호시공', status:'published', price:null, purchasable:false, title:'관악드림타운 창호 시공 · 01', location:'서울 · 관악구 · 관악드림타운', image:'../assets/projects/gwanak-dreamtown-01/01.webp', thumb:'../assets/projects/gwanak-dreamtown-01/cover.webp', images:[
+    {src:'../assets/projects/gwanak-dreamtown-01/01.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-01/02.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-01/03.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-01/04.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-01/05.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-01/06.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-01/07.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-01/08.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-01/09.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-01/10.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-01/11.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-01/12.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-01/13.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-01/14.webp',label:'창호시공'}
+  ]},
+  {id:'gwanak-dreamtown-02', brand:'창호시공', status:'published', price:null, purchasable:false, title:'관악드림타운 창호 시공 · 02', location:'서울 · 관악구 · 관악드림타운', image:'../assets/projects/gwanak-dreamtown-02/01.webp', thumb:'../assets/projects/gwanak-dreamtown-02/cover.webp', images:[
+    {src:'../assets/projects/gwanak-dreamtown-02/01.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-02/02.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-02/03.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-02/04.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-02/05.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-02/06.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-02/07.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-02/08.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-02/09.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-02/10.webp',label:'창호시공'}
+  ]},
+  {id:'gwanak-dreamtown-03', brand:'창호시공', status:'published', price:null, purchasable:false, title:'관악드림타운 창호 시공 · 03', location:'서울 · 관악구 · 관악드림타운', image:'../assets/projects/gwanak-dreamtown-03/01.webp', thumb:'../assets/projects/gwanak-dreamtown-03/cover.webp', images:[
+    {src:'../assets/projects/gwanak-dreamtown-03/01.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-03/02.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-03/03.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-03/04.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-03/05.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-03/06.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-03/07.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-03/08.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-03/09.webp',label:'창호시공'}
+  ]},
+  {id:'gwanak-dreamtown-04', brand:'BEFORE · AFTER', status:'published', price:null, purchasable:false, title:'관악드림타운 창호 시공 · 04', location:'서울 · 관악구 · 관악드림타운', image:'../assets/projects/gwanak-dreamtown-04/after/01.webp', thumb:'../assets/projects/gwanak-dreamtown-04/cover-after.webp', beforeCover:'../assets/projects/gwanak-dreamtown-04/cover-before.webp', afterCover:'../assets/projects/gwanak-dreamtown-04/cover-after.webp', images:[
+    {src:'../assets/projects/gwanak-dreamtown-04/after/01.webp',label:'AFTER'},{src:'../assets/projects/gwanak-dreamtown-04/after/02.webp',label:'AFTER'},{src:'../assets/projects/gwanak-dreamtown-04/after/03.webp',label:'AFTER'},{src:'../assets/projects/gwanak-dreamtown-04/after/04.webp',label:'AFTER'},{src:'../assets/projects/gwanak-dreamtown-04/after/05.webp',label:'AFTER'},{src:'../assets/projects/gwanak-dreamtown-04/after/06.webp',label:'AFTER'},{src:'../assets/projects/gwanak-dreamtown-04/after/07.webp',label:'AFTER'},{src:'../assets/projects/gwanak-dreamtown-04/after/08.webp',label:'AFTER'},{src:'../assets/projects/gwanak-dreamtown-04/after/09.webp',label:'AFTER'},{src:'../assets/projects/gwanak-dreamtown-04/before/01.webp',label:'BEFORE'},{src:'../assets/projects/gwanak-dreamtown-04/before/02.webp',label:'BEFORE'},{src:'../assets/projects/gwanak-dreamtown-04/before/03.webp',label:'BEFORE'},{src:'../assets/projects/gwanak-dreamtown-04/before/04.webp',label:'BEFORE'},{src:'../assets/projects/gwanak-dreamtown-04/before/05.webp',label:'BEFORE'},{src:'../assets/projects/gwanak-dreamtown-04/before/06.webp',label:'BEFORE'},{src:'../assets/projects/gwanak-dreamtown-04/before/07.webp',label:'BEFORE'},{src:'../assets/projects/gwanak-dreamtown-04/before/08.webp',label:'BEFORE'},{src:'../assets/projects/gwanak-dreamtown-04/before/09.webp',label:'BEFORE'}
+  ]},
+  {id:'gwanak-dreamtown-05', brand:'창호시공', status:'published', price:null, purchasable:false, title:'관악드림타운 창호 시공 · 05', location:'서울 · 관악구 · 관악드림타운', image:'../assets/projects/gwanak-dreamtown-05/01.webp', thumb:'../assets/projects/gwanak-dreamtown-05/cover.webp', images:[
+    {src:'../assets/projects/gwanak-dreamtown-05/01.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-05/02.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-05/03.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-05/04.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-05/05.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-05/06.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-05/07.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-05/08.webp',label:'창호시공'},{src:'../assets/projects/gwanak-dreamtown-05/09.webp',label:'창호시공'}
+  ]},
+  {id:'bongcheon-doosan-01', brand:'창호시공', status:'published', price:null, purchasable:false, title:'봉천 두산 창호 시공 · 01', location:'서울 · 관악구 · 봉천 두산', image:'../assets/projects/bongcheon-doosan-01/01.webp', thumb:'../assets/projects/bongcheon-doosan-01/cover.webp', images:[
+    {src:'../assets/projects/bongcheon-doosan-01/01.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-01/02.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-01/03.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-01/04.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-01/05.webp',label:'창호시공'}
+  ]},
+  {id:'bongcheon-doosan-02', brand:'창호시공', status:'published', price:null, purchasable:false, title:'봉천 두산 창호 시공 · 02', location:'서울 · 관악구 · 봉천 두산', image:'../assets/projects/bongcheon-doosan-02/01.webp', thumb:'../assets/projects/bongcheon-doosan-02/cover.webp', images:[
+    {src:'../assets/projects/bongcheon-doosan-02/01.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-02/02.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-02/03.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-02/04.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-02/05.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-02/06.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-02/07.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-02/08.webp',label:'창호시공'}
+  ]},
+  {id:'bongcheon-doosan-03', brand:'창호시공', status:'published', price:null, purchasable:false, title:'봉천 두산 창호 시공 · 03', location:'서울 · 관악구 · 봉천 두산', image:'../assets/projects/bongcheon-doosan-03/01.webp', thumb:'../assets/projects/bongcheon-doosan-03/cover.webp', images:[
+    {src:'../assets/projects/bongcheon-doosan-03/01.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-03/02.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-03/03.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-03/04.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-03/05.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-03/06.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-03/07.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-03/08.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-03/09.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-03/10.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-03/11.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-03/12.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-03/13.webp',label:'창호시공'},{src:'../assets/projects/bongcheon-doosan-03/14.webp',label:'창호시공'}
+  ]},
+  {id:'sillim-geonyeong-4', brand:'창호시공', status:'published', price:null, purchasable:false, title:'신림 건영4차 창호 시공', location:'서울 · 관악구 · 신림 건영4차', image:'../assets/projects/sillim-geonyeong-4/01.webp', thumb:'../assets/projects/sillim-geonyeong-4/cover.webp', images:[
+    {src:'../assets/projects/sillim-geonyeong-4/01.webp',label:'창호시공'},{src:'../assets/projects/sillim-geonyeong-4/02.webp',label:'창호시공'},{src:'../assets/projects/sillim-geonyeong-4/03.webp',label:'창호시공'},{src:'../assets/projects/sillim-geonyeong-4/04.webp',label:'창호시공'},{src:'../assets/projects/sillim-geonyeong-4/05.webp',label:'창호시공'},{src:'../assets/projects/sillim-geonyeong-4/06.webp',label:'창호시공'},{src:'../assets/projects/sillim-geonyeong-4/07.webp',label:'창호시공'},{src:'../assets/projects/sillim-geonyeong-4/08.webp',label:'창호시공'},{src:'../assets/projects/sillim-geonyeong-4/09.webp',label:'창호시공'},{src:'../assets/projects/sillim-geonyeong-4/10.webp',label:'창호시공'},{src:'../assets/projects/sillim-geonyeong-4/11.webp',label:'창호시공'}
+  ]},
+  {id:'guro-new-honghyeon-soledium', brand:'창호시공', status:'published', price:null, purchasable:false, title:'구로 뉴홍현솔레디움 창호 시공', location:'서울 · 구로구 · 구로 뉴홍현솔레디움', image:'../assets/projects/guro-new-honghyeon-soledium/01.webp', thumb:'../assets/projects/guro-new-honghyeon-soledium/cover.webp', images:[
+    {src:'../assets/projects/guro-new-honghyeon-soledium/01.webp',label:'창호시공'},{src:'../assets/projects/guro-new-honghyeon-soledium/02.webp',label:'창호시공'},{src:'../assets/projects/guro-new-honghyeon-soledium/03.webp',label:'창호시공'},{src:'../assets/projects/guro-new-honghyeon-soledium/04.webp',label:'창호시공'},{src:'../assets/projects/guro-new-honghyeon-soledium/05.webp',label:'창호시공'},{src:'../assets/projects/guro-new-honghyeon-soledium/06.webp',label:'창호시공'},{src:'../assets/projects/guro-new-honghyeon-soledium/07.webp',label:'창호시공'},{src:'../assets/projects/guro-new-honghyeon-soledium/08.webp',label:'창호시공'},{src:'../assets/projects/guro-new-honghyeon-soledium/09.webp',label:'창호시공'}
+  ]},
+  {id:'sindorim-daerim-2', brand:'창호시공', status:'published', price:null, purchasable:false, title:'신도림 대림2차 창호 시공', location:'서울 · 구로구 · 신도림 대림2차', image:'../assets/projects/sindorim-daerim-2/01.webp', thumb:'../assets/projects/sindorim-daerim-2/cover.webp', images:[
+    {src:'../assets/projects/sindorim-daerim-2/01.webp',label:'창호시공'},{src:'../assets/projects/sindorim-daerim-2/02.webp',label:'창호시공'},{src:'../assets/projects/sindorim-daerim-2/03.webp',label:'창호시공'},{src:'../assets/projects/sindorim-daerim-2/04.webp',label:'창호시공'},{src:'../assets/projects/sindorim-daerim-2/05.webp',label:'창호시공'},{src:'../assets/projects/sindorim-daerim-2/06.webp',label:'창호시공'}
+  ]},
+  {id:'daebang-daerim-01', brand:'창호시공', status:'published', price:null, purchasable:false, title:'대방대림 창호 시공 · 01', location:'서울 · 동작구 · 대방대림', image:'../assets/projects/daebang-daerim-01/01.webp', thumb:'../assets/projects/daebang-daerim-01/cover.webp', images:[
+    {src:'../assets/projects/daebang-daerim-01/01.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-01/02.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-01/03.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-01/04.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-01/05.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-01/06.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-01/07.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-01/08.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-01/09.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-01/10.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-01/11.webp',label:'창호시공'}
+  ]},
+  {id:'daebang-daerim-02', brand:'창호시공', status:'published', price:null, purchasable:false, title:'대방대림 창호 시공 · 02', location:'서울 · 동작구 · 대방대림', image:'../assets/projects/daebang-daerim-02/01.webp', thumb:'../assets/projects/daebang-daerim-02/cover.webp', images:[
+    {src:'../assets/projects/daebang-daerim-02/01.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-02/02.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-02/03.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-02/04.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-02/05.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-02/06.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-02/07.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-02/08.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-02/09.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-02/10.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-02/11.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-02/12.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-02/13.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-02/14.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-02/15.webp',label:'창호시공'}
+  ]},
+  {id:'daebang-daerim-03', brand:'창호시공', status:'published', price:null, purchasable:false, title:'대방대림 창호 시공 · 03', location:'서울 · 동작구 · 대방대림', image:'../assets/projects/daebang-daerim-03/01.webp', thumb:'../assets/projects/daebang-daerim-03/cover.webp', images:[
+    {src:'../assets/projects/daebang-daerim-03/01.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-03/02.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-03/03.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-03/04.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-03/05.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-03/06.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-03/07.webp',label:'창호시공'},{src:'../assets/projects/daebang-daerim-03/08.webp',label:'창호시공'}
+  ]},
+  {id:'daebang-seongwon-01', brand:'창호시공', status:'published', price:null, purchasable:false, title:'대방성원 창호 시공 · 01', location:'서울 · 동작구 · 대방성원', image:'../assets/projects/daebang-seongwon-01/01.webp', thumb:'../assets/projects/daebang-seongwon-01/cover.webp', images:[
+    {src:'../assets/projects/daebang-seongwon-01/01.webp',label:'창호시공'},{src:'../assets/projects/daebang-seongwon-01/02.webp',label:'창호시공'},{src:'../assets/projects/daebang-seongwon-01/03.webp',label:'창호시공'},{src:'../assets/projects/daebang-seongwon-01/04.webp',label:'창호시공'},{src:'../assets/projects/daebang-seongwon-01/05.webp',label:'창호시공'},{src:'../assets/projects/daebang-seongwon-01/06.webp',label:'창호시공'},{src:'../assets/projects/daebang-seongwon-01/07.webp',label:'창호시공'},{src:'../assets/projects/daebang-seongwon-01/08.webp',label:'창호시공'},{src:'../assets/projects/daebang-seongwon-01/09.webp',label:'창호시공'}
+  ]},
+  {id:'daebang-seongwon-02', brand:'창호시공', status:'published', price:null, purchasable:false, title:'대방성원 창호 시공 · 02', location:'서울 · 동작구 · 대방성원', image:'../assets/projects/daebang-seongwon-02/01.webp', thumb:'../assets/projects/daebang-seongwon-02/cover.webp', images:[
+    {src:'../assets/projects/daebang-seongwon-02/01.webp',label:'창호시공'},{src:'../assets/projects/daebang-seongwon-02/02.webp',label:'창호시공'},{src:'../assets/projects/daebang-seongwon-02/03.webp',label:'창호시공'},{src:'../assets/projects/daebang-seongwon-02/04.webp',label:'창호시공'},{src:'../assets/projects/daebang-seongwon-02/05.webp',label:'창호시공'},{src:'../assets/projects/daebang-seongwon-02/06.webp',label:'창호시공'},{src:'../assets/projects/daebang-seongwon-02/07.webp',label:'창호시공'},{src:'../assets/projects/daebang-seongwon-02/08.webp',label:'창호시공'}
+  ]},
+  {id:'muak-cheonggu-1', brand:'창호시공', status:'published', price:null, purchasable:false, title:'무악 청구1차 창호 시공', location:'서울 · 서대문구 · 무악 청구1차', image:'../assets/projects/muak-cheonggu-1/01.webp', thumb:'../assets/projects/muak-cheonggu-1/cover.webp', images:[
+    {src:'../assets/projects/muak-cheonggu-1/01.webp',label:'창호시공'},{src:'../assets/projects/muak-cheonggu-1/02.webp',label:'창호시공'},{src:'../assets/projects/muak-cheonggu-1/03.webp',label:'창호시공'},{src:'../assets/projects/muak-cheonggu-1/04.webp',label:'창호시공'},{src:'../assets/projects/muak-cheonggu-1/05.webp',label:'창호시공'},{src:'../assets/projects/muak-cheonggu-1/06.webp',label:'창호시공'},{src:'../assets/projects/muak-cheonggu-1/07.webp',label:'창호시공'},{src:'../assets/projects/muak-cheonggu-1/08.webp',label:'창호시공'},{src:'../assets/projects/muak-cheonggu-1/09.webp',label:'창호시공'},{src:'../assets/projects/muak-cheonggu-1/10.webp',label:'창호시공'},{src:'../assets/projects/muak-cheonggu-1/11.webp',label:'창호시공'}
+  ]},
+  {id:'hongeun-doosan', brand:'창호시공', status:'published', price:null, purchasable:false, title:'홍은 두산 창호 시공', location:'서울 · 서대문구 · 홍은 두산', image:'../assets/projects/hongeun-doosan/01.webp', thumb:'../assets/projects/hongeun-doosan/cover.webp', images:[
+    {src:'../assets/projects/hongeun-doosan/01.webp',label:'창호시공'},{src:'../assets/projects/hongeun-doosan/02.webp',label:'창호시공'},{src:'../assets/projects/hongeun-doosan/03.webp',label:'창호시공'},{src:'../assets/projects/hongeun-doosan/04.webp',label:'창호시공'},{src:'../assets/projects/hongeun-doosan/05.webp',label:'창호시공'},{src:'../assets/projects/hongeun-doosan/06.webp',label:'창호시공'},{src:'../assets/projects/hongeun-doosan/07.webp',label:'창호시공'},{src:'../assets/projects/hongeun-doosan/08.webp',label:'창호시공'}
+  ]},
+  {id:'hongje-yuwon-hana', brand:'창호시공', status:'published', price:null, purchasable:false, title:'홍제 유원하나 창호 시공', location:'서울 · 서대문구 · 홍제 유원하나', image:'../assets/projects/hongje-yuwon-hana/01.webp', thumb:'../assets/projects/hongje-yuwon-hana/cover.webp', images:[
+    {src:'../assets/projects/hongje-yuwon-hana/01.webp',label:'창호시공'},{src:'../assets/projects/hongje-yuwon-hana/02.webp',label:'창호시공'},{src:'../assets/projects/hongje-yuwon-hana/03.webp',label:'창호시공'},{src:'../assets/projects/hongje-yuwon-hana/04.webp',label:'창호시공'},{src:'../assets/projects/hongje-yuwon-hana/05.webp',label:'창호시공'}
+  ]},
+  {id:'banpo-hyundai-donggung', brand:'창호시공', status:'published', price:null, purchasable:false, title:'반포 현대동궁 창호 시공', location:'서울 · 서초구 · 반포 현대동궁', image:'../assets/projects/banpo-hyundai-donggung/01.webp', thumb:'../assets/projects/banpo-hyundai-donggung/cover.webp', images:[
+    {src:'../assets/projects/banpo-hyundai-donggung/01.webp',label:'창호시공'},{src:'../assets/projects/banpo-hyundai-donggung/02.webp',label:'창호시공'},{src:'../assets/projects/banpo-hyundai-donggung/03.webp',label:'창호시공'},{src:'../assets/projects/banpo-hyundai-donggung/04.webp',label:'창호시공'}
+  ]},
+  {id:'seocho-yuwon', brand:'창호시공', status:'published', price:null, purchasable:false, title:'서초 유원 창호 시공', location:'서울 · 서초구 · 서초 유원', image:'../assets/projects/seocho-yuwon/01.webp', thumb:'../assets/projects/seocho-yuwon/cover.webp', images:[
+    {src:'../assets/projects/seocho-yuwon/01.webp',label:'창호시공'},{src:'../assets/projects/seocho-yuwon/02.webp',label:'창호시공'},{src:'../assets/projects/seocho-yuwon/03.webp',label:'창호시공'},{src:'../assets/projects/seocho-yuwon/04.webp',label:'창호시공'},{src:'../assets/projects/seocho-yuwon/05.webp',label:'창호시공'},{src:'../assets/projects/seocho-yuwon/06.webp',label:'창호시공'},{src:'../assets/projects/seocho-yuwon/07.webp',label:'창호시공'},{src:'../assets/projects/seocho-yuwon/08.webp',label:'창호시공'}
+  ]},
+  {id:'haengdang-doosan', brand:'창호시공', status:'published', price:null, purchasable:false, title:'행당 두산 창호 시공', location:'서울 · 성동구 · 행당 두산', image:'../assets/projects/haengdang-doosan/01.webp', thumb:'../assets/projects/haengdang-doosan/cover.webp', images:[
+    {src:'../assets/projects/haengdang-doosan/01.webp',label:'창호시공'},{src:'../assets/projects/haengdang-doosan/02.webp',label:'창호시공'},{src:'../assets/projects/haengdang-doosan/03.webp',label:'창호시공'},{src:'../assets/projects/haengdang-doosan/04.webp',label:'창호시공'},{src:'../assets/projects/haengdang-doosan/05.webp',label:'창호시공'},{src:'../assets/projects/haengdang-doosan/06.webp',label:'창호시공'},{src:'../assets/projects/haengdang-doosan/07.webp',label:'창호시공'},{src:'../assets/projects/haengdang-doosan/08.webp',label:'창호시공'},{src:'../assets/projects/haengdang-doosan/09.webp',label:'창호시공'}
+  ]},
+  {id:'donam-hanshin-hanjin', brand:'창호시공', status:'published', price:null, purchasable:false, title:'돈암 한신한진 창호 시공', location:'서울 · 성북구 · 돈암 한신한진', image:'../assets/projects/donam-hanshin-hanjin/01.webp', thumb:'../assets/projects/donam-hanshin-hanjin/cover.webp', images:[
+    {src:'../assets/projects/donam-hanshin-hanjin/01.webp',label:'창호시공'},{src:'../assets/projects/donam-hanshin-hanjin/02.webp',label:'창호시공'},{src:'../assets/projects/donam-hanshin-hanjin/03.webp',label:'창호시공'},{src:'../assets/projects/donam-hanshin-hanjin/04.webp',label:'창호시공'},{src:'../assets/projects/donam-hanshin-hanjin/05.webp',label:'창호시공'},{src:'../assets/projects/donam-hanshin-hanjin/06.webp',label:'창호시공'},{src:'../assets/projects/donam-hanshin-hanjin/07.webp',label:'창호시공'},{src:'../assets/projects/donam-hanshin-hanjin/08.webp',label:'창호시공'}
+  ]},
+  {id:'munjeong-raemian', brand:'창호시공', status:'published', price:null, purchasable:false, title:'문정 래미안 창호 시공', location:'서울 · 송파구 · 문정 래미안', image:'../assets/projects/munjeong-raemian/01.webp', thumb:'../assets/projects/munjeong-raemian/cover.webp', images:[
+    {src:'../assets/projects/munjeong-raemian/01.webp',label:'창호시공'},{src:'../assets/projects/munjeong-raemian/02.webp',label:'창호시공'},{src:'../assets/projects/munjeong-raemian/03.webp',label:'창호시공'},{src:'../assets/projects/munjeong-raemian/04.webp',label:'창호시공'},{src:'../assets/projects/munjeong-raemian/05.webp',label:'창호시공'},{src:'../assets/projects/munjeong-raemian/06.webp',label:'창호시공'}
+  ]},
+  {id:'singil-raemian-estium', brand:'창호시공', status:'published', price:null, purchasable:false, title:'신길 래미안에스티움 창호 시공', location:'서울 · 영등포구 · 신길 래미안에스티움', image:'../assets/projects/singil-raemian-estium/01.webp', thumb:'../assets/projects/singil-raemian-estium/cover.webp', images:[
+    {src:'../assets/projects/singil-raemian-estium/01.webp',label:'창호시공'},{src:'../assets/projects/singil-raemian-estium/02.webp',label:'창호시공'},{src:'../assets/projects/singil-raemian-estium/03.webp',label:'창호시공'},{src:'../assets/projects/singil-raemian-estium/04.webp',label:'창호시공'},{src:'../assets/projects/singil-raemian-estium/05.webp',label:'창호시공'}
+  ]},
+  {id:'huam-miju-life', brand:'창호시공', status:'published', price:null, purchasable:false, title:'후암 미주라이프 창호 시공', location:'서울 · 용산구 · 후암 미주라이프', image:'../assets/projects/huam-miju-life/01.webp', thumb:'../assets/projects/huam-miju-life/cover.webp', images:[
+    {src:'../assets/projects/huam-miju-life/01.webp',label:'창호시공'},{src:'../assets/projects/huam-miju-life/02.webp',label:'창호시공'},{src:'../assets/projects/huam-miju-life/03.webp',label:'창호시공'},{src:'../assets/projects/huam-miju-life/04.webp',label:'창호시공'},{src:'../assets/projects/huam-miju-life/05.webp',label:'창호시공'},{src:'../assets/projects/huam-miju-life/06.webp',label:'창호시공'},{src:'../assets/projects/huam-miju-life/07.webp',label:'창호시공'},{src:'../assets/projects/huam-miju-life/08.webp',label:'창호시공'},{src:'../assets/projects/huam-miju-life/09.webp',label:'창호시공'},{src:'../assets/projects/huam-miju-life/10.webp',label:'창호시공'},{src:'../assets/projects/huam-miju-life/11.webp',label:'창호시공'},{src:'../assets/projects/huam-miju-life/12.webp',label:'창호시공'}
+  ]},
+  {id:'muak-dongnip-geukdong', brand:'창호시공', status:'published', price:null, purchasable:false, title:'무악 독립극동 창호 시공', location:'서울 · 종로구 · 무악 독립극동', image:'../assets/projects/muak-dongnip-geukdong/01.webp', thumb:'../assets/projects/muak-dongnip-geukdong/cover.webp', images:[
+    {src:'../assets/projects/muak-dongnip-geukdong/01.webp',label:'창호시공'},{src:'../assets/projects/muak-dongnip-geukdong/02.webp',label:'창호시공'},{src:'../assets/projects/muak-dongnip-geukdong/03.webp',label:'창호시공'},{src:'../assets/projects/muak-dongnip-geukdong/04.webp',label:'창호시공'},{src:'../assets/projects/muak-dongnip-geukdong/05.webp',label:'창호시공'},{src:'../assets/projects/muak-dongnip-geukdong/06.webp',label:'창호시공'},{src:'../assets/projects/muak-dongnip-geukdong/07.webp',label:'창호시공'},{src:'../assets/projects/muak-dongnip-geukdong/08.webp',label:'창호시공'}
+  ]},
+  {id:'gwangju-dongseong-2', brand:'창호시공', status:'published', price:null, purchasable:false, title:'광주 동성2차 창호 시공', location:'경기 · 광주시 · 광주 동성2차', image:'../assets/projects/gwangju-dongseong-2/01.webp', thumb:'../assets/projects/gwangju-dongseong-2/cover.webp', images:[
+    {src:'../assets/projects/gwangju-dongseong-2/01.webp',label:'창호시공'},{src:'../assets/projects/gwangju-dongseong-2/02.webp',label:'창호시공'},{src:'../assets/projects/gwangju-dongseong-2/03.webp',label:'창호시공'},{src:'../assets/projects/gwangju-dongseong-2/04.webp',label:'창호시공'},{src:'../assets/projects/gwangju-dongseong-2/05.webp',label:'창호시공'},{src:'../assets/projects/gwangju-dongseong-2/06.webp',label:'창호시공'},{src:'../assets/projects/gwangju-dongseong-2/07.webp',label:'창호시공'},{src:'../assets/projects/gwangju-dongseong-2/08.webp',label:'창호시공'},{src:'../assets/projects/gwangju-dongseong-2/09.webp',label:'창호시공'}
+  ]},
+  {id:'gimpo-yuhyeon-hyundai-primeville', brand:'창호시공', status:'published', price:null, purchasable:false, title:'풍무 유현마을 현대프라임빌 창호 시공', location:'경기 · 김포시 · 풍무 유현마을 현대프라임빌', image:'../assets/projects/gimpo-yuhyeon-hyundai-primeville/01.webp', thumb:'../assets/projects/gimpo-yuhyeon-hyundai-primeville/cover.webp', images:[
+    {src:'../assets/projects/gimpo-yuhyeon-hyundai-primeville/01.webp',label:'창호시공'},{src:'../assets/projects/gimpo-yuhyeon-hyundai-primeville/02.webp',label:'창호시공'},{src:'../assets/projects/gimpo-yuhyeon-hyundai-primeville/03.webp',label:'창호시공'},{src:'../assets/projects/gimpo-yuhyeon-hyundai-primeville/04.webp',label:'창호시공'},{src:'../assets/projects/gimpo-yuhyeon-hyundai-primeville/05.webp',label:'창호시공'},{src:'../assets/projects/gimpo-yuhyeon-hyundai-primeville/06.webp',label:'창호시공'},{src:'../assets/projects/gimpo-yuhyeon-hyundai-primeville/07.webp',label:'창호시공'},{src:'../assets/projects/gimpo-yuhyeon-hyundai-primeville/08.webp',label:'창호시공'},{src:'../assets/projects/gimpo-yuhyeon-hyundai-primeville/09.webp',label:'창호시공'},{src:'../assets/projects/gimpo-yuhyeon-hyundai-primeville/10.webp',label:'창호시공'},{src:'../assets/projects/gimpo-yuhyeon-hyundai-primeville/11.webp',label:'창호시공'},{src:'../assets/projects/gimpo-yuhyeon-hyundai-primeville/12.webp',label:'창호시공'},{src:'../assets/projects/gimpo-yuhyeon-hyundai-primeville/13.webp',label:'창호시공'},{src:'../assets/projects/gimpo-yuhyeon-hyundai-primeville/14.webp',label:'창호시공'}
+  ]},
+  {id:'bundang-gumi-samsung-geonyeong', brand:'창호시공', status:'published', price:null, purchasable:false, title:'구미동 삼성건영 창호 시공', location:'경기 · 성남시 · 구미동 삼성건영', image:'../assets/projects/bundang-gumi-samsung-geonyeong/01.webp', thumb:'../assets/projects/bundang-gumi-samsung-geonyeong/cover.webp', images:[
+    {src:'../assets/projects/bundang-gumi-samsung-geonyeong/01.webp',label:'창호시공'},{src:'../assets/projects/bundang-gumi-samsung-geonyeong/02.webp',label:'창호시공'},{src:'../assets/projects/bundang-gumi-samsung-geonyeong/03.webp',label:'창호시공'},{src:'../assets/projects/bundang-gumi-samsung-geonyeong/04.webp',label:'창호시공'},{src:'../assets/projects/bundang-gumi-samsung-geonyeong/05.webp',label:'창호시공'},{src:'../assets/projects/bundang-gumi-samsung-geonyeong/06.webp',label:'창호시공'},{src:'../assets/projects/bundang-gumi-samsung-geonyeong/07.webp',label:'창호시공'},{src:'../assets/projects/bundang-gumi-samsung-geonyeong/08.webp',label:'창호시공'}
+  ]},
+  {id:'bundang-sangnok-woosung', brand:'창호시공', status:'published', price:null, purchasable:false, title:'분당 상록우성 창호 시공', location:'경기 · 성남시 · 분당 상록우성', image:'../assets/projects/bundang-sangnok-woosung/01.webp', thumb:'../assets/projects/bundang-sangnok-woosung/cover.webp', images:[
+    {src:'../assets/projects/bundang-sangnok-woosung/01.webp',label:'창호시공'},{src:'../assets/projects/bundang-sangnok-woosung/02.webp',label:'창호시공'},{src:'../assets/projects/bundang-sangnok-woosung/03.webp',label:'창호시공'},{src:'../assets/projects/bundang-sangnok-woosung/04.webp',label:'창호시공'},{src:'../assets/projects/bundang-sangnok-woosung/05.webp',label:'창호시공'},{src:'../assets/projects/bundang-sangnok-woosung/06.webp',label:'창호시공'},{src:'../assets/projects/bundang-sangnok-woosung/07.webp',label:'창호시공'},{src:'../assets/projects/bundang-sangnok-woosung/08.webp',label:'창호시공'},{src:'../assets/projects/bundang-sangnok-woosung/09.webp',label:'창호시공'},{src:'../assets/projects/bundang-sangnok-woosung/10.webp',label:'창호시공'}
+  ]},
+  {id:'pangyo-botdeul-9-geumho', brand:'창호시공', status:'published', price:null, purchasable:false, title:'판교 봇들마을9단지 금호어울림 창호 시공', location:'경기 · 성남시 · 판교 봇들마을9단지 금호어울림', image:'../assets/projects/pangyo-botdeul-9-geumho/01.webp', thumb:'../assets/projects/pangyo-botdeul-9-geumho/cover.webp', images:[
+    {src:'../assets/projects/pangyo-botdeul-9-geumho/01.webp',label:'창호시공'},{src:'../assets/projects/pangyo-botdeul-9-geumho/02.webp',label:'창호시공'},{src:'../assets/projects/pangyo-botdeul-9-geumho/03.webp',label:'창호시공'},{src:'../assets/projects/pangyo-botdeul-9-geumho/04.webp',label:'창호시공'},{src:'../assets/projects/pangyo-botdeul-9-geumho/05.webp',label:'창호시공'},{src:'../assets/projects/pangyo-botdeul-9-geumho/06.webp',label:'창호시공'},{src:'../assets/projects/pangyo-botdeul-9-geumho/07.webp',label:'창호시공'},{src:'../assets/projects/pangyo-botdeul-9-geumho/08.webp',label:'창호시공'}
+  ]},
+  {id:'siheung-samik', brand:'창호시공', status:'published', price:null, purchasable:false, title:'시흥 삼익 창호 시공', location:'경기 · 시흥시 · 시흥 삼익', image:'../assets/projects/siheung-samik/01.webp', thumb:'../assets/projects/siheung-samik/cover.webp', images:[
+    {src:'../assets/projects/siheung-samik/01.webp',label:'창호시공'},{src:'../assets/projects/siheung-samik/02.webp',label:'창호시공'},{src:'../assets/projects/siheung-samik/03.webp',label:'창호시공'},{src:'../assets/projects/siheung-samik/04.webp',label:'창호시공'},{src:'../assets/projects/siheung-samik/05.webp',label:'창호시공'},{src:'../assets/projects/siheung-samik/06.webp',label:'창호시공'}
+  ]},
+  {id:'anseong-miyang-house', brand:'창호시공', status:'published', price:null, purchasable:false, title:'안성 미양면 주택 창호 시공', location:'경기 · 안성시 · 안성 미양면 주택', image:'../assets/projects/anseong-miyang-house/01.webp', thumb:'../assets/projects/anseong-miyang-house/cover.webp', images:[
+    {src:'../assets/projects/anseong-miyang-house/01.webp',label:'창호시공'},{src:'../assets/projects/anseong-miyang-house/02.webp',label:'창호시공'},{src:'../assets/projects/anseong-miyang-house/03.webp',label:'창호시공'},{src:'../assets/projects/anseong-miyang-house/04.webp',label:'창호시공'},{src:'../assets/projects/anseong-miyang-house/05.webp',label:'창호시공'},{src:'../assets/projects/anseong-miyang-house/06.webp',label:'창호시공'},{src:'../assets/projects/anseong-miyang-house/07.webp',label:'창호시공'},{src:'../assets/projects/anseong-miyang-house/08.webp',label:'창호시공'},{src:'../assets/projects/anseong-miyang-house/09.webp',label:'창호시공'},{src:'../assets/projects/anseong-miyang-house/10.webp',label:'창호시공'},{src:'../assets/projects/anseong-miyang-house/11.webp',label:'창호시공'},{src:'../assets/projects/anseong-miyang-house/12.webp',label:'창호시공'},{src:'../assets/projects/anseong-miyang-house/13.webp',label:'창호시공'},{src:'../assets/projects/anseong-miyang-house/14.webp',label:'창호시공'}
+  ]},
+  {id:'bupyeong-mujigae', brand:'창호시공', status:'published', price:null, purchasable:false, title:'부평 무지개 창호 시공', location:'인천 · 부평구 · 부평 무지개', image:'../assets/projects/bupyeong-mujigae/01.webp', thumb:'../assets/projects/bupyeong-mujigae/cover.webp', images:[
+    {src:'../assets/projects/bupyeong-mujigae/01.webp',label:'창호시공'},{src:'../assets/projects/bupyeong-mujigae/02.webp',label:'창호시공'},{src:'../assets/projects/bupyeong-mujigae/03.webp',label:'창호시공'},{src:'../assets/projects/bupyeong-mujigae/04.webp',label:'창호시공'},{src:'../assets/projects/bupyeong-mujigae/05.webp',label:'창호시공'},{src:'../assets/projects/bupyeong-mujigae/06.webp',label:'창호시공'},{src:'../assets/projects/bupyeong-mujigae/07.webp',label:'창호시공'},{src:'../assets/projects/bupyeong-mujigae/08.webp',label:'창호시공'}
+  ]},
+  {id:'cheongcheon-prugio', brand:'창호시공', status:'published', price:null, purchasable:false, title:'청천 푸르지오 창호 시공', location:'인천 · 부평구 · 청천 푸르지오', image:'../assets/projects/cheongcheon-prugio/01.webp', thumb:'../assets/projects/cheongcheon-prugio/cover.webp', images:[
+    {src:'../assets/projects/cheongcheon-prugio/01.webp',label:'창호시공'},{src:'../assets/projects/cheongcheon-prugio/02.webp',label:'창호시공'},{src:'../assets/projects/cheongcheon-prugio/03.webp',label:'창호시공'},{src:'../assets/projects/cheongcheon-prugio/04.webp',label:'창호시공'},{src:'../assets/projects/cheongcheon-prugio/05.webp',label:'창호시공'},{src:'../assets/projects/cheongcheon-prugio/06.webp',label:'창호시공'},{src:'../assets/projects/cheongcheon-prugio/07.webp',label:'창호시공'},{src:'../assets/projects/cheongcheon-prugio/08.webp',label:'창호시공'}
   ]}
 ];
 
 var BRANDS = ['전체','창호시공','BEFORE · AFTER','시공 과정'];
-var curFilter='전체';
+var curFilter='전체',curRegion='';
+var REGION_ORDER=['서울','경기','인천'];
+function regionOf(c){var p=String(c.location||'').split(' · ');return p.length===3&&REGION_ORDER.indexOf(p[0])>=0?p[0]+' '+p[1]:'';}
 var gallery=document.getElementById('gallery'),filterBox=document.getElementById('filter'),emptyEl=document.getElementById('empty');
 function visibleList(){return CASES.filter(function(c){return curFilter==='전체'||c.brand===curFilter;});}
 
@@ -289,10 +424,10 @@ function renderGallery(){
     var media=c.type==='video'
       ? '<div class="gmedia gvideo" style="--poster:url(\''+c.image+'\')"><img class="gvideo-poster" src="'+c.image+'" alt="" loading="lazy"><span class="gvideo-label">PROCESS FILM · 01</span><span class="gvideo-play" aria-hidden="true"></span><span class="gvideo-action">영상 보기 ↗</span></div>'
       : c.beforeCover
-      ? '<div class="gmedia gcompare"><span class="gcompare-shot gcompare-before"><i style="--img:url(\''+c.beforeCover+'\')"></i><b class="gcompare-label">BEFORE</b></span><span class="gcompare-shot gcompare-after"><i style="--img:url(\''+c.afterCover+'\')"></i><b class="gcompare-label">AFTER</b></span><span class="gcount">'+c.images.length+' PHOTOS</span></div>'
-      : '<div class="gmedia"><i style="--img:url(\''+c.image+'\')"></i><span class="gcount">'+c.images.length+' PHOTOS</span></div>';
+      ? '<div class="gmedia gcompare"><span class="gcompare-shot gcompare-before"><i data-img="'+c.beforeCover+'"></i><b class="gcompare-label">BEFORE</b></span><span class="gcompare-shot gcompare-after"><i data-img="'+c.afterCover+'"></i><b class="gcompare-label">AFTER</b></span><span class="gcount">'+c.images.length+' PHOTOS</span></div>'
+      : '<div class="gmedia"><i data-img="'+(c.thumb||c.image)+'"></i><span class="gcount">'+c.images.length+' PHOTOS</span></div>';
     var aria=c.type==='video'?esc(c.title)+' 영상 보기':esc(c.title)+' 사진 '+c.images.length+'장 보기';
-    return '<a href="#" id="'+esc(c.id)+'" class="gcard" data-i="'+i+'" data-brand="'+esc(c.brand)+'" aria-label="'+aria+'">'
+    return '<a href="#" id="'+esc(c.id)+'" class="gcard" data-i="'+i+'" data-brand="'+esc(c.brand)+'" data-region="'+esc(regionOf(c))+'" aria-label="'+aria+'">'
       +media
       +'<span class="gbadge">'+esc(c.brand)+'</span>'
       +'<div class="gtitle">'+esc(c.title)+'</div>'
@@ -300,6 +435,11 @@ function renderGallery(){
   }).join('');
   // reveal + click
   var cards=gallery.querySelectorAll('.gcard');
+  function loadImg(el){el.querySelectorAll('i[data-img]').forEach(function(x){x.style.setProperty('--img','url(\''+x.dataset.img+'\')');x.removeAttribute('data-img');});}
+  if('IntersectionObserver' in window){
+    var imgIo=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){loadImg(e.target);imgIo.unobserve(e.target);}});},{rootMargin:'400px 0px'});
+    cards.forEach(function(el){imgIo.observe(el);});
+  } else { cards.forEach(loadImg); }
   if('IntersectionObserver' in window && !reduce){
     var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1});
     cards.forEach(function(el){io.observe(el);});
@@ -308,6 +448,18 @@ function renderGallery(){
   applyFilter();
 }
 
+function renderRegion(){
+  var box=document.getElementById('regionFilter');if(!box)return;
+  var count={};CASES.forEach(function(c){var r=regionOf(c);if(r)count[r]=(count[r]||0)+1;});
+  var html='<option value="">전체 지역 ('+Object.keys(count).reduce(function(s,k){return s+count[k];},0)+')</option>';
+  REGION_ORDER.forEach(function(sido){
+    var keys=Object.keys(count).filter(function(k){return k.split(' ')[0]===sido;}).sort();
+    if(!keys.length)return;
+    html+='<optgroup label="'+sido+'">'+keys.map(function(k){return '<option value="'+esc(k)+'">'+esc(k)+' ('+count[k]+')</option>';}).join('')+'</optgroup>';
+  });
+  var sel=box.querySelector('select');sel.innerHTML=html;
+  sel.addEventListener('change',function(){curRegion=sel.value;applyFilter();});
+}
 function renderFilter(){
   filterBox.innerHTML=BRANDS.map(function(b){return '<button class="fbtn'+(b==='전체'?' on':'')+'" data-b="'+b+'">'+b+'</button>';}).join('');
   filterBox.querySelectorAll('.fbtn').forEach(function(btn){
@@ -321,7 +473,7 @@ function renderFilter(){
 function applyFilter(){
   var shown=0;
   gallery.querySelectorAll('.gcard').forEach(function(el){
-    var ok=curFilter==='전체'||el.dataset.brand===curFilter;
+    var ok=(curFilter==='전체'||el.dataset.brand===curFilter)&&(!curRegion||el.dataset.region===curRegion);
     el.classList.toggle('hide',!ok); if(ok)shown++;
   });
   emptyEl.style.display=shown?'none':'block';
@@ -389,9 +541,9 @@ modal.addEventListener('click',function(e){if(e.target.id==='modal')closeModal()
 addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();});
 function submitForm(e){e.preventDefault();var f=e.target;
   if(window.mmConsultSubmit){mmConsultSubmit(f,function(r){alert(r.title+'\n\n'+r.message);if(r.ok!==false){f.reset();closeModal();}});}
-  else{alert('접수 준비 중입니다. 전화 02-6012-0033 로 문의해 주세요.');closeModal();}}
+  else{alert('접수 준비 중입니다. 이메일 urbanroad@millimeter.co.kr 로 문의해 주세요.');closeModal();}}
 
-renderFilter();renderGallery();
+renderFilter();renderRegion();renderGallery();
 var requestedCaseId=location.hash.slice(1);
 var requestedCaseIndex=CASES.findIndex(function(c){return c.id===requestedCaseId;});
 if(requestedCaseIndex>=0)setTimeout(function(){CASES[requestedCaseIndex].type==='video'?openVideo(requestedCaseIndex):openLb(requestedCaseIndex);},0);
