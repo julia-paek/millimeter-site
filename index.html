@@ -178,6 +178,7 @@ section[id]{scroll-margin-top:78px}
 .cs-track::-webkit-scrollbar{display:none}
 .cs-card{flex:0 0 440px;max-width:440px;scroll-snap-align:center;display:block}
 .cs-media{aspect-ratio:16/9;border-radius:0;overflow:hidden;background-size:cover;background-position:center;transition:transform .5s var(--ease-soft)}
+.cs-media>img{display:block;width:100%;height:100%;object-fit:cover}
 .cs-card:hover .cs-media{transform:scale(1.02)}
 .cs-media.cs-compare{display:grid;grid-template-columns:1fr 1fr;background:#1F3822}
 .cs-compare-shot{position:relative;min-width:0;overflow:hidden}
@@ -702,6 +703,7 @@ body{counter-reset:mmsec}
 
 <script src="consult.js?v=c3"></script>
 <script src="sitenav.js?v=g51"></script>
+<script src="project-cases.js?v=1"></script>
 <script>
 var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -908,13 +910,20 @@ if(!reduce){
 }
 
 /* carousel: arrows + drag (범용) */
-function initCarousel(trackId,prevId,nextId){
+function initCarousel(trackId,prevId,nextId,loop){
   var track=document.getElementById(trackId),prev=document.getElementById(prevId),next=document.getElementById(nextId);
   if(!track||!prev||!next)return;
   function step(){var c=track.firstElementChild,g=parseInt(getComputedStyle(track).gap)||20;return c?c.getBoundingClientRect().width+g:350;}
-  function upd(){prev.disabled=track.scrollLeft<=4;next.disabled=track.scrollLeft+track.clientWidth>=track.scrollWidth-4;}
-  prev.addEventListener('click',function(){track.scrollBy({left:-step(),behavior:'smooth'});});
-  next.addEventListener('click',function(){track.scrollBy({left:step(),behavior:'smooth'});});
+  function upd(){var fits=track.scrollWidth<=track.clientWidth+4;prev.disabled=loop?fits:track.scrollLeft<=4;next.disabled=loop?fits:track.scrollLeft+track.clientWidth>=track.scrollWidth-4;}
+  function move(dir){
+    var max=track.scrollWidth-track.clientWidth;
+    var target=track.scrollLeft+dir*step();
+    if(loop&&dir>0&&track.scrollLeft>=max-4)target=0;
+    if(loop&&dir<0&&track.scrollLeft<=4)target=max;
+    track.scrollTo({left:target,behavior:reduce?'auto':'smooth'});
+  }
+  prev.addEventListener('click',function(){move(-1);});
+  next.addEventListener('click',function(){move(1);});
   track.addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();
   // drag to scroll (pointer)
   var down=false,sx=0,sl=0,moved=0;
@@ -927,13 +936,7 @@ function initCarousel(trackId,prevId,nextId){
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 
 /* cases 테이블 매핑 — 시공사례 (id·status·price·purchasable = 커머스 확장 대비 필드) */
-var CASES = [
-  {id:'sangdo-geonyeong-40', status:'published', price:null, purchasable:false, title:'상도건영 40평형 창호 시공', location:'서울 · 동작구 · BEFORE & AFTER', image:'assets/projects/sangdo-geonyeong-40/after/01.webp', beforeImage:'assets/projects/sangdo-geonyeong-40/before/03.webp', afterImage:'assets/projects/sangdo-geonyeong-40/after/01.webp'},
-  {id:'hydraulic-winch-lifting', type:'video', status:'published', price:null, purchasable:false, title:'차량 유압 윈치 양중', location:'대형 창호 자재 반입 과정', image:'assets/projects/hydraulic-winch-lifting/poster.webp?v=g2026073001'},
-  {id:'gwanak-dreamtown-30', status:'published', price:null, purchasable:false, title:'관악드림타운 30평형 창호 시공', location:'서울 · 관악구 · 관악드림타운', image:'assets/projects/gwanak-dreamtown-30/01.webp'},
-  {id:'gireum-gyeongnam-honorsville-32', status:'published', price:null, purchasable:false, title:'길음 경남아너스빌 32평형 창호 시공', location:'서울 · 성북구 · 길음 경남아너스빌', image:'assets/projects/gireum-gyeongnam-honorsville-32/01.webp'},
-  {id:'daebang-daerim-59', status:'published', price:null, purchasable:false, title:'대방대림 59평형 창호 시공', location:'서울 · 동작구 · 대방대림', image:'assets/projects/daebang-daerim-59/01.webp'}
-];
+var CASES = mmProjectCases('');
 
 /* categories 테이블 매핑 (status=준비중) — "곧 더 많은 영역에서" */
 var ICON = {
@@ -952,11 +955,12 @@ var COMING = [
 
 function renderCases(){var t=document.getElementById('ctrack');if(!t)return;
   t.innerHTML=CASES.map(function(c){
+    var cover=c.thumb||c.image;
     var media=c.type==='video'
       ? '<div class="cs-media cs-video" style="--poster:url(\''+c.image+'\')"><img src="'+c.image+'" alt="" loading="lazy"><span class="cs-video-label">PROCESS FILM · 01</span><span class="cs-video-play" aria-hidden="true"></span><span class="cs-video-action">영상 보기 ↗</span></div>'
-      : c.beforeImage
-      ? '<div class="cs-media cs-compare"><span class="cs-compare-shot cs-compare-before"><i style="--img:url(\''+c.beforeImage+'\')"></i><b class="cs-compare-label">BEFORE</b></span><span class="cs-compare-shot cs-compare-after"><i style="--img:url(\''+c.afterImage+'\')"></i><b class="cs-compare-label">AFTER</b></span></div>'
-      : '<div class="cs-media" style="background-image:url(\''+c.image+'\')"></div>';
+      : c.beforeCover
+      ? '<div class="cs-media cs-compare"><span class="cs-compare-shot cs-compare-before"><i style="--img:url(\''+c.beforeCover+'\')"></i><b class="cs-compare-label">BEFORE</b></span><span class="cs-compare-shot cs-compare-after"><i style="--img:url(\''+c.afterCover+'\')"></i><b class="cs-compare-label">AFTER</b></span></div>'
+      : '<div class="cs-media"><img src="'+cover+'" alt="" loading="lazy"></div>';
     return '<a href="projects/#'+c.id+'" class="cs-card" aria-label="'+esc(c.title)+(c.type==='video'?' 영상 보기':' 사진 보기')+'">'+media+'<div class="cs-title">'+esc(c.title)+'</div><div class="cs-sub">'+esc(c.location)+'</div></a>';
   }).join('');}
 function renderComing(){var t=document.getElementById('ptrack');if(!t)return;
@@ -966,26 +970,31 @@ renderCases();renderComing();
 
 initCarousel('etrack','eprev','enext');
 initCarousel('ptrack','pprev','pnext');
-initCarousel('ctrack','cprev','cnext');
+initCarousel('ctrack','cprev','cnext',true);
 
 /* 시공사례 — 자동으로 흐르는 캐러셀 (호버·드래그 시 정지, 끝에서 처음으로) */
 (function(){
   if(reduce) return;
   var track=document.getElementById('ctrack');
   if(!track) return;
-  var paused=false;
-  track.addEventListener('pointerenter',function(){paused=true;});
-  track.addEventListener('pointerleave',function(){paused=false;});
+  var paused=false,wrap=track.parentElement;
+  wrap.addEventListener('pointerenter',function(){paused=true;});
+  wrap.addEventListener('pointerleave',function(){paused=false;});
   track.addEventListener('pointerdown',function(){paused=true;});
-  addEventListener('pointerup',function(){if(!track.matches(':hover'))paused=false;});
-  setInterval(function(){
+  addEventListener('pointerup',function(){if(!wrap.matches(':hover'))paused=false;});
+  function advance(){
+    schedule();
     if(paused||document.hidden)return;
     var max=track.scrollWidth-track.clientWidth;
     var c=track.firstElementChild,g=parseInt(getComputedStyle(track).gap)||20;
     var step=c?c.getBoundingClientRect().width+g:460;
     if(track.scrollLeft>=max-8) track.scrollTo({left:0,behavior:'smooth'});
     else track.scrollBy({left:step,behavior:'smooth'});
-  },3800);
+  }
+  var timer;
+  function schedule(){clearTimeout(timer);timer=setTimeout(advance,3800);}
+  ['cprev','cnext'].forEach(function(id){document.getElementById(id).addEventListener('click',schedule);});
+  schedule();
 })();
 
 /* modal + focus trap */
