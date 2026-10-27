@@ -266,7 +266,7 @@ h1,h2{font-family:'SUIT Variable','SUIT','Pretendard Variable',Pretendard,sans-s
 
 <script src="../consult.js?v=c3"></script>
 <script src="../sitenav.js?v=g51"></script>
-<script src="../project-cases.js?v=2"></script>
+<script src="../project-cases.js?v=3"></script>
 <script>
 var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
@@ -274,7 +274,7 @@ function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp
 /* cases 테이블 매핑 (id·brand·status·price·purchasable = 커머스 확장 대비 필드) */
 var CASES = mmProjectCases('../');
 
-var BRANDS = ['전체'].concat(CASES.some(function(c){return c.constructionStatus==='ongoing';})?['진행 중']:[]).concat(['창호시공','BEFORE · AFTER','시공 과정']);
+var BRANDS = ['전체','창호시공','BEFORE · AFTER','시공 과정'];
 var curFilter='전체',curRegion='';
 var REGION_ORDER=['서울','경기','인천'];
 function regionOf(c){var p=String(c.location||'').split(' · ');return p.length===3&&REGION_ORDER.indexOf(p[0])>=0?p[0]+' '+p[1]:'';}

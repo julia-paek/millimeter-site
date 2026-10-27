@@ -173,17 +173,6 @@ section[id]{scroll-margin-top:78px}
 @media(max-width:900px){.ev-card{flex:0 0 286px;max-width:286px;min-height:0}.ev-body{padding:22px 22px 0;gap:6px}.ev-desc{font-size:14px;line-height:1.58;margin-top:4px}.ev-ill{height:104px;padding:0 20px 4px}.ev-ill svg{max-width:140px}.ev-arrow{width:42px;height:42px;font-size:19px}.ev-title{font-size:22px}}
 
 /* cases — Apple Arcade 스타일 와이드 카드 자동 캐러셀 */
-.cs-jumps{display:flex;flex-wrap:wrap;gap:8px;max-width:1280px;margin:0 auto 24px;padding:0 32px}
-.cs-jump{border:1px solid var(--accent);background:transparent;color:var(--headline);padding:12px 20px;min-height:44px;font-size:15px;font-weight:600;cursor:pointer;transition:background .2s,color .2s}
-.cs-jump[aria-current="true"]{background:var(--accent);color:var(--bg)}
-.cs-jump:hover{background:#e7ecdf;color:var(--headline)}
-.cs-jump[aria-current="true"]:hover{background:var(--accent);color:var(--bg)}
-.cs-jump:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.cs-jump[hidden],.cs-jumps[hidden]{display:none}
-.cs-status{display:inline-block;margin-top:14px;padding:4px 8px;border:1px solid var(--accent);font-size:12px;line-height:1.4;color:var(--accent);font-weight:600}
-.cs-status.is-current{background:var(--accent);color:var(--bg)}
-.cs-status+.cs-title{margin-top:8px}
-@media(max-width:600px){.cs-jumps{padding:0 var(--mobile-edge,16px);gap:8px}.cs-jump{flex:1;min-width:0;padding:12px 8px;font-size:14px}}
 .cs-wrap{position:relative}
 .cs-track{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px max(calc((100vw - 1280px)/2 + 32px),32px) 8px;scrollbar-width:none;scroll-behavior:smooth;cursor:grab}
 .cs-track.drag{cursor:grabbing;scroll-snap-type:none}
@@ -640,13 +629,9 @@ body{counter-reset:mmsec}
 <!-- CASES — Apple Arcade 스타일 자동 캐러셀 -->
 <section class="sec reveal" id="cases" aria-labelledby="cases-t" style="overflow:hidden">
   <div class="ev-head">
-    <h2 id="cases-t">실제 시공 사례<br><span>진행 중인 현장부터 완성된 공간까지 확인해보세요.</span></h2>
+    <h2 id="cases-t">실제 시공 사례<br><span>실제 현장의 시공 전후와 완성된 공간을 확인해보세요.</span></h2>
     <a href="projects/">전체 시공사례 보기</a>
   </div>
-  <nav class="cs-jumps" aria-label="시공사례 바로가기">
-    <button type="button" class="cs-jump" id="caseJumpCurrent" aria-controls="ctrack">진행 중인 현장</button>
-    <button type="button" class="cs-jump" id="caseJumpCompleted" aria-controls="ctrack">완공 시공사례</button>
-  </nav>
   <div class="cs-wrap">
     <div class="cs-track" id="ctrack"><!-- CASES 데이터로 자동 생성 --></div>
     <button class="pc-arrow pc-prev" id="cprev" aria-label="이전 사례">‹</button>
@@ -728,7 +713,7 @@ body{counter-reset:mmsec}
 
 <script src="consult.js?v=c3"></script>
 <script src="sitenav.js?v=g51"></script>
-<script src="project-cases.js?v=2"></script>
+<script src="project-cases.js?v=3"></script>
 <script src="today-sites.js?v=2" defer></script>
 <script>
 var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -987,10 +972,7 @@ function renderCases(){var t=document.getElementById('ctrack');if(!t)return;
       : c.beforeCover
       ? '<div class="cs-media cs-compare"><span class="cs-compare-shot cs-compare-before"><i style="--img:url(\''+c.beforeCover+'\')"></i><b class="cs-compare-label">BEFORE</b></span><span class="cs-compare-shot cs-compare-after"><i style="--img:url(\''+c.afterCover+'\')"></i><b class="cs-compare-label">AFTER</b></span></div>'
       : '<div class="cs-media"><img src="'+cover+'" alt="" loading="lazy"></div>';
-    var ongoing=c.constructionStatus==='ongoing';
-    var label=ongoing?'진행 중':c.type==='video'?'시공 과정':'';
-    var badge=label?'<span class="cs-status'+(ongoing?' is-current':'')+'">'+label+'</span>':'';
-    return '<a href="projects/#'+c.id+'" class="cs-card" data-case-state="'+(ongoing?'ongoing':'completed')+'" aria-label="'+(label?label+' · ':'')+esc(c.title)+(c.type==='video'?' 영상 보기':' 사진 보기')+'">'+media+badge+'<div class="cs-title">'+esc(c.title)+'</div><div class="cs-sub">'+esc(c.location)+'</div></a>';
+    return '<a href="projects/#'+c.id+'" class="cs-card" aria-label="'+esc(c.title)+(c.type==='video'?' 영상 보기':' 사진 보기')+'">'+media+'<div class="cs-title">'+esc(c.title)+'</div><div class="cs-sub">'+esc(c.location)+'</div></a>';
   }).join('');}
 function renderComing(){var t=document.getElementById('ptrack');if(!t)return;
   t.innerHTML=COMING.map(function(c){return '<article class="pc-card"><div class="pc-tag">Coming Soon</div><div class="pc-name">'+esc(c.name)+'</div><p class="pc-desc">'+esc(c.desc)+'</p><div class="pc-art" aria-hidden="true">'+c.icon+'</div></article>';}).join('');}
@@ -1000,50 +982,20 @@ renderCases();renderComing();
 initCarousel('etrack','eprev','enext');
 initCarousel('ptrack','pprev','pnext');
 initCarousel('ctrack','cprev','cnext',true);
-/* 그룹 버튼은 필터가 아닌 바로가기: 화살표는 모든 현장을 연속해서 넘깁니다. */
-(function(){
-  var track=document.getElementById('ctrack'),nav=document.querySelector('.cs-jumps');
-  var current=document.getElementById('caseJumpCurrent'),completed=document.getElementById('caseJumpCompleted');
-  var cards=Array.from(track.querySelectorAll('.cs-card'));
-  var currentFirst=track.querySelector('[data-case-state="ongoing"]'),completedFirst=track.querySelector('[data-case-state="completed"]');
-  current.hidden=!currentFirst;completed.hidden=!completedFirst;nav.hidden=!currentFirst||!completedFirst;
-  function jump(card){
-    if(!card)return;
-    track.scrollTo({left:card.offsetLeft-cards[0].offsetLeft,behavior:reduce?'auto':'smooth'});
-    track.dispatchEvent(new Event('casejump'));
-  }
-  current.addEventListener('click',function(){jump(currentFirst);});
-  completed.addEventListener('click',function(){jump(completedFirst);});
-  function update(){
-    var edge=track.getBoundingClientRect().left+(parseFloat(getComputedStyle(track).paddingLeft)||0)+1;
-    var first=cards.find(function(card){return card.getBoundingClientRect().right>edge;});
-    var ongoing=first&&first.dataset.caseState==='ongoing';
-    current.setAttribute('aria-current',ongoing?'true':'false');completed.setAttribute('aria-current',ongoing?'false':'true');
-  }
-  track.addEventListener('scroll',update,{passive:true});addEventListener('resize',update);update();
-})();
-
 
 /* 시공사례 — 자동으로 흐르는 캐러셀 (호버·드래그 시 정지, 끝에서 처음으로) */
 (function(){
   if(reduce) return;
   var track=document.getElementById('ctrack');
   if(!track) return;
-  var paused=false,visible=!('IntersectionObserver' in window),wrap=track.closest('#cases');
-  if('IntersectionObserver' in window){
-    var visibility=new IntersectionObserver(function(entries){
-      visible=entries[0].isIntersecting;
-      if(visible)schedule();
-    },{threshold:.2});
-    visibility.observe(track);
-  }
+  var paused=false,wrap=track.parentElement;
   wrap.addEventListener('pointerenter',function(){paused=true;});
   wrap.addEventListener('pointerleave',function(){paused=false;});
   track.addEventListener('pointerdown',function(){paused=true;});
   addEventListener('pointerup',function(){if(!wrap.matches(':hover'))paused=false;});
   function advance(){
     schedule();
-    if(paused||!visible||document.hidden)return;
+    if(paused||document.hidden)return;
     var max=track.scrollWidth-track.clientWidth;
     var c=track.firstElementChild,g=parseInt(getComputedStyle(track).gap)||20;
     var step=c?c.getBoundingClientRect().width+g:460;
@@ -1053,7 +1005,6 @@ initCarousel('ctrack','cprev','cnext',true);
   var timer;
   function schedule(){clearTimeout(timer);timer=setTimeout(advance,3800);}
   ['cprev','cnext'].forEach(function(id){document.getElementById(id).addEventListener('click',schedule);});
-  track.addEventListener('casejump',schedule);
   schedule();
 })();
 
