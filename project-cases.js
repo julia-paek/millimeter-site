@@ -135,16 +135,26 @@ var MM_PROJECT_CASES = [
   {id:'bupyeong-mujigae', brand:'창호시공', status:'published', price:null, purchasable:false, title:'부평 무지개 창호 시공', location:'인천 · 부평구 · 부평 무지개', image:'assets/projects/bupyeong-mujigae/01.webp', thumb:'assets/projects/bupyeong-mujigae/cover.webp', images:[
     {src:'assets/projects/bupyeong-mujigae/01.webp',label:'창호시공'},{src:'assets/projects/bupyeong-mujigae/02.webp',label:'창호시공'},{src:'assets/projects/bupyeong-mujigae/03.webp',label:'창호시공'},{src:'assets/projects/bupyeong-mujigae/04.webp',label:'창호시공'},{src:'assets/projects/bupyeong-mujigae/05.webp',label:'창호시공'},{src:'assets/projects/bupyeong-mujigae/06.webp',label:'창호시공'},{src:'assets/projects/bupyeong-mujigae/07.webp',label:'창호시공'},{src:'assets/projects/bupyeong-mujigae/08.webp',label:'창호시공'}
   ]},
-  {id:'cheongcheon-prugio', brand:'창호시공', status:'published', price:null, purchasable:false, title:'청천 푸르지오 창호 시공', location:'인천 · 부평구 · 청천 푸르지오', image:'assets/projects/cheongcheon-prugio/01.webp', thumb:'assets/projects/cheongcheon-prugio/cover.webp', images:[
+  /* 임시 사진: 사용자 요청으로 마지막 등록 완공 사례를 진행 중 표시로 사용. 완료 안내 시 constructionStatus를 completed로 변경하면 원래 사진 목록과 분류가 복원됩니다. */
+  {id:'cheongcheon-prugio', constructionStatus:'ongoing', brand:'창호시공', status:'published', price:null, purchasable:false, title:'청천 푸르지오 창호 시공', location:'인천 · 부평구 · 청천 푸르지오', image:'assets/projects/cheongcheon-prugio/01.webp', thumb:'assets/projects/cheongcheon-prugio/cover.webp', images:[
     {src:'assets/projects/cheongcheon-prugio/01.webp',label:'창호시공'},{src:'assets/projects/cheongcheon-prugio/02.webp',label:'창호시공'},{src:'assets/projects/cheongcheon-prugio/03.webp',label:'창호시공'},{src:'assets/projects/cheongcheon-prugio/04.webp',label:'창호시공'},{src:'assets/projects/cheongcheon-prugio/05.webp',label:'창호시공'},{src:'assets/projects/cheongcheon-prugio/06.webp',label:'창호시공'},{src:'assets/projects/cheongcheon-prugio/07.webp',label:'창호시공'},{src:'assets/projects/cheongcheon-prugio/08.webp',label:'창호시공'}
   ]}
 ];
 function mmProjectCases(prefix){
   function path(src){return src ? prefix+src : src;}
-  return MM_PROJECT_CASES.filter(function(c){return c.status==='published';}).map(function(c){
+  var list=MM_PROJECT_CASES.filter(function(c){return c.status==='published';}).map(function(c){
     var item=Object.assign({},c);
+    item.constructionStatus=c.constructionStatus==='ongoing'?'ongoing':'completed';
+    if(item.constructionStatus==='ongoing'){
+      // 진행 중에는 대표 사진 한 장만 표시하고 원본 사진 목록은 보존합니다.
+      var cover=c.thumb||c.image;
+      item.brand='진행 중';item.image=cover;item.thumb=cover;
+      item.images=[{src:cover,label:'진행 중'}];
+      delete item.beforeCover;delete item.afterCover;
+    }
     ['image','thumb','beforeCover','afterCover','video'].forEach(function(key){if(item[key])item[key]=path(item[key]);});
     if(item.images)item.images=item.images.map(function(photo){return Object.assign({},photo,{src:path(photo.src)});});
     return item;
   });
+  return list.filter(function(c){return c.constructionStatus==='ongoing';}).concat(list.filter(function(c){return c.constructionStatus!=='ongoing';}));
 }
