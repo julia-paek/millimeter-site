@@ -24,7 +24,9 @@ function routeDefaultType(){
 function timingOptions(){
   var now=new Date(Date.now()+9*60*60*1000);
   var options='<option value="">선택해주세요</option>';
-  for(var i=1;i<=24;i++){
+  // 2028년 항목은 운영자 요청 시 별도로 추가합니다.
+  var months=(2027-now.getUTCFullYear())*12+11-now.getUTCMonth();
+  for(var i=1;i<=months;i++){
     var month=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth()+i,1));
     var label=month.getUTCFullYear()+'년 '+(month.getUTCMonth()+1)+'월';
     options+='<option value="'+label+'">'+label+'</option>';
