@@ -21,6 +21,17 @@ function routeDefaultType(){
   return /\/interior(?:\/|$|\/index\.html$)/.test(location.pathname) ? 'interior' : 'window';
 }
 
+function timingOptions(){
+  var now=new Date(Date.now()+9*60*60*1000);
+  var options='<option value="">선택해주세요</option>';
+  for(var i=1;i<=24;i++){
+    var month=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth()+i,1));
+    var label=month.getUTCFullYear()+'년 '+(month.getUTCMonth()+1)+'월';
+    options+='<option value="'+label+'">'+label+'</option>';
+  }
+  return options+'<option value="미정">미정</option>';
+}
+
 function typeLabel(type){
   return type === 'interior' ? '인테리어' : '창호';
 }
@@ -84,7 +95,7 @@ function ensureWindowFields(form, uid){
   var block=document.createElement('div');block.className='mm-consult-generated';
   function field(name,label,content){return '<div><label for="'+uid+'-'+name+'">'+label+'</label>'+content.replace('FIELD','id="'+uid+'-'+name+'" name="'+name+'"')+'</div>';}
   block.innerHTML=field('address','시공 주소 *','<input FIELD required autocomplete="street-address" placeholder="시·구, 도로명 주소 또는 아파트명">')
-    +field('when','시공 희망 시기','<select FIELD><option>미정</option><option>1개월 이내</option><option>1~3개월</option><option>3~6개월</option><option>6개월 이후</option></select>')
+    +field('when','시공 희망 시기','<select FIELD>'+timingOptions()+'</select>')
     +'<div data-mm-window-section class="mm-consult-window-grid">'
     +field('size','평형','<select FIELD><option value="">선택</option><option>20평 미만</option><option>20평대</option><option>30평대</option><option>40평대</option><option>50평 이상</option><option>잘 모르겠음</option></select>')
     +field('brand','관심 브랜드','<select FIELD><option value="">추천받기 / 미정</option><option>LX하우시스</option><option>KCC</option><option>PROFINE</option><option>고구려안전방충망</option></select>')+'</div>'
@@ -216,6 +227,8 @@ window.mmConsultSubmit = function(form, cb){
         if(result.ok!==true || result.requestId!==requestId){
           cb({ok:false,title:'접수되지 않았습니다',message:'입력 내용을 확인하거나 '+contact()+' 로 문의해주세요.'});return;
         }
+        form.reset();
+        delete form._mmRequest;
         cb({ok:true,title:'상담이 접수됐습니다',message:'영업일 24시간 안에 연락드릴게요.'});
       })
       .catch(function(){
