@@ -240,6 +240,7 @@ section[id],main [id]{scroll-margin-top:calc(var(--nav-h) + 70px)}
 .ch strong{display:block;margin-top:auto;font-size:17px;font-weight:700;color:var(--headline)}
 .ch:hover{z-index:1;background:#f7f4ee;transform:translateY(-4px)}
 .ch small{display:block;font-size:13px;color:var(--muted);margin-top:7px;font-weight:500}
+.ch .installer-note{max-width:100%;line-height:1.45}
 .ch.hi{background:var(--accent);color:#fff;border-color:var(--accent)}
 .ch.hi::before,.ch.hi .node-icon,.ch.hi strong{color:#fff}
 .ch.hi:hover{background:#254b2e}
@@ -377,6 +378,7 @@ section[id],main [id]{scroll-margin-top:calc(var(--nav-h) + 70px)}
 .qa.open button .ic{transform:rotate(45deg)}
 .qa .ans{max-height:0;overflow:hidden;transition:max-height .35s var(--ease-soft)}
 .qa .ans p{padding:0 4px 24px;font-size:15.5px;color:var(--muted);line-height:1.75}
+.qa .ans .warranty-disclaimer{display:block;margin-top:8px;font-size:13px;line-height:1.6}
 /* 브랜드 원칙 — 카드 대신 의미가 연결되는 심벌 다이어그램 */
 .vals{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:0;max-width:1120px;margin:58px auto 0;text-align:center}
 .vals::before{content:"";position:absolute;top:55px;left:11%;right:11%;height:1px;background:var(--line-strong)}
@@ -642,7 +644,7 @@ h1,h2{font-family:'SUIT Variable','SUIT','Pretendard Variable',Pretendard,sans-s
             </span>
             <span class="ch hi" data-step="02">
               <span class="node-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M7 16h25M26 10l6 6-6 6M41 32H16M22 26l-6 6 6 6"/><path d="M8 29V10M40 38V19"/></svg></span>
-              <strong>MM LAB</strong><small>직거래 · 직시공</small>
+              <strong>MM LAB</strong><small class="installer-note">검증된 LX ENG 시공팀 시공</small>
             </span>
             <span class="ch you" data-step="03">
               <span class="node-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="18" cy="15" r="7"/><path d="M6 40c1-9 5-14 12-14s11 5 12 14M31 11h11v17H31zM34 16h5M34 21h5"/></svg></span>
@@ -825,7 +827,7 @@ h1,h2{font-family:'SUIT Variable','SUIT','Pretendard Variable',Pretendard,sans-s
         <div class="qa"><button>살고 있는 집인데 시공이 되나요?<span class="ic">＋</span></button><div class="ans"><p>가능합니다. 이사 없이 거주 중에도 시공할 수 있도록 일정과 동선을 맞춰 드립니다.</p></div></div>
         <div class="qa"><button>저가 제품과 정확히 무엇이 다른가요?<span class="ic">＋</span></button><div class="ans"><p>저가 공업사 제품은 다루지 않습니다. KCC · LX하우시스 · KBE 본사 정품만 사용해 단열·기밀·내구 성능과 보증이 다릅니다.</p></div></div>
         <div class="qa"><button>정말 약 20% 절감되나요?<span class="ic">＋</span></button><div class="ans"><p>본사 직거래로 일반 인테리어 회사가 받는 유통 마진(약 20%)을 덜어냅니다. 30평 기준 약 200만 원 차이가 납니다.</p></div></div>
-        <div class="qa" id="brand-warranty"><button>보증은 어떻게 되나요?<span class="ic">＋</span></button><div class="ans"><p>본사 품질 보증 10년이 적용됩니다. 시공 후에도 책임지고 관리합니다.</p></div></div>
+        <div class="qa" id="brand-warranty"><button>보증은 어떻게 되나요?<span class="ic">＋</span></button><div class="ans"><p>본사 품질 보증이 적용됩니다. 시공 후에도 책임지고 관리합니다.<small class="warranty-disclaimer">※ 보증 기간과 적용 범위는 브랜드 및 제품에 따라 다릅니다.</small></p></div></div>
         <div class="qa"><button>상담에 비용이 드나요?<span class="ic">＋</span></button><div class="ans"><p>현장 실측을 포함한 상담·견적은 무료입니다. 부담 없이 문의해 주세요.</p></div></div>
       </div>
     </div>
